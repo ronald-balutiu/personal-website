@@ -1,0 +1,19 @@
+---
+interface Props {
+  href: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const { href, icon, title, description } = Astro.props;
+---
+<a href={href} class="project-card">
+  <div class="project-content">
+    <div class="project-icon">
+      <Fragment set:html={icon} />
+    </div>
+    <h3 class="project-heading">{title}</h3>
+    <p class="project-description">{description}</p>
+  </div>
+</a> 

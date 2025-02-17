@@ -1,291 +1,48 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import '../styles/index.css'
+import Hero from '../components/Hero.astro'
+import ProjectCard from '../components/ProjectCard.astro'
+
+const projects = [
+  {
+    href: "/project1",
+    title: "Project One",
+    description: "A brief description of your first project and what makes it special.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+      <polyline points="2 17 12 22 22 17"></polyline>
+      <polyline points="2 12 12 17 22 12"></polyline>
+    </svg>`
+  },
+  {
+    href: "/project2",
+    title: "Project Two",
+    description: "An overview of your second project highlighting its key features.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    </svg>`
+  },
+  // Add project3 and project4 data similarly
+];
 ---
 
-<Layout title="Your Name | Senior Software Engineer">
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Your Name</h1>
-      <p class="tagline">
-        Senior Software Engineer focusing on design processes, shipping meaningful work, and making
-        people's lives better along the way.
-      </p>
-      <div class="scroll-indicator">
-        <span class="arrow">↓</span>
-        <span class="text">Scroll to explore</span>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="projects">
-    <h2>Projects</h2>
-    <div class="project-grid">
-      <a href="/project1" class="project-card">
-        <div class="project-content">
-          <div class="logo">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-          </div>
-          <h3>Project One</h3>
-          <p>A brief description of your first project and what makes it special.</p>
-        </div>
-      </a>
-      <a href="/project2" class="project-card">
-        <div class="project-content">
-          <div class="logo">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-          </div>
-          <h3>Project Two</h3>
-          <p>An overview of your second project highlighting its key features.</p>
-        </div>
-      </a>
-      <a href="/project3" class="project-card">
-        <div class="project-content">
-          <div class="logo">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-              ></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-          </div>
-          <h3>Project Three</h3>
-          <p>Details about your third project and its impact on users.</p>
-        </div>
-      </a>
-      <a href="/project4" class="project-card">
-        <div class="project-content">
-          <div class="logo">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
-          </div>
-          <h3>Project Four</h3>
-          <p>A summary of your fourth project and its technical achievements.</p>
-        </div>
-      </a>
+<Layout title="Ronald Balutiu | Software Engineer">
+  <Hero />
+  
+  <section id="projects" class="projects-section">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+      {projects.map(project => (
+        <ProjectCard 
+          href={project.href}
+          icon={project.icon}
+          title={project.title}
+          description={project.description}
+        />
+      ))}
     </div>
   </section>
 </Layout>
-
-<style>
-  .hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 2rem;
-    position: relative;
-  }
-
-  .hero-content {
-    max-width: 70ch;
-    position: relative;
-  }
-
-  h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin: 0;
-    background: linear-gradient(to right, var(--primary), #2563eb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: 'Inconsolata', monospace;
-  }
-
-  .tagline {
-    font-size: 1.5rem;
-    line-height: 1.5;
-    color: #4b5563;
-    margin: 2rem 0;
-    font-family: 'Inconsolata', monospace;
-  }
-
-  .scroll-indicator {
-    position: absolute;
-    bottom: 4rem;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    animation: bounce 2s infinite;
-    width: fit-content;
-  }
-
-  .arrow {
-    font-size: 2rem;
-    color: var(--primary);
-  }
-
-  .text {
-    font-size: 0.875rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-family: 'Inconsolata', monospace;
-  }
-
-  @keyframes bounce {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-20px);
-    }
-    60% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .projects {
-    padding: 4rem 2rem;
-    background-color: #f9fafb;
-  }
-
-  h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--text);
-    font-family: 'Inconsolata', monospace;
-  }
-
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-
-  .project-card {
-    height: 300px;
-    background: white;
-    border-radius: 1rem;
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-
-  .project-card:hover {
-    transform: translateY(-10px);
-    box-shadow:
-      0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  }
-
-  .project-content {
-    height: 100%;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
-  }
-
-  .logo {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary);
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 1rem;
-    transition: all 0.3s ease;
-  }
-
-  .project-card:hover .logo {
-    transform: scale(1.1);
-    background: rgba(59, 130, 246, 0.15);
-  }
-
-  h3 {
-    margin: 0 0 1rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text);
-    font-family: 'Inconsolata', monospace;
-  }
-
-  .project-content p {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #6b7280;
-    font-family: 'Inconsolata', monospace;
-  }
-
-  @media (max-width: 768px) {
-    .project-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .project-card {
-      height: 250px;
-    }
-  }
-</style>

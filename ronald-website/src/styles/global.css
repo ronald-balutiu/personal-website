@@ -1,1 +1,99 @@
 @import 'tailwindcss';
+
+:root {
+  --background: #ffffff;
+  --text: #1f2937;
+  --primary: #3b82f6;
+  --primary-light: rgba(59, 130, 246, 0.1);
+  --primary-light-hover: rgba(59, 130, 246, 0.15);
+  --primary-hover: #2563eb;
+  --gray-100: #F9FAFB;
+  --gray-200: #F3F4F6;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --brown: #5D3A3A;
+}
+
+/* Typography */
+html {
+  font-family: "DM Sans", sans-serif;
+  background: var(--background);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+/* Common text styles */
+.font-coustard {
+  font-family: 'Coustard', serif;
+}
+
+.font-dm-sans {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.text-gray {
+  color: var(--gray-500);
+}
+
+.text-gray-600 {
+  color: var(--gray-600);
+}
+
+.text-brown {
+  color: var(--brown);
+}
+
+/* Layout */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+}
+
+/* Common components */
+.section {
+  padding: 4rem 2rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.25rem;
+  margin-bottom: 3rem;
+  color: var(--text);
+}
+
+/* Common shadows */
+.shadow-sm {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-lg {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+/* Common transitions */
+.transition-all {
+  transition: all 0.3s;
+}
+
+.transition-colors {
+  transition: color 0.2s;
+}
+
+/* Common links */
+.link {
+  text-decoration: none;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--primary);
+}
+
