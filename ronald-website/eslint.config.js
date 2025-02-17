@@ -1,28 +1,22 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-
-export default tseslint.config(
-  { ignores: ['dist'] },
-  {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+export default [
+    {
+        ignores: ["node_modules/", "dist/", ".astro/"],
     },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+    {
+        extends: ["eslint:recommended", "plugin:astro/recommended", "plugin:prettier/recommended"],
+        plugins: ["astro", "prettier"],
+        rules: {
+            "prettier/prettier": "error",
+        },
+        overrides: [
+            {
+                files: ["*.astro"],
+                parser: "astro-eslint-parser",
+                parserOptions: {
+                    parser: "@typescript-eslint/parser",
+                    extraFileExtensions: [".astro"],
+                },
+            },
+        ],
     },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-    },
-  },
-)
+];

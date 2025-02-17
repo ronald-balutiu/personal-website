@@ -1,0 +1,118 @@
+---
+import './src/styles/global.css'
+interface Props {
+  title: string
+  description?: string
+}
+
+const { title, description = 'Personal website built with Astro' } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a href="/photography" class="photography-link">Photography</a>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <div class="social-links">
+        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer"
+          >GitHub</a
+        >
+        <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+        <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer"
+          >Twitter</a
+        >
+        <a href="mailto:your.email@example.com">Email</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --background: #ffffff;
+    --text: #1f2937;
+    --primary: #3b82f6;
+  }
+
+  html {
+    font-family: 'Inconsolata', monospace;
+    background: var(--background);
+    color: var(--text);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+    width: 100%;
+  }
+
+  .photography-link {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    z-index: 100;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .photography-link:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  footer {
+    padding: 2rem;
+    background-color: #f3f4f6;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .social-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .social-links a:hover {
+    color: var(--primary);
+  }
+</style>
