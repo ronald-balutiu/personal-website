@@ -17,14 +17,18 @@ const { title, description = 'Personal website built with Astro' } = Astro.props
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Coustard:wght@400;900&display=swap" rel="stylesheet">
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chonburi&family=Coustard:wght@400;900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <Header />
@@ -34,31 +38,3 @@ const { title, description = 'Personal website built with Astro' } = Astro.props
     <Footer />
   </body>
 </html>
-
-<style is:global>
-  :root {
-    --background: #ffffff;
-    --text: #1f2937;
-    --primary: #3b82f6;
-  }
-
-  html {
-    font-family: "DM Sans", serif;
-    background: var(--background);
-    color: var(--text);
-    scroll-behavior: smooth;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1;
-    width: 100%;
-  }
-</style>

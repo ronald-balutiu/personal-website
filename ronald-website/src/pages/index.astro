@@ -6,43 +6,45 @@ import ProjectCard from '../components/ProjectCard.astro'
 
 const projects = [
   {
-    href: "/project1",
-    title: "Project One",
-    description: "A brief description of your first project and what makes it special.",
+    href: '/project1',
+    title: 'Project One',
+    description: 'A brief description of your first project and what makes it special.',
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
       <polyline points="2 17 12 22 22 17"></polyline>
       <polyline points="2 12 12 17 22 12"></polyline>
-    </svg>`
+    </svg>`,
   },
   {
-    href: "/project2",
-    title: "Project Two",
-    description: "An overview of your second project highlighting its key features.",
+    href: '/project2',
+    title: 'Project Two',
+    description: 'An overview of your second project highlighting its key features.',
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"></circle>
       <line x1="12" y1="16" x2="12" y2="12"></line>
       <line x1="12" y1="8" x2="12.01" y2="8"></line>
-    </svg>`
+    </svg>`,
   },
   // Add project3 and project4 data similarly
-];
+]
 ---
 
 <Layout title="Ronald Balutiu | Software Engineer">
   <Hero />
-  
+
   <section id="projects" class="projects-section">
     <h2 class="section-title">Projects</h2>
     <div class="projects-grid">
-      {projects.map(project => (
-        <ProjectCard 
-          href={project.href}
-          icon={project.icon}
-          title={project.title}
-          description={project.description}
-        />
-      ))}
+      {
+        projects.map((project) => (
+          <ProjectCard
+            href={project.href}
+            icon={project.icon}
+            title={project.title}
+            description={project.description}
+          />
+        ))
+      }
     </div>
   </section>
 </Layout>

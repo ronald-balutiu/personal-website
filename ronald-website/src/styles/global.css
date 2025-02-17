@@ -6,17 +6,15 @@
   --primary: #3b82f6;
   --primary-light: rgba(59, 130, 246, 0.1);
   --primary-light-hover: rgba(59, 130, 246, 0.15);
-  --primary-hover: #2563eb;
-  --gray-100: #F9FAFB;
-  --gray-200: #F3F4F6;
-  --gray-500: #6B7280;
-  --gray-600: #4B5563;
-  --brown: #5D3A3A;
+  --gray-100: #f9fafb;
+  --gray-200: #f3f4f6;
+  --gray-500: #6b7280;
+  --brown: #5d3a3a;
 }
 
 /* Typography */
 html {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   background: var(--background);
   color: var(--text);
   scroll-behavior: smooth;
@@ -25,18 +23,6 @@ html {
 /* Common text styles */
 .font-coustard {
   font-family: 'Coustard', serif;
-}
-
-.font-dm-sans {
-  font-family: 'DM Sans', sans-serif;
-}
-
-.text-gray {
-  color: var(--gray-500);
-}
-
-.text-gray-600 {
-  color: var(--gray-600);
 }
 
 .text-brown {
@@ -58,10 +44,6 @@ main {
 }
 
 /* Common components */
-.section {
-  padding: 4rem 2rem;
-}
-
 .section-title {
   text-align: center;
   font-size: 2.25rem;
@@ -77,23 +59,22 @@ main {
 .shadow-lg {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
-/* Common transitions */
-.transition-all {
-  transition: all 0.3s;
-}
-
-.transition-colors {
-  transition: color 0.2s;
-}
 
 /* Common links */
 .link {
   text-decoration: none;
   color: var(--text);
-  transition: color 0.2s;
+  transition: all 0.2s;
 }
 
 .link:hover {
-  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-color: var(--brown);
+  text-underline-offset: 0.2em;
 }
 
+/* Keep the special link styles for navigation */
+.resume-link,
+.nav-link {
+  text-decoration: none;
+}

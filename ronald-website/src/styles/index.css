@@ -22,7 +22,6 @@
 .hero-title-outline {
   color: transparent;
   -webkit-text-stroke: 1px var(--brown);
-  text-stroke: 1px var(--primary);
 }
 
 .hero-title-solid {
@@ -138,7 +137,11 @@
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {

@@ -3,29 +3,36 @@ const socialLinks = [
   {
     name: 'GitHub',
     url: 'https://github.com/yourusername',
+    icon: '/assets/github-mark.svg',
   },
   {
     name: 'LinkedIn',
     url: 'https://linkedin.com/in/yourusername',
+    icon: '/assets/linkedin.svg',
   },
   {
     name: 'Twitter',
     url: 'https://twitter.com/yourusername',
+    icon: '/assets/twitter.svg',
   },
   {
     name: 'Email',
     url: 'mailto:your.email@example.com',
+    icon: '/assets/email.svg',
   },
-];
+]
 ---
 
-<footer class="footer">
-  <div class="social-links">
-    {socialLinks.map(({ name, url }) => (
-      <a href={url} target="_blank" rel="noopener noreferrer" class="link">
-        {name}
-      </a>
-    ))}
+<footer class="p-8 bg-gray-200">
+  <div class="flex justify-center gap-8">
+    {
+      socialLinks.map(({ name, url, icon }) => (
+        <a href={url} target="_blank" rel="noopener noreferrer" class="link flex items-center">
+          <img src={icon} alt={name} class="mr-2 w-5 h-5" />
+          {name}
+        </a>
+      ))
+    }
   </div>
 </footer>
 
@@ -40,4 +47,4 @@ const socialLinks = [
     justify-content: center;
     gap: 2rem;
   }
-</style> 
+</style>
