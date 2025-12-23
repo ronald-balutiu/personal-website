@@ -1,8 +1,6 @@
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 
-import tailwindcss from '@tailwindcss/vite'
-
 export default defineConfig({
   // Update with your actual site URL
   site: 'https://ronaldbalutiu.com',
@@ -18,7 +16,5 @@ export default defineConfig({
   // Ensures SSG (Static Site Generation)
   output: 'static',
 
-  vite: {
-    plugins: [tailwindcss()],
-  },
+  vite: {},
 })

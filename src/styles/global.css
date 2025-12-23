@@ -1,16 +1,5 @@
-@import 'tailwindcss';
-
-:root {
-  --background: #ffffff;
-  --text: #1f2937;
-  --primary: #3b82f6;
-  --primary-light: rgba(59, 130, 246, 0.1);
-  --primary-light-hover: rgba(59, 130, 246, 0.15);
-  --gray-100: #f9fafb;
-  --gray-200: #f3f4f6;
-  --gray-500: #6b7280;
-  --brown: #5d3a3a;
-}
+@import './tokens.css';
+@import './components/footer.css';
 
 /* Typography */
 html {

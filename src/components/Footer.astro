@@ -23,28 +23,15 @@ const socialLinks = [
 ]
 ---
 
-<footer class="p-8 bg-gray-200">
-  <div class="flex justify-center gap-8">
+<footer class="site-footer">
+  <div class="social-links">
     {
       socialLinks.map(({ name, url, icon }) => (
-        <a href={url} target="_blank" rel="noopener noreferrer" class="link flex items-center">
-          <img src={icon} alt={name} class="mr-2 w-5 h-5" loading="lazy" />
+        <a href={url} target="_blank" rel="noopener noreferrer" class="social-link">
+          <img src={icon} alt={name} class="social-icon" loading="lazy" />
           {name}
         </a>
       ))
     }
   </div>
 </footer>
-
-<style>
-  .footer {
-    padding: 2rem;
-    background-color: var(--gray-200);
-  }
-
-  .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  }
-</style>
