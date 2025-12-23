@@ -1,12 +1,13 @@
 .site-footer {
-  padding: 2rem;
-  background-color: var(--gray-200);
+  padding: 1.25rem 2rem;
+  background-color: transparent;
+  border-top: 1px solid rgba(31, 41, 55, 0.08);
 }
 
 .social-links {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
 }
 
@@ -16,13 +17,13 @@
   gap: 0.5rem;
   color: var(--text);
   text-decoration: none;
-  transition: all 0.2s;
+  transition: color 0.2s ease, transform 0.2s ease;
+  font-size: 0.95rem;
 }
 
 .social-link:hover {
-  text-decoration: underline;
-  text-decoration-color: var(--brown);
-  text-underline-offset: 0.2em;
+  color: var(--brown);
+  transform: translateY(-1px);
 }
 
 .social-icon {
