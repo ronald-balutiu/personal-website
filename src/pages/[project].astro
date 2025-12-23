@@ -1,55 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import { getCollection } from 'astro:content'
 
-export function getStaticPaths() {
-  return [
-    {
-      params: { project: 'project1' },
-      props: {
-        title: 'Project One',
-        description: 'A brief description of your first project and what makes it special.',
-        details:
-          'Detailed explanation of Project One goes here. Include technologies used, challenges overcome, and results achieved.',
-        link: 'https://github.com/yourusername/project1',
-      },
-    },
-    {
-      params: { project: 'project2' },
-      props: {
-        title: 'Project Two',
-        description: 'An overview of your second project highlighting its key features.',
-        details:
-          'Detailed explanation of Project Two goes here. Include technologies used, challenges overcome, and results achieved.',
-        link: 'https://github.com/yourusername/project2',
-      },
-    },
-    {
-      params: { project: 'project3' },
-      props: {
-        title: 'Project Three',
-        description: 'Details about your third project and its impact on users.',
-        details:
-          'Detailed explanation of Project Three goes here. Include technologies used, challenges overcome, and results achieved.',
-        link: 'https://github.com/yourusername/project3',
-      },
-    },
-    {
-      params: { project: 'project4' },
-      props: {
-        title: 'Project Four',
-        description: 'A summary of your fourth project and its technical achievements.',
-        details:
-          'Detailed explanation of Project Four goes here. Include technologies used, challenges overcome, and results achieved.',
-        link: 'https://github.com/yourusername/project4',
-      },
-    },
-  ]
+export async function getStaticPaths() {
+  const projects = await getCollection('projects')
+
+  return projects.map((project) => ({
+    params: { project: project.slug },
+    props: { project },
+  }))
 }
 
-const { title, description, details, link } = Astro.props
+const { project } = Astro.props
+const { title, description, details, link } = project.data
 ---
 
-<Layout title={`${title} | Your Name`}>
+<Layout title={`${title} | Ronald Balutiu`}>
   <div class="project-container">
     <div class="project-content">
       <h1>{title}</h1>
