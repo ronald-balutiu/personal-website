@@ -1,0 +1,21 @@
+.about-section {
+  padding: clamp(3rem, 4vw, 4.5rem) 2rem;
+  background-color: var(--background);
+}
+
+.about-content {
+  max-width: 70ch;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-text {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 1.5rem;
+}
+
+.about-text:last-child {
+  margin-bottom: 0;
+}
