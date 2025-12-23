@@ -1,0 +1,22 @@
+---
+import ProjectItem from './ProjectItem.astro'
+import { getCollection } from 'astro:content'
+
+const projects = await getCollection('projects')
+---
+
+<section id="projects" class="projects-section" aria-labelledby="projects-title">
+  <h2 id="projects-title" class="section-title">Projects</h2>
+  <div class="projects-grid">
+    {
+      projects.map((project) => (
+        <ProjectItem
+          href={`/${project.slug}`}
+          icon={project.data.icon}
+          title={project.data.title}
+          description={project.data.description}
+        />
+      ))
+    }
+  </div>
+</section>

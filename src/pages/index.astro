@@ -1,28 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Hero from '../components/Hero.astro'
-import ProjectCard from '../components/ProjectCard.astro'
-import { getCollection } from 'astro:content'
-
-const projects = await getCollection('projects')
+import Intro from '../components/intro/Intro.astro'
+import Projects from '../components/projects/Projects.astro'
 ---
 
 <Layout title="Ronald Balutiu | Software Engineer">
-  <Hero />
-
-  <section id="projects" class="projects-section">
-    <h2 class="section-title">Projects</h2>
-    <div class="projects-grid">
-      {
-        projects.map((project) => (
-          <ProjectCard
-            href={`/${project.slug}`}
-            icon={project.data.icon}
-            title={project.data.title}
-            description={project.data.description}
-          />
-        ))
-      }
-    </div>
-  </section>
+  <Intro />
+  <Projects />
 </Layout>

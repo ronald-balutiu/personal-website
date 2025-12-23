@@ -18,7 +18,7 @@
   }
 }
 
-.project-card {
+.project-item {
   height: 300px;
   background-color: white;
   border-radius: 1rem;
@@ -28,11 +28,11 @@
   overflow: hidden;
 }
 
-.project-card:hover {
+.project-item:hover {
   transform: translateY(-0.625rem);
 }
 
-.project-content {
+.project-item-content {
   height: 100%;
   padding: 2rem;
   display: flex;
@@ -47,7 +47,7 @@
   );
 }
 
-.project-icon {
+.project-item-icon {
   width: 5rem;
   height: 5rem;
   margin-bottom: 1.5rem;
@@ -59,19 +59,19 @@
   border-radius: 1rem;
 }
 
-.project-card:hover .project-icon {
+.project-item:hover .project-item-icon {
   transform: scale(1.1);
   background-color: var(--primary-light-hover);
 }
 
-.project-heading {
+.project-item-heading {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text);
 }
 
-.project-description {
+.project-item-description {
   margin: 0;
   font-size: 1rem;
   line-height: 1.5;
