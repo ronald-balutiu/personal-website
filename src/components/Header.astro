@@ -10,12 +10,20 @@
   .header {
     width: 100%;
     padding: 2rem 3rem;
+    box-sizing: border-box;
   }
 
-  .resume-link {
-    float: right;
+  nav {
+    display: flex;
+    justify-content: flex-end;
   }
 
   .resume-text {
+  }
+
+  @media (max-width: 640px) {
+    .header {
+      padding: 1.5rem;
+    }
   }
 </style>
