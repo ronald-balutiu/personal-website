@@ -11,9 +11,7 @@ const { href, icon, title, description } = Astro.props
 
 <a href={href} class="project-item">
   <div class="project-item-content">
-    <div class="project-item-icon">
-      <Fragment set:html={icon} />
-    </div>
+    <img class="project-item-icon" src={icon} alt="" loading="lazy" />
     <h3 class="project-item-heading">{title}</h3>
     <p class="project-item-description">{description}</p>
   </div>
