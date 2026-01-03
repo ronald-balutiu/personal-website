@@ -47,7 +47,14 @@ const socialLinks = [
             class="intro-social-link"
             aria-label={name}
           >
-            <img src={icon} alt="" class="intro-social-icon" loading="lazy" aria-hidden="true" />
+            <img
+              src={icon}
+              alt=""
+              class="intro-social-icon"
+              loading="eager"
+              fetchpriority="high"
+              aria-hidden="true"
+            />
           </a>
         ))
       }

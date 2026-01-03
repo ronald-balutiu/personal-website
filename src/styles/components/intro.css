@@ -11,6 +11,7 @@
 .intro-content {
   max-width: 70ch;
   position: relative;
+  transform: translateY(-4.8rem);
 }
 
 .intro-title {

@@ -66,6 +66,13 @@ main {
   text-underline-offset: 0.2em;
 }
 
+/* Body-copy external links should always be underlined. */
+main p a[href^="http"] {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.2em;
+}
+
 /* Keep the special link styles for navigation */
 .resume-link,
 .nav-link {
