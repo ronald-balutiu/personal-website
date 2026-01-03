@@ -1,0 +1,100 @@
+<nav class="jump-links" aria-label="In-page">
+  <ol class="jump-links-list">
+    <li>
+      <a class="jump-link" href="#about">
+        <span class="jump-number">01</span>
+        <span class="jump-label">About</span>
+      </a>
+    </li>
+    <li>
+      <a class="jump-link" href="#experience">
+        <span class="jump-number">02</span>
+        <span class="jump-label">Experience</span>
+      </a>
+    </li>
+    <li>
+      <a class="jump-link" href="#projects">
+        <span class="jump-number">03</span>
+        <span class="jump-label">Projects</span>
+      </a>
+    </li>
+  </ol>
+</nav>
+
+<script>
+  const jumpNav = document.querySelector('.jump-links')
+  if (jumpNav) {
+    const jumpLinks = Array.from(jumpNav.querySelectorAll('.jump-link'))
+    if (jumpLinks.length) {
+      const items = jumpLinks.reduce((acc, link) => {
+        const href = link.getAttribute('href')
+        if (!href || !href.startsWith('#')) return acc
+        const id = href.slice(1)
+        const section = document.getElementById(id)
+        if (!section) return acc
+        const labelId = section.getAttribute('aria-labelledby')
+        const heading = (labelId && document.getElementById(labelId)) || section
+        acc.push({ id, link, heading })
+        return acc
+      }, [])
+
+      if (items.length) {
+        const linkById = new Map(items.map(({ id, link }) => [id, link]))
+        let activeId = ''
+
+        const setActiveId = (id) => {
+          if (activeId === id) return
+          activeId = id
+          jumpLinks.forEach((link) => link.classList.remove('jump-link-active'))
+          if (id) {
+            linkById.get(id)?.classList.add('jump-link-active')
+          }
+        }
+
+        const clearActive = () => setActiveId('')
+
+        const setFadeMode = () => {
+          const atTop = window.scrollY < 8 && !window.location.hash
+          jumpNav.classList.toggle('fade-slow', atTop)
+          jumpNav.classList.toggle('fade-fast', !atTop)
+        }
+
+        let rafId = 0
+        const scheduleUpdate = () => {
+          if (rafId) return
+          rafId = window.requestAnimationFrame(() => {
+            rafId = 0
+            updateActive()
+          })
+        }
+
+        const updateActive = () => {
+          const activationLine = window.innerHeight * 0.65
+          let nextId = ''
+
+          for (const { id, heading } of items) {
+            if (heading.getBoundingClientRect().top <= activationLine) {
+              nextId = id
+            } else {
+              break
+            }
+          }
+
+          nextId ? setActiveId(nextId) : clearActive()
+        }
+
+        window.addEventListener('scroll', scheduleUpdate, { passive: true })
+        window.addEventListener('resize', scheduleUpdate)
+        window.addEventListener(
+          'pageshow',
+          () => {
+            setFadeMode()
+            scheduleUpdate()
+          },
+          { once: true }
+        )
+        scheduleUpdate()
+      }
+    }
+  }
+</script>
