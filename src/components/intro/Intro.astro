@@ -1,3 +1,28 @@
+---
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/ronald-balutiu/',
+    icon: '/assets/github-mark.svg',
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://www.linkedin.com/in/ronald-balutiu/',
+    icon: '/assets/linkedin.svg',
+  },
+  {
+    name: 'Instagram',
+    url: 'https://www.instagram.com/studio.balutiu/',
+    icon: '/assets/instagram.svg',
+  },
+  {
+    name: 'Email',
+    url: 'mailto:rbalutiu@gmail.com',
+    icon: '/assets/email.svg',
+  },
+]
+---
+
 <section class="intro">
   <div class="intro-content">
     <h1 class="intro-title">
@@ -12,10 +37,21 @@
       </span>
     </h1>
     <p class="intro-description">Design-minded engineer shipping high quality, high impact work.</p>
-  </div>
-  <div class="intro-scroll">
-    <span class="intro-scroll-arrow">↓</span>
-    <span class="intro-scroll-text">Scroll to explore</span>
+    <div class="intro-social-links" aria-label="Social links">
+      {
+        socialLinks.map(({ name, url, icon }) => (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="intro-social-link"
+            aria-label={name}
+          >
+            <img src={icon} alt="" class="intro-social-icon" loading="lazy" aria-hidden="true" />
+          </a>
+        ))
+      }
+    </div>
   </div>
 </section>
 

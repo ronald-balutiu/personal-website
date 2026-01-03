@@ -16,5 +16,7 @@ export default defineConfig({
   // Ensures SSG (Static Site Generation)
   output: 'static',
 
+  trailingSlash: 'never',
+
   vite: {},
 })

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ronaldbalutiu.com/sitemap-index.xml

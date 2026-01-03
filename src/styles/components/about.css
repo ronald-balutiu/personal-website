@@ -1,5 +1,5 @@
 .about-section {
-  padding: clamp(3rem, 4vw, 4.5rem) 2rem;
+  padding: 0 2rem clamp(2.5rem, 3vw, 3rem);
   background-color: var(--background);
 }
 
