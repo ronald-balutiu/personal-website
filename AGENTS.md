@@ -78,6 +78,22 @@ For risky changes:
 - propose rollback strategy
 - prefer incremental rollout (flags/migrations) where applicable
 
+## Documentation Standards
+- Prefer putting deep/project-specific rules in `docs/` (or `agent_docs/`) rather than bloating this file.
+
+### `docs/` conventions (create `docs/` if missing)
+**Immutability**
+- Files in `docs/` are **write-once**: never edit an existing doc.
+- To change/revert guidance, create a new doc that references the old one.
+
+**Naming**
+- `YYYY-MM-DD HH-MM-SS - Topic.md` (use strict Year-Month-Day order)
+
+**Content**
+- Write for future agents reading chronologically.
+- When updating/reverting, include what changed (diff-level explanation) and why.
+- Use `docs/` for planning and executing. This especially includes long tasks & memory. For plans, please use the format `/docs/{plan_name}/{files}`
+
 ## Long Tasks & Memory
 For work spanning multiple sessions, maintain a lightweight scratchpad (choose one):
 - `progress.md` or `scratchpad.md`
@@ -91,6 +107,8 @@ Include:
 ## Commit & Pull Request Guidelines
 - Follow Conventional Commits (`feat:`, `fix:`, `chore:`, `build(deps-dev): ...`).
 - Keep each commit scoped to one logical change.
+- Before committing code, spin up a subagent and run the `/review` skill on the staged diff.
+- Treat unresolved `/review` findings as blockers; fix them or explain to me why we should not tackle them before raising a PR.
 - PRs should include a short summary, affected files/routes, linked issue (if any), and screenshots for visual updates.
 - Document manual QA steps in the PR description (commands executed and pages checked).
 
