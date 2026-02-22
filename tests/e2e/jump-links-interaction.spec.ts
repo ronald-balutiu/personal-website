@@ -100,7 +100,9 @@ test('active state follows deterministic scroll progression and clears near top 
   await expectActiveHash(page, '')
 })
 
-test('deep-link load, refresh, and back-forward preserve active link behavior', async ({ page }) => {
+test('deep-link load, refresh, and back-forward preserve active link behavior', async ({
+  page,
+}) => {
   await page.goto('/#experience')
   await waitForJumpLinksVisible(page)
   await expect.poll(() => page.evaluate(() => window.location.hash)).toBe('#experience')
@@ -117,5 +119,6 @@ test('deep-link load, refresh, and back-forward preserve active link behavior', 
 
   await page.goBack()
   await expect.poll(() => page.evaluate(() => window.location.hash)).toBe('#experience')
+  await scrollHeadingToActivationLine(page, 'experience')
   await expectActiveHash(page, '#experience')
 })

@@ -52,6 +52,9 @@ npm run test:unit
 npm run test:e2e
 npm run test:a11y
 
+# Cross-browser full test run (unit + e2e + a11y; e2e/a11y on Chromium + Firefox + WebKit)
+npm run test:cross-browser
+
 # Aggregate validation
 npm run test
 ```
@@ -59,7 +62,7 @@ npm run test
 Install Playwright browsers once per machine:
 
 ```sh
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 ```
 
 ## Content
@@ -69,6 +72,7 @@ Projects are managed through Astro content collections in `src/content/projects/
 ## Styling
 
 Styles live in `src/styles/`:
+
 - `tokens.css` for design tokens (colors, spacing, typography)
 - `global.css` for base styles and layout primitives
 - `components/` for reusable component styles

@@ -3,6 +3,8 @@ import { defineConfig, devices } from '@playwright/test'
 const host = '127.0.0.1'
 const port = 4173
 const baseURL = `http://${host}:${port}`
+const isCI = Boolean(process.env.CI)
+const playwrightWorkers = process.env.PLAYWRIGHT_WORKERS ?? (isCI ? 1 : '50%')
 
 export default defineConfig({
   testDir: 'tests',
@@ -12,9 +14,9 @@ export default defineConfig({
 
   fullyParallel: false,
 
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: process.env.CI ? 'line' : 'list',
+  retries: isCI ? 2 : 0,
+  workers: playwrightWorkers,
+  reporter: isCI ? 'line' : 'list',
 
   use: {
     baseURL,
@@ -26,6 +28,14 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
     },
   ],
 

@@ -67,7 +67,7 @@ main {
 }
 
 /* Body-copy external links should always be underlined. */
-main p a[href^="http"] {
+main p a[href^='http'] {
   text-decoration: underline;
   text-decoration-color: currentColor;
   text-underline-offset: 0.2em;
