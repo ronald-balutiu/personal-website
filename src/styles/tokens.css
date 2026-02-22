@@ -6,6 +6,17 @@
   --primary-light-hover: rgba(59, 130, 246, 0.15);
   --gray-100: #f9fafb;
   --gray-200: #f3f4f6;
+  --gray-400: #9ca3af;
   --gray-500: #67707f;
   --brown: #5d3a3a;
+
+  /* Motion primitives: adjust these first to scale the whole motion system. */
+  --motion-ease-standard: ease;
+  --motion-duration-fast: 0.3s;
+  --motion-duration-soft: 0.5s;
+  --motion-duration-standard: 1s;
+  --motion-delay-base: 0.25s;
+  --motion-stagger-step: 0.5s;
+  --motion-sequence-intro-step: 1;
+  --motion-sequence-social-jump-step: calc(var(--motion-sequence-intro-step) + 2);
 }

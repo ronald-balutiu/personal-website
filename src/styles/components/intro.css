@@ -1,4 +1,18 @@
 .intro {
+  /* Intro motion semantics: local mapping from global primitives. */
+  --intro-motion-social-duration: var(--motion-duration-soft);
+  --intro-motion-social-delay: calc(
+    var(--motion-delay-base) + var(--motion-sequence-social-jump-step) * var(--motion-stagger-step)
+  );
+  --intro-motion-peace-fade-duration: var(--motion-duration-standard);
+  --intro-motion-peace-fade-delay: var(--motion-delay-base);
+  --intro-motion-peace-tilt-duration: var(--motion-duration-standard);
+  --intro-motion-peace-tilt-delay: calc(
+    var(--motion-delay-base) + var(--motion-sequence-intro-step) * var(--motion-stagger-step)
+  );
+  --intro-motion-immediate-duration: var(--motion-duration-fast);
+  --intro-motion-immediate-delay: 0s;
+
   height: calc(100vh - 2rem);
   display: flex;
   align-items: center;
@@ -35,21 +49,6 @@
   margin: 2rem 0;
 }
 
-.intro-scroll {
-  position: absolute;
-  bottom: 2rem;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  width: fit-content;
-  opacity: 0;
-  animation: fade-in 1s ease 1s forwards;
-}
-
 .intro-social-links {
   margin-top: 1.5rem;
   display: flex;
@@ -57,7 +56,11 @@
   gap: 1rem;
   flex-wrap: wrap;
   opacity: 0;
-  animation: fade-in 0.9s ease 3.2s forwards;
+  animation-name: fade-in;
+  animation-duration: var(--intro-motion-social-duration);
+  animation-timing-function: var(--motion-ease-standard);
+  animation-delay: var(--intro-motion-social-delay);
+  animation-fill-mode: forwards;
 }
 
 .intro-social-link {
@@ -87,21 +90,31 @@
 .intro-peace-icon {
   display: inline-block;
   opacity: 0;
-  animation:
-    peace-fade 1s ease 1s forwards,
-    peace-tilt 1s ease 2s both;
+  animation-name: peace-fade, peace-tilt;
+  animation-duration:
+    var(--intro-motion-peace-fade-duration), var(--intro-motion-peace-tilt-duration);
+  animation-timing-function: var(--motion-ease-standard), var(--motion-ease-standard);
+  animation-delay: var(--intro-motion-peace-fade-delay), var(--intro-motion-peace-tilt-delay);
+  animation-fill-mode: forwards, both;
 }
 
-.intro-scroll-arrow {
-  font-size: 1.875rem;
-  color: inherit;
+:root.intro-enter-immediate .intro-social-links,
+:root.intro-enter-immediate .intro-peace-icon {
+  opacity: 1;
 }
 
-.intro-scroll-text {
-  font-size: 0.875rem;
-  color: var(--gray-500);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+:root.intro-enter-immediate .intro-social-links {
+  animation-duration: var(--intro-motion-immediate-duration);
+  animation-delay: var(--intro-motion-immediate-delay);
+}
+
+:root.intro-enter-immediate .intro-peace-icon {
+  animation-name: peace-fade;
+  animation-duration: var(--intro-motion-immediate-duration);
+  animation-timing-function: var(--motion-ease-standard);
+  animation-delay: var(--intro-motion-immediate-delay);
+  animation-fill-mode: forwards;
+  transform: rotate(12deg);
 }
 
 @keyframes fade-in {

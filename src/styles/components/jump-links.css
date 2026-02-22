@@ -1,4 +1,12 @@
 .jump-links {
+  /* Jump-links motion semantics: local mapping from global primitives. */
+  --jump-links-motion-fast-duration: var(--motion-duration-fast);
+  --jump-links-motion-fast-delay: 0s;
+  --jump-links-motion-slow-duration: var(--motion-duration-soft);
+  --jump-links-motion-slow-delay: calc(
+    var(--motion-delay-base) + var(--motion-sequence-social-jump-step) * var(--motion-stagger-step)
+  );
+
   position: fixed;
   left: clamp(1rem, 2vw, 2.5rem);
   top: 50%;
@@ -90,11 +98,19 @@
 }
 
 .jump-links.fade-fast {
-  animation: jump-links-fade 0.3s ease 0s forwards;
+  animation-name: jump-links-fade;
+  animation-duration: var(--jump-links-motion-fast-duration);
+  animation-timing-function: var(--motion-ease-standard);
+  animation-delay: var(--jump-links-motion-fast-delay);
+  animation-fill-mode: forwards;
 }
 
 .jump-links.fade-slow {
-  animation: jump-links-fade 0.9s ease 3.2s forwards;
+  animation-name: jump-links-fade;
+  animation-duration: var(--jump-links-motion-slow-duration);
+  animation-timing-function: var(--motion-ease-standard);
+  animation-delay: var(--jump-links-motion-slow-delay);
+  animation-fill-mode: forwards;
 }
 
 @keyframes jump-links-fade {
