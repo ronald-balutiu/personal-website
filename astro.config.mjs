@@ -1,22 +1,17 @@
-import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
+import { defineConfig } from 'astro/config'
 
 export default defineConfig({
-  // Update with your actual site URL
   site: 'https://ronaldbalutiu.com',
 
   integrations: [sitemap()],
 
-  markdown: {
-    shikiConfig: {
-      theme: 'github-dark', // Code block theme
-    },
-  },
-
-  // Ensures SSG (Static Site Generation)
   output: 'static',
-
   trailingSlash: 'never',
 
-  vite: {},
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+    },
+  },
 })

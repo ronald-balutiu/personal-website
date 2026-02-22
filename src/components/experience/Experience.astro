@@ -1,75 +1,76 @@
 ---
 const experiences = [
   {
-    role: "Software Development Engineer II",
-    company: "Amazon",
-    location: "New York, NY",
-    dateRange: "Apr 2022 – Present",
+    role: 'Software Development Engineer II',
+    company: 'Amazon',
+    location: 'New York, NY',
+    dateRange: 'Apr 2022 – Present',
     highlights: [
-      "Lead development of customer-facing features with a focus on reliability and UX.",
-      "Drive cross-team delivery, aligning design, product, and engineering priorities.",
-      "Raise quality through scalable architecture, performance tuning, and review standards.",
+      'Lead development of customer-facing features with a focus on reliability and UX.',
+      'Drive cross-team delivery, aligning design, product, and engineering priorities.',
+      'Raise quality through scalable architecture, performance tuning, and review standards.',
     ],
   },
   {
-    role: "Software Development Engineer I",
-    company: "Amazon",
-    location: "Seattle, WA",
-    dateRange: "Aug 2020 – Apr 2022",
+    role: 'Software Development Engineer I',
+    company: 'Amazon',
+    location: 'Seattle, WA',
+    dateRange: 'Aug 2020 – Apr 2022',
     highlights: [
-      "Built and shipped features across core user journeys with measurable impact.",
-      "Collaborated with design and PM partners to translate product goals into execution.",
-      "Improved maintainability through refactors, testing, and operational tooling.",
+      'Built and shipped features across core user journeys with measurable impact.',
+      'Collaborated with design and PM partners to translate product goals into execution.',
+      'Improved maintainability through refactors, testing, and operational tooling.',
     ],
   },
   {
-    role: "CSIL System Administrator",
-    company: "University of Chicago",
-    location: "Chicago, IL",
-    dateRange: "May 2018 – Jun 2020",
+    role: 'CSIL System Administrator',
+    company: 'University of Chicago',
+    location: 'Chicago, IL',
+    dateRange: 'May 2018 – Jun 2020',
     highlights: [
-      "Maintained 65+ macOS lab machines supporting 500+ daily users.",
-      "Built and maintained a Mojave image using Jenkins, Ansible, Homebrew, and JS.",
-      "Led server relocation and upgrades for lab imaging, backups, and web hosting.",
+      'Maintained 65+ macOS lab machines supporting 500+ daily users.',
+      'Built and maintained a Mojave image using Jenkins, Ansible, Homebrew, and JS.',
+      'Led server relocation and upgrades for lab imaging, backups, and web hosting.',
     ],
   },
   {
-    role: "Software Engineering Intern",
-    company: "Visa",
-    location: "Austin, TX",
-    dateRange: "Jun 2019 – Sep 2019",
+    role: 'Software Engineering Intern',
+    company: 'Visa',
+    location: 'Austin, TX',
+    dateRange: 'Jun 2019 – Sep 2019',
     highlights: [
-      "Implemented real-time server health monitoring across 100 internal systems.",
-      "Built internal tools including a custom link shortener and fleet insights dashboards.",
-      "Developed security and compliance automation for 3,200+ Macs.",
+      'Implemented real-time server health monitoring across 100 internal systems.',
+      'Built internal tools including a custom link shortener and fleet insights dashboards.',
+      'Developed security and compliance automation for 3,200+ Macs.',
     ],
   },
-];
-
+]
 ---
 
 <section id="experience" class="experience-section" aria-labelledby="experience-title">
   <div class="experience-content">
     <h2 id="experience-title" class="section-title">Experience</h2>
     <div class="experience-list">
-      {experiences.map((item) => (
-        <article class="experience-item">
-          <header class="experience-header">
-            <p class="experience-dates">{item.dateRange}</p>
-            <div class="experience-summary">
-              <h3 class="experience-role">{item.role}</h3>
-              <p class="experience-meta">
-                {item.company} · {item.location}
-              </p>
-            </div>
-          </header>
-          <ul class="experience-highlights">
-            {item.highlights.map((highlight) => (
-              <li>{highlight}</li>
-            ))}
-          </ul>
-        </article>
-      ))}
+      {
+        experiences.map((item) => (
+          <article class="experience-item">
+            <header class="experience-header">
+              <p class="experience-dates">{item.dateRange}</p>
+              <div class="experience-summary">
+                <h3 class="experience-role">{item.role}</h3>
+                <p class="experience-meta">
+                  {item.company} · {item.location}
+                </p>
+              </div>
+            </header>
+            <ul class="experience-highlights">
+              {item.highlights.map((highlight) => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>

@@ -10,16 +10,30 @@
     "clean": "rm -rf .astro/",
     "format": "prettier --write .",
     "lint": "eslint . --fix",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "test:unit": "vitest run --config vitest.config.ts",
+    "test:e2e": "playwright test tests/e2e --config playwright.config.ts --pass-with-no-tests",
+    "test:a11y": "playwright test tests/a11y --config playwright.config.ts --pass-with-no-tests",
+    "test": "npm run check && npm run test:unit && npm run test:e2e && npm run test:a11y"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/sitemap": "^3.7.0",
+    "@playwright/test": "^1.58.2",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
+    "@typescript-eslint/parser": "^8.56.0",
     "astro": "^5.17.3",
-    "eslint": "^10.0.1",
+    "eslint": "^9.39.3",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-astro": "^1.6.0",
-    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "globals": "^17.3.0",
     "prettier": "^3.8.1",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   }
 }

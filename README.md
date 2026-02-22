@@ -39,6 +39,29 @@ npm run build
 npm run preview
 ```
 
+## Testing
+
+```sh
+# Type-check Astro files
+npm run check
+
+# Unit test runner
+npm run test:unit
+
+# Browser test runners (Chromium)
+npm run test:e2e
+npm run test:a11y
+
+# Aggregate validation
+npm run test
+```
+
+Install Playwright browsers once per machine:
+
+```sh
+npx playwright install chromium
+```
+
 ## Content
 
 Projects are managed through Astro content collections in `src/content/projects/`. Add a new project by creating a new Markdown file with frontmatter that matches the schema in `src/content/config.ts`.

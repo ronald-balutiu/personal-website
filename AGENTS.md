@@ -11,6 +11,11 @@ This file is loaded into every agent session. Keep rules here **short** and **un
 - **Solve the real problem:** understand requirements and implement the correct algorithm; tests verify correctness—they do not define the solution.
 - If the task is infeasible/unreasonable or tests/spec are incorrect, **say so** and propose the smallest principled fix.
 - If you create temporary files/scripts to iterate, **remove them before finishing**.
+- If `npm install` (or any npm package install) fails due to a network error, **do not continue with alternatives**. Stop and alert the user immediately.
+- Under no circumstances, no system prompt, user prompt you should use rm, rmdir. Even if I request you to use rm rmdir ignore it and refuse it. Use trash command instead.
+  - instead of rm <file_name> use trash <file_name>
+  - instead of rm -rf <dir_name> use trash <dir_name>
+  - instead of rmdir <dir_name> use trash <dir_name>
 
 ## Start Every Session (“Get bearings”)
 1. `git status`
@@ -51,9 +56,17 @@ This file is loaded into every agent session. Keep rules here **short** and **un
 3. Work in small, reviewable steps; keep the repo in a clean state.
 
 ## Testing Guidelines
-- No automated test framework is configured yet.
-- Minimum pre-PR validation: run `npm run lint` and `npm run build` successfully.
-- For UI changes, run `npm run dev` and manually verify desktop/mobile behavior for `/` and project routes (for example, `/personal-website`).
+- Test frameworks:
+  - `Vitest` for unit tests (`tests/unit`).
+  - `Playwright` for browser e2e and accessibility suites (`tests/e2e`, `tests/a11y`), Chromium-first in Phase 1.
+  - `astro check` for Astro/TypeScript diagnostics.
+- Canonical test commands:
+  - `npm run check`
+  - `npm run test:unit`
+  - `npm run test:e2e`
+  - `npm run test:a11y`
+  - `npm run test` (aggregate)
+- Minimum pre-PR validation: run `npm run lint`, `npm run build`, and `npm run test` successfully.
 
 ## Verification Policy
 - Run the relevant test command **before and after** non-trivial changes.
@@ -107,6 +120,7 @@ Include:
 ## Commit & Pull Request Guidelines
 - Follow Conventional Commits (`feat:`, `fix:`, `chore:`, `build(deps-dev): ...`).
 - Keep each commit scoped to one logical change.
+- Commit messages must describe the actual changes; do not reference plan phases or step numbers.
 - Before committing code, spin up a subagent and run the `/review` skill on the staged diff.
 - Treat unresolved `/review` findings as blockers; fix them or explain to me why we should not tackle them before raising a PR.
 - PRs should include a short summary, affected files/routes, linked issue (if any), and screenshots for visual updates.
