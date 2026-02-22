@@ -5,7 +5,7 @@ const port = 4173
 const baseURL = `http://${host}:${port}`
 
 export default defineConfig({
-  testDir: 'tests/e2e',
+  testDir: 'tests',
 
   timeout: 30_000,
   expect: { timeout: 5_000 },
