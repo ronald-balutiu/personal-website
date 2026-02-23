@@ -23,7 +23,35 @@ const projectSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const frontmatterPattern = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/
 
 const projectsDir = path.resolve(import.meta.dirname, '../../src/content/projects')
+const srcDir = path.resolve(import.meta.dirname, '../../src')
 const publicDir = path.resolve(import.meta.dirname, '../../public')
+const assetsDir = path.resolve(publicDir, 'assets')
+const assetReferencePattern = /\/assets\/[^"'`\s)>\]}]+/g
+const unusedAssetAllowlist = new Set([
+  // TODO: Remove once dark mode is implemented and these assets are actively referenced.
+  '/assets/email-white.svg',
+  '/assets/github-mark-white.svg',
+  '/assets/instagram-white.svg',
+  '/assets/linkedin-white.svg',
+])
+const textFileExtensions = new Set([
+  '.astro',
+  '.css',
+  '.html',
+  '.js',
+  '.json',
+  '.md',
+  '.mdx',
+  '.mjs',
+  '.svg',
+  '.ts',
+  '.tsx',
+  '.txt',
+  '.webmanifest',
+  '.xml',
+  '.yaml',
+  '.yml',
+])
 
 const stripQuotes = (value: string) => {
   const isDoubleQuoted = value.startsWith('"') && value.endsWith('"')
@@ -72,6 +100,80 @@ const loadProjectEntries = (): ProjectEntry[] => {
     const frontmatter = parseFrontmatter(markdown, fileName) as ProjectFrontmatter
     return { fileName, slug, frontmatter }
   })
+}
+
+const toPosixPath = (filePath: string) => filePath.split(path.sep).join('/')
+
+const readTextFilesRecursively = (rootDir: string): string[] => {
+  const stack = [rootDir]
+  const files: string[] = []
+
+  while (stack.length > 0) {
+    const currentDir = stack.pop()
+    if (!currentDir) continue
+
+    for (const entry of readdirSync(currentDir, { withFileTypes: true })) {
+      const entryPath = path.join(currentDir, entry.name)
+      if (entry.isDirectory()) {
+        stack.push(entryPath)
+        continue
+      }
+
+      const extension = path.extname(entry.name).toLowerCase()
+      if (!textFileExtensions.has(extension)) continue
+      files.push(entryPath)
+    }
+  }
+
+  return files
+}
+
+const listAllAssetPaths = (): string[] => {
+  const stack = [assetsDir]
+  const paths: string[] = []
+
+  while (stack.length > 0) {
+    const currentDir = stack.pop()
+    if (!currentDir) continue
+
+    for (const entry of readdirSync(currentDir, { withFileTypes: true })) {
+      const entryPath = path.join(currentDir, entry.name)
+      if (entry.isDirectory()) {
+        stack.push(entryPath)
+        continue
+      }
+
+      if (!entry.isFile()) continue
+      const publicRelativePath = toPosixPath(path.relative(publicDir, entryPath))
+      paths.push(`/${publicRelativePath}`)
+    }
+  }
+
+  return paths.sort()
+}
+
+const normalizeAssetReference = (reference: string) =>
+  reference.split(/[?#]/, 1)[0].replace(/[),.;:]+$/, '')
+
+const collectAssetReferences = (): Set<string> => {
+  const references = new Set<string>()
+  const filesToScan = [...readTextFilesRecursively(srcDir), ...readTextFilesRecursively(publicDir)]
+
+  for (const filePath of filesToScan) {
+    const isAssetFile = filePath.startsWith(`${assetsDir}${path.sep}`)
+    if (isAssetFile) continue
+
+    const content = readFileSync(filePath, 'utf8')
+    for (const match of content.matchAll(assetReferencePattern)) {
+      const rawReference = match[0]
+      const normalizedReference = normalizeAssetReference(rawReference)
+      if (normalizedReference.startsWith('/assets/')) {
+        references.add(normalizedReference)
+      }
+    }
+  }
+
+  return references
 }
 
 describe('project content integrity', () => {
@@ -164,5 +266,22 @@ describe('project content integrity', () => {
         true
       )
     }
+  })
+
+  it('does not contain unreferenced files under public/assets', () => {
+    const allAssetPaths = listAllAssetPaths()
+    expect(allAssetPaths.length, 'Expected at least one file under public/assets').toBeGreaterThan(
+      0
+    )
+
+    const referencedAssetPaths = collectAssetReferences()
+    const unreferencedAssetPaths = allAssetPaths.filter(
+      (assetPath) => !referencedAssetPaths.has(assetPath) && !unusedAssetAllowlist.has(assetPath)
+    )
+
+    expect(
+      unreferencedAssetPaths,
+      `Found unreferenced files under public/assets:\n${unreferencedAssetPaths.join('\n')}`
+    ).toEqual([])
   })
 })
