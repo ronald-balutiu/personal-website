@@ -4,15 +4,19 @@ import { fileURLToPath } from 'node:url'
 
 import { expect, type Page, test } from '@playwright/test'
 
+import { PROJECT_DETAIL_PAGES_ENABLED } from '../../src/config/features'
+
 const thisFile = fileURLToPath(import.meta.url)
 const thisDir = path.dirname(thisFile)
 const projectsContentDir = path.resolve(thisDir, '../../src/content/projects')
 const criticalResourceTypes = new Set(['document', 'script', 'xhr', 'fetch', 'stylesheet', 'font'])
 
-const projectSlugs = readdirSync(projectsContentDir, { withFileTypes: true })
-  .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
-  .map((entry) => entry.name.replace(/\.md$/, ''))
-  .sort()
+const projectSlugs = PROJECT_DETAIL_PAGES_ENABLED
+  ? readdirSync(projectsContentDir, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
+      .map((entry) => entry.name.replace(/\.md$/, ''))
+      .sort()
+  : []
 
 type RuntimeIssue = {
   kind: 'pageerror' | 'console.error' | 'requestfailed' | 'badresponse'
@@ -97,6 +101,8 @@ for (const viewport of smokeViewports) {
     test('representative project route renders title, description, and primary link', async ({
       page,
     }) => {
+      test.skip(!PROJECT_DETAIL_PAGES_ENABLED, 'Project detail pages are disabled')
+
       await openHealthyRoute(page, '/personal-website')
 
       await expect(page.getByRole('heading', { level: 1, name: 'Personal Website' })).toBeVisible()
@@ -109,6 +115,24 @@ for (const viewport of smokeViewports) {
       const primaryLink = page.getByRole('link', { name: 'View Project' })
       await expect(primaryLink).toBeVisible()
       await expect(primaryLink).toHaveAttribute('href', /^https?:\/\//)
+    })
+
+    test('project cards link directly to external URLs when detail pages are disabled', async ({
+      page,
+    }) => {
+      test.skip(PROJECT_DETAIL_PAGES_ENABLED, 'Project detail pages are enabled')
+
+      await openHealthyRoute(page, '/')
+
+      const projectLinks = page.locator('#projects .project-item')
+      const count = await projectLinks.count()
+      expect(count).toBeGreaterThan(0)
+
+      for (let index = 0; index < count; index += 1) {
+        const link = projectLinks.nth(index)
+        await expect(link).toHaveAttribute('href', /^https?:\/\//)
+        await expect(link).toHaveAttribute('target', '_blank')
+      }
     })
 
     for (const slug of projectSlugs) {

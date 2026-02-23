@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 2rem;
+  padding: 0 var(--content-inline-padding);
   position: relative;
 }
 
@@ -29,13 +29,14 @@
 }
 
 .intro-title {
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
   margin: 0;
 }
 
 .intro-title-outline {
-  color: transparent;
+  color: var(--transparent);
   -webkit-text-stroke: 1px var(--brown);
 }
 
@@ -44,8 +45,9 @@
 }
 
 .intro-description {
-  font-size: 1.5rem;
-  line-height: 1.5;
+  font-size: var(--font-size-intro-description);
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-regular);
   margin: 2rem 0;
 }
 
@@ -74,7 +76,8 @@
   transition:
     color 0.2s ease,
     transform 0.2s ease;
-  font-size: 0.95rem;
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 .intro-social-link:hover {

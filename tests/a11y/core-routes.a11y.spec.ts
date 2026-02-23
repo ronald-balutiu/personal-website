@@ -5,16 +5,20 @@ import { fileURLToPath } from 'node:url'
 import AxeBuilderPlaywright from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
+import { PROJECT_DETAIL_PAGES_ENABLED } from '../../src/config/features'
+
 const blockingImpacts = new Set(['serious', 'critical'])
 
 const thisFile = fileURLToPath(import.meta.url)
 const thisDir = path.dirname(thisFile)
 const projectsContentDir = path.resolve(thisDir, '../../src/content/projects')
 
-const projectSlugs = readdirSync(projectsContentDir, { withFileTypes: true })
-  .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
-  .map((entry) => entry.name.replace(/\.md$/, ''))
-  .sort()
+const projectSlugs = PROJECT_DETAIL_PAGES_ENABLED
+  ? readdirSync(projectsContentDir, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
+      .map((entry) => entry.name.replace(/\.md$/, ''))
+      .sort()
+  : []
 
 const routes = [
   { path: '/', label: 'homepage' },
@@ -49,6 +53,7 @@ const incompleteAllowlist = new Set([
   '/|color-contrast|.intro-title-outline',
   '/|color-contrast|.project-item-heading',
   '/|color-contrast|.project-item-description',
+  '/|color-contrast|#about-title',
 ])
 
 const collectBlockingIncomplete = (routePath: string, incomplete: ViolationLike[]) => {

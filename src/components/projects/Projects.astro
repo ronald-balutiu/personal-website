@@ -1,6 +1,7 @@
 ---
 import ProjectItem from './ProjectItem.astro'
 import { getCollection } from 'astro:content'
+import { PROJECT_DETAIL_PAGES_ENABLED } from '../../config/features'
 
 const projects = await getCollection('projects')
 ---
@@ -11,7 +12,8 @@ const projects = await getCollection('projects')
     {
       projects.map((project) => (
         <ProjectItem
-          href={`/${project.slug}`}
+          href={PROJECT_DETAIL_PAGES_ENABLED ? `/${project.slug}` : project.data.link}
+          external={!PROJECT_DETAIL_PAGES_ENABLED}
           icon={project.data.icon}
           title={project.data.title}
           description={project.data.description}

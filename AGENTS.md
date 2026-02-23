@@ -150,6 +150,7 @@ Include:
 
 - Follow Conventional Commits (`feat:`, `fix:`, `chore:`, `build(deps-dev): ...`).
 - Keep each commit scoped to one logical change.
+- Please run `npm run release` before creating a new commit.
 - Commit messages must describe the actual changes; do not reference plan phases or step numbers.
 - PRs should include a short summary, affected files/routes, linked issue (if any), and screenshots for visual updates.
 - Document manual QA steps in the PR description (commands executed and pages checked).

@@ -7,8 +7,11 @@ interface Props {
   balancedRails?: boolean
 }
 
-const { title, description = 'Personal website built with Astro', balancedRails = false } =
-  Astro.props
+const {
+  title,
+  description = 'Personal website built with Astro',
+  balancedRails = false,
+} = Astro.props
 ---
 
 <!doctype html>
@@ -27,22 +30,24 @@ const { title, description = 'Personal website built with Astro', balancedRails 
     />
   </head>
   <body>
-    {balancedRails ? (
-      <main class="page-shell">
-        <aside class="page-rail page-rail-left">
-          <slot name="left-rail" />
-        </aside>
-        <div class="page-content">
+    {
+      balancedRails ? (
+        <main class="page-shell">
+          <aside class="page-rail page-rail-left">
+            <slot name="left-rail" />
+          </aside>
+          <div class="page-content">
+            <slot />
+          </div>
+          <aside class="page-rail page-rail-right" aria-hidden="true">
+            <slot name="right-rail" />
+          </aside>
+        </main>
+      ) : (
+        <main>
           <slot />
-        </div>
-        <aside class="page-rail page-rail-right" aria-hidden="true">
-          <slot name="right-rail" />
-        </aside>
-      </main>
-    ) : (
-      <main>
-        <slot />
-      </main>
-    )}
+        </main>
+      )
+    }
   </body>
 </html>

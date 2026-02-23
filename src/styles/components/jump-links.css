@@ -34,9 +34,10 @@
   gap: 0.75rem;
   text-decoration: none;
   color: var(--gray-500);
-  font-size: 0.75rem;
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: var(--letter-spacing-wider);
   transition: color 0.2s ease;
 }
 
@@ -44,7 +45,7 @@
   content: '';
   width: 1.5rem;
   height: 1px;
-  background: rgba(93, 58, 58, 0.25);
+  background: var(--brown-alpha-25);
   transition:
     width 0.2s ease,
     background 0.2s ease;
@@ -57,7 +58,7 @@
 
 .jump-link-active {
   color: var(--brown);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 .jump-link:hover::before,
@@ -72,18 +73,18 @@
 }
 
 .jump-link:focus-visible {
-  outline: 2px solid rgba(93, 58, 58, 0.4);
+  outline: 2px solid var(--brown-alpha-40);
   outline-offset: 4px;
 }
 
 .jump-number {
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
+  font-size: var(--font-size-label-xs);
+  letter-spacing: var(--letter-spacing-wide);
   font-variant-numeric: tabular-nums;
 }
 
 .jump-label {
-  font-size: 0.75rem;
+  font-size: var(--font-size-label-sm);
 }
 
 @media (min-width: 1301px) {
