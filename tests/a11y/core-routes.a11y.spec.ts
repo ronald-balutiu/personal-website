@@ -51,10 +51,18 @@ const formatViolations = (violations: ViolationLike[]) => {
 const incompleteAllowlist = new Set([
   '/|aria-prohibited-attr|.intro-social-links',
   '/|color-contrast|.intro-title-outline',
-  '/|color-contrast|.project-item-heading',
-  '/|color-contrast|.project-item-description',
   '/|color-contrast|#about-title',
 ])
+
+const incompleteAllowlistPatterns = [
+  /^\/\|color-contrast\|.*\.project-item-heading$/,
+  /^\/\|color-contrast\|.*\.project-item-description$/,
+]
+
+const isAllowlistedIncomplete = (key: string) => {
+  if (incompleteAllowlist.has(key)) return true
+  return incompleteAllowlistPatterns.some((pattern) => pattern.test(key))
+}
 
 const collectBlockingIncomplete = (routePath: string, incomplete: ViolationLike[]) => {
   const unresolved: ViolationLike[] = []
@@ -64,7 +72,7 @@ const collectBlockingIncomplete = (routePath: string, incomplete: ViolationLike[
 
     const unresolvedNodes = violation.nodes.filter((node) => {
       const key = `${routePath}|${violation.id}|${toTargetString(node.target)}`
-      return !incompleteAllowlist.has(key)
+      return !isAllowlistedIncomplete(key)
     })
 
     if (unresolvedNodes.length > 0) {
