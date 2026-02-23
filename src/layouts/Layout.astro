@@ -4,9 +4,11 @@ import '../styles/global.css'
 interface Props {
   title: string
   description?: string
+  balancedRails?: boolean
 }
 
-const { title, description = 'Personal website built with Astro' } = Astro.props
+const { title, description = 'Personal website built with Astro', balancedRails = false } =
+  Astro.props
 ---
 
 <!doctype html>
@@ -25,8 +27,22 @@ const { title, description = 'Personal website built with Astro' } = Astro.props
     />
   </head>
   <body>
-    <main>
-      <slot />
-    </main>
+    {balancedRails ? (
+      <main class="page-shell">
+        <aside class="page-rail page-rail-left">
+          <slot name="left-rail" />
+        </aside>
+        <div class="page-content">
+          <slot />
+        </div>
+        <aside class="page-rail page-rail-right" aria-hidden="true">
+          <slot name="right-rail" />
+        </aside>
+      </main>
+    ) : (
+      <main>
+        <slot />
+      </main>
+    )}
   </body>
 </html>

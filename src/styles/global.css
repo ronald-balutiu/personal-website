@@ -36,6 +36,26 @@ main {
   width: 100%;
 }
 
+.page-shell {
+  display: grid;
+  grid-template-columns:
+    minmax(0, var(--layout-rail-width))
+    minmax(0, 1fr)
+    minmax(0, var(--layout-rail-width));
+}
+
+.page-content {
+  min-width: 0;
+}
+
+.page-rail {
+  min-width: 0;
+}
+
+.page-rail-right {
+  pointer-events: none;
+}
+
 /* Common components */
 .section-title {
   text-align: center;

@@ -79,6 +79,8 @@ This file is loaded into every agent session. Keep rules here **short** and **un
   - `npm run test:cross-browser` (full test suite; e2e/a11y on Chromium + Firefox + WebKit)
   - `npm run test` (aggregate)
   - `npm run release` (local pre-commit quality gate)
+- Playwright artifacts:
+  - Save all generated Playwright files (screenshots, traces, videos, logs, reports) under `/playwright_output/`.
 - Minimum pre-PR validation: run `npm run release` successfully.
 
 ## Verification Policy

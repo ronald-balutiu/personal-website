@@ -9,6 +9,7 @@
   --gray-400: #9ca3af;
   --gray-500: #67707f;
   --brown: #5d3a3a;
+  --layout-rail-width: clamp(0rem, 12vw, 14rem);
 
   /* Motion primitives: adjust these first to scale the whole motion system. */
   --motion-ease-standard: ease;

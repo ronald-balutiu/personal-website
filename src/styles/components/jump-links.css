@@ -7,9 +7,11 @@
     var(--motion-delay-base) + var(--motion-sequence-social-jump-step) * var(--motion-stagger-step)
   );
 
-  position: fixed;
-  left: clamp(1rem, 2vw, 2.5rem);
-  top: 50%;
+  position: sticky;
+  top: 50vh;
+  align-self: start;
+  margin-left: clamp(1rem, 2vw, 2.5rem);
+  width: max-content;
   transform: translateY(-50%);
   z-index: 10;
   opacity: 0;
