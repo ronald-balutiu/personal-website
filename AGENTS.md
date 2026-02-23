@@ -57,6 +57,7 @@ This file is loaded into every agent session. Keep rules here **short** and **un
 ### Small / Local Changes (single-file, obvious scope)
 
 - Implement directly with a small, reviewable diff.
+- For short tasks, coding can start on the current checkout, but before creating any commit, create/switch to a dedicated feature branch and commit there.
 - Include how to verify (commands).
 
 ### Multi-file / Risky / Architectural Work
@@ -64,6 +65,7 @@ This file is loaded into every agent session. Keep rules here **short** and **un
 1. Present **1–3 options** with tradeoffs and risks.
 2. Proceed with the best option unless the user must choose.
 3. Work in small, reviewable steps; keep the repo in a clean state.
+4. Because `master` is protected, each new plan/workstream must execute on a new branch (never directly on `master`).
 
 ## Testing Guidelines
 
@@ -151,6 +153,13 @@ Include:
 - Follow Conventional Commits (`feat:`, `fix:`, `chore:`, `build(deps-dev): ...`).
 - Keep each commit scoped to one logical change.
 - Please run `npm run release` before creating a new commit.
+- All commits must be signed; do not create unsigned commits.
+- Do not push commits directly to `master`; use a feature branch and open a PR.
+- Preferred PR flow uses GitHub CLI:
+  - Verify auth first with `gh auth status`.
+  - Push branch with `git push -u origin <branch-name>`.
+  - Open PR with `gh pr create --base master --head <branch-name> --fill` (or explicit `--title`/`--body`).
+  - If `gh` auth is invalid or PR creation fails, stop and alert the user.
 - Commit messages must describe the actual changes; do not reference plan phases or step numbers.
 - PRs should include a short summary, affected files/routes, linked issue (if any), and screenshots for visual updates.
 - Document manual QA steps in the PR description (commands executed and pages checked).
