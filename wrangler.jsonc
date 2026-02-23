@@ -1,5 +1,5 @@
 {
-    "name": "personal-website",
-    "compatibility_date": "2026-02-22",
-    "pages_build_output_dir": "./dist"
+  "name": "personal-website",
+  "compatibility_date": "2026-02-22",
+  "pages_build_output_dir": "./dist",
 }

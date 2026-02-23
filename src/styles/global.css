@@ -99,3 +99,18 @@ main p a[href^='http'] {
 .nav-link {
   text-decoration: none;
 }
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  padding: 0.9rem var(--content-inline-padding) 1.15rem;
+  background-color: var(--background);
+  text-align: center;
+}
+
+.site-footer-text {
+  margin: 0;
+  color: var(--gray-500);
+  font-size: var(--font-size-label-sm);
+  line-height: var(--line-height-normal);
+}
