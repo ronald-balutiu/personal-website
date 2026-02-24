@@ -1,17 +1,15 @@
 ---
 import '../styles/global.css'
+import SEO from '../components/SEO.astro'
+import { buildSeo, type SeoInput } from '../lib/seo'
 
 interface Props {
-  title: string
-  description?: string
+  seo: SeoInput
   balancedRails?: boolean
 }
 
-const {
-  title,
-  description = 'Personal website built with Astro',
-  balancedRails = false,
-} = Astro.props
+const { seo, balancedRails = false } = Astro.props
+const resolvedSeo = buildSeo(seo)
 ---
 
 <!doctype html>
@@ -19,9 +17,8 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <SEO seo={resolvedSeo} />
     <link rel="icon" type="image/svg+xml" href="/assets/laptop.svg" />
-    <meta name="description" content={description} />
-    <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

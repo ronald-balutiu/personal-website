@@ -9,6 +9,12 @@ type ProjectFrontmatter = {
   details: string
   link: string
   icon: string
+  seoTitle?: string
+  seoDescription?: string
+  ogImage?: string
+  ogImageAlt?: string
+  publishedAt?: string
+  updatedAt?: string
 }
 
 type ProjectEntry = {
@@ -18,7 +24,15 @@ type ProjectEntry = {
 }
 
 const requiredKeys = ['title', 'description', 'details', 'link', 'icon'] as const
-const requiredKeySet = new Set<string>(requiredKeys)
+const optionalKeys = [
+  'seoTitle',
+  'seoDescription',
+  'ogImage',
+  'ogImageAlt',
+  'publishedAt',
+  'updatedAt',
+] as const
+const allowedKeySet = new Set<string>([...requiredKeys, ...optionalKeys])
 const projectSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const frontmatterPattern = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/
 
@@ -202,7 +216,7 @@ describe('project content integrity', () => {
 
       for (const key of keys) {
         expect(
-          requiredKeySet.has(key),
+          allowedKeySet.has(key),
           `${fileName} contains unsupported frontmatter key "${key}"`
         ).toBe(true)
       }
