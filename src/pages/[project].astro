@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 import { PROJECT_DETAIL_PAGES_ENABLED } from '../config/features'
+import { siteConfig } from '../config/site'
 
 export async function getStaticPaths() {
   if (!PROJECT_DETAIL_PAGES_ENABLED) {
@@ -12,15 +13,43 @@ export async function getStaticPaths() {
 
   return projects.map((project) => ({
     params: { project: project.slug },
-    props: { project },
+    props: { project, slug: project.slug },
   }))
 }
 
-const { project } = Astro.props
-const { title, description, details, link } = project.data
+const { project, slug } = Astro.props
+const routeSlug = slug ?? project.slug
+const { title, description, details, link, seoTitle, seoDescription, ogImage, ogImageAlt } =
+  project.data
+const pageTitle = seoTitle ?? title
+const pageDescription = seoDescription ?? description
+const projectJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: title,
+  description: pageDescription,
+  url: `${siteConfig.siteUrl}/${routeSlug}`,
+  codeRepository: link,
+  author: {
+    '@type': 'Person',
+    name: 'Ronald Balutiu',
+    url: siteConfig.siteUrl,
+  },
+}
 ---
 
-<Layout title={`Ronald Balutiu | ${title}`}>
+<Layout
+  seo={{
+    pageType: 'project',
+    path: `/${routeSlug}`,
+    title: pageTitle,
+    description: pageDescription,
+    ogType: 'article',
+    ogImage,
+    ogImageAlt: ogImageAlt ?? `${title} project preview`,
+    jsonLd: [projectJsonLd],
+  }}
+>
   <div class="project-container">
     <div class="project-content">
       <h1>{title}</h1>

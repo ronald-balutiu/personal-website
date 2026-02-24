@@ -157,6 +157,7 @@ Include:
 - Do not push commits directly to `master`; use a feature branch and open a PR.
 - Preferred PR flow uses GitHub CLI:
   - Verify auth first with `gh auth status`.
+  - If auth verification fails in the sandbox, retry with escalated privileges before concluding auth is invalid.
   - Push branch with `git push -u origin <branch-name>`.
   - Open PR with `gh pr create --base master --head <branch-name> --fill` (or explicit `--title`/`--body`).
   - After creating the PR, always enable auto-merge using squash: `gh pr merge --auto --squash <pr-number>`.

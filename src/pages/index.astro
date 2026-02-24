@@ -1,13 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import { siteConfig } from '../config/site'
 import Intro from '../components/intro/Intro.astro'
 import About from '../components/about/About.astro'
 import Experience from '../components/experience/Experience.astro'
 import Projects from '../components/projects/Projects.astro'
 import JumpLinks from '../components/JumpLinks.astro'
+
+const homeJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteConfig.siteName,
+    url: siteConfig.siteUrl,
+    inLanguage: siteConfig.language,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Ronald Balutiu',
+    url: siteConfig.siteUrl,
+  },
+]
 ---
 
-<Layout title="Ronald Balutiu | SWE" balancedRails>
+<Layout
+  seo={{
+    pageType: 'home',
+    path: '/',
+    title: siteConfig.defaultTitle,
+    description: siteConfig.defaultDescription,
+    ogType: 'website',
+    jsonLd: homeJsonLd,
+  }}
+  balancedRails
+>
   <JumpLinks slot="left-rail" />
   <Intro />
   <About />
