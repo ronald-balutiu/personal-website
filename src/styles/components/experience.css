@@ -28,7 +28,7 @@
 
 .experience-company {
   margin: 0;
-  font-size: var(--font-size-heading-sm);
+  font-size: var(--font-size-heading-md);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   color: var(--text);
@@ -65,7 +65,7 @@
 
 .experience-role-title {
   font-weight: var(--font-weight-medium);
-  color: var(--text);
+  color: var(--gray-500);
   flex: 1 1 18ch;
   min-width: 0;
 }
