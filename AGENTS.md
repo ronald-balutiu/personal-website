@@ -21,9 +21,10 @@ This file is loaded into every agent session. Keep rules here **short** and **un
 
 ## Start Every Session (“Get bearings”)
 
-1. `git status`
-2. Read `README.md` and `docs/architecture.md` (if present).
-3. Discover the canonical build/test/lint entrypoints (see “Commands” below). If discovered, use them consistently.
+1. `git fetch --prune`
+2. `git status`
+3. Read `README.md` and `docs/architecture.md` (if present).
+4. Discover the canonical build/test/lint entrypoints (see “Commands” below). If discovered, use them consistently.
 
 ## Project Structure & Module Organization
 
@@ -57,6 +58,7 @@ This file is loaded into every agent session. Keep rules here **short** and **un
 ### Small / Local Changes (single-file, obvious scope)
 
 - Implement directly with a small, reviewable diff.
+- For short tasks, coding can start on the current checkout, but before creating any commit, create/switch to a dedicated feature branch and commit there.
 - Include how to verify (commands).
 
 ### Multi-file / Risky / Architectural Work
@@ -64,6 +66,7 @@ This file is loaded into every agent session. Keep rules here **short** and **un
 1. Present **1–3 options** with tradeoffs and risks.
 2. Proceed with the best option unless the user must choose.
 3. Work in small, reviewable steps; keep the repo in a clean state.
+4. Because `master` is protected, each new plan/workstream must execute on a new branch (never directly on `master`).
 
 ## Testing Guidelines
 
@@ -79,6 +82,8 @@ This file is loaded into every agent session. Keep rules here **short** and **un
   - `npm run test:cross-browser` (full test suite; e2e/a11y on Chromium + Firefox + WebKit)
   - `npm run test` (aggregate)
   - `npm run release` (local pre-commit quality gate)
+- Playwright artifacts:
+  - Save all generated Playwright files (screenshots, traces, videos, logs, reports) under `/playwright_output/`.
 - Minimum pre-PR validation: run `npm run release` successfully.
 
 ## Verification Policy
@@ -148,6 +153,18 @@ Include:
 
 - Follow Conventional Commits (`feat:`, `fix:`, `chore:`, `build(deps-dev): ...`).
 - Keep each commit scoped to one logical change.
+- Please run `npm run release` before creating a new commit.
+- All commits must be signed; do not create unsigned commits.
+- Do not push commits directly to `master`; use a feature branch and open a PR.
+- Preferred PR flow uses GitHub CLI:
+  - Verify auth first with `gh auth status`.
+  - Ensure that only changes being pushed in the PR are new commits (ie. nothing already merged into origin/master)
+  - If auth verification fails in the sandbox, retry with escalated privileges before concluding auth is invalid.
+  - Push branch with `git push -u origin <branch-name>`.
+  - Open PR with `gh pr create --base master --head <branch-name> --fill` (or explicit `--title`/`--body`). Ensure that the pr description is written as if it were from my perspective.
+  - After creating the PR, always enable auto-merge using squash: `gh pr merge --auto --squash <pr-number>`.
+  - Do not use rebase auto-merge because `master` requires signed commits.
+  - If `gh` auth is invalid or PR creation fails, stop and alert the user.
 - Commit messages must describe the actual changes; do not reference plan phases or step numbers.
 - PRs should include a short summary, affected files/routes, linked issue (if any), and screenshots for visual updates.
 - Document manual QA steps in the PR description (commands executed and pages checked).

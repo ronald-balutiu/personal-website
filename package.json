@@ -19,7 +19,7 @@
     "test:a11y": "playwright test tests/a11y --config playwright.config.ts --project=chromium --pass-with-no-tests",
     "test:cross-browser": "npm run check && npm run test:unit && playwright test tests/e2e --config playwright.config.ts --project=chromium --project=firefox --project=webkit --pass-with-no-tests && playwright test tests/a11y --config playwright.config.ts --project=chromium --project=firefox --project=webkit --pass-with-no-tests",
     "test": "npm run check && npm run test:unit && npm run test:e2e && npm run test:a11y",
-    "release:ci": "npm run lint:check && npm run format:check && npm run build && npm run test:cross-browser",
+    "release:ci": "npm run astro -- sync && npm run lint:check && npm run format:check && npm run build && npm run test:cross-browser",
     "release": "npm run lint && npm run format && npm run check && npm run build && npm run test"
   },
   "devDependencies": {
@@ -40,6 +40,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "wrangler": "^4.67.0"
   }
 }

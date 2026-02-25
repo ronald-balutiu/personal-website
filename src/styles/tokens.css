@@ -9,6 +9,53 @@
   --gray-400: #9ca3af;
   --gray-500: #67707f;
   --brown: #5d3a3a;
+  --brown-light: #f2e5dc;
+  --white: #ffffff;
+  --transparent: transparent;
+
+  --border-subtle: rgba(31, 41, 55, 0.08);
+  --shadow-ink-soft: rgba(17, 24, 39, 0.08);
+  --shadow-ink-strong: rgba(17, 24, 39, 0.14);
+  --shadow-black-soft: rgba(0, 0, 0, 0.1);
+  --overlay-white-soft: rgba(255, 255, 255, 0.65);
+  --overlay-white-strong: rgba(255, 255, 255, 0.95);
+  --brown-alpha-25: rgba(93, 58, 58, 0.25);
+  --brown-alpha-40: rgba(93, 58, 58, 0.4);
+  --action-primary-bg: #2563eb;
+  --action-primary-bg-hover: #1d4ed8;
+  --action-primary-text: var(--white);
+  /* Rails grow only when there is meaningful extra viewport space. */
+  --layout-rail-width: clamp(0rem, calc((100vw - 72rem) / 2), 14rem);
+  /* Shared section side padding so horizontal spacing scales smoothly. */
+  --content-inline-padding: clamp(1rem, 1.6vw + 0.4rem, 2rem);
+
+  /* Typography scale: use these tokens instead of raw font values in components. */
+  --font-size-display: clamp(2.4rem, 5vw, 3rem);
+  --font-size-intro-description: clamp(1.2rem, 2.5vw, 1.5rem);
+  --font-size-page-title: clamp(2rem, 4vw, 2.5rem);
+  --font-size-page-title-mobile: clamp(1.85rem, 8vw, 2.2rem);
+  --font-size-section-title: clamp(2rem, 3.2vw, 2.25rem);
+  --font-size-heading-md: 1.5rem;
+  --font-size-heading-sm: 1.25rem;
+  --font-size-body-lg: 1.125rem;
+  --font-size-body-md: 1rem;
+  --font-size-body-sm: 0.95rem;
+  --font-size-label-sm: 0.75rem;
+  --font-size-label-xs: 0.7rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+  --line-height-comfy: 1.7;
+
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-wide: 0.1em;
+  --letter-spacing-wider: 0.18em;
 
   /* Motion primitives: adjust these first to scale the whole motion system. */
   --motion-ease-standard: ease;

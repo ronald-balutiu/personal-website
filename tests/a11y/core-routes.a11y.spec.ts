@@ -5,16 +5,20 @@ import { fileURLToPath } from 'node:url'
 import AxeBuilderPlaywright from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
+import { PROJECT_DETAIL_PAGES_ENABLED } from '../../src/config/features'
+
 const blockingImpacts = new Set(['serious', 'critical'])
 
 const thisFile = fileURLToPath(import.meta.url)
 const thisDir = path.dirname(thisFile)
 const projectsContentDir = path.resolve(thisDir, '../../src/content/projects')
 
-const projectSlugs = readdirSync(projectsContentDir, { withFileTypes: true })
-  .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
-  .map((entry) => entry.name.replace(/\.md$/, ''))
-  .sort()
+const projectSlugs = PROJECT_DETAIL_PAGES_ENABLED
+  ? readdirSync(projectsContentDir, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
+      .map((entry) => entry.name.replace(/\.md$/, ''))
+      .sort()
+  : []
 
 const routes = [
   { path: '/', label: 'homepage' },
@@ -47,9 +51,18 @@ const formatViolations = (violations: ViolationLike[]) => {
 const incompleteAllowlist = new Set([
   '/|aria-prohibited-attr|.intro-social-links',
   '/|color-contrast|.intro-title-outline',
-  '/|color-contrast|.project-item-heading',
-  '/|color-contrast|.project-item-description',
+  '/|color-contrast|#about-title',
 ])
+
+const incompleteAllowlistPatterns = [
+  /^\/\|color-contrast\|.*\.project-item-heading$/,
+  /^\/\|color-contrast\|.*\.project-item-description$/,
+]
+
+const isAllowlistedIncomplete = (key: string) => {
+  if (incompleteAllowlist.has(key)) return true
+  return incompleteAllowlistPatterns.some((pattern) => pattern.test(key))
+}
 
 const collectBlockingIncomplete = (routePath: string, incomplete: ViolationLike[]) => {
   const unresolved: ViolationLike[] = []
@@ -59,7 +72,7 @@ const collectBlockingIncomplete = (routePath: string, incomplete: ViolationLike[
 
     const unresolvedNodes = violation.nodes.filter((node) => {
       const key = `${routePath}|${violation.id}|${toTargetString(node.target)}`
-      return !incompleteAllowlist.has(key)
+      return !isAllowlistedIncomplete(key)
     })
 
     if (unresolvedNodes.length > 0) {

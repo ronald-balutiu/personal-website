@@ -1,5 +1,5 @@
 .about-section {
-  padding: 0 2rem clamp(2.5rem, 3vw, 3rem);
+  padding: 0 var(--content-inline-padding) clamp(2.5rem, 3vw, 3rem);
   background-color: var(--background);
 }
 
@@ -10,8 +10,9 @@
 }
 
 .about-text {
-  font-size: 1.125rem;
-  line-height: 1.7;
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-comfy);
+  font-weight: var(--font-weight-regular);
   color: var(--text);
   margin: 0 0 1.5rem;
 }

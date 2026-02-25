@@ -1,0 +1,36 @@
+---
+import type { ResolvedSeo } from '../lib/seo'
+
+interface Props {
+  seo: ResolvedSeo
+}
+
+const { seo } = Astro.props
+---
+
+<title>{seo.title}</title>
+<meta name="description" content={seo.description} />
+<link rel="canonical" href={seo.canonical} />
+<meta name="robots" content={seo.robots} />
+<meta name="theme-color" content={seo.themeColor} />
+
+<meta property="og:type" content={seo.og.type} />
+<meta property="og:title" content={seo.og.title} />
+<meta property="og:description" content={seo.og.description} />
+<meta property="og:url" content={seo.og.url} />
+<meta property="og:site_name" content={seo.og.siteName} />
+<meta property="og:image" content={seo.og.image} />
+<meta property="og:image:alt" content={seo.og.imageAlt} />
+<meta property="og:locale" content={seo.og.locale} />
+
+<meta name="twitter:card" content={seo.twitter.card} />
+<meta name="twitter:title" content={seo.twitter.title} />
+<meta name="twitter:description" content={seo.twitter.description} />
+<meta name="twitter:image" content={seo.twitter.image} />
+<meta name="twitter:image:alt" content={seo.twitter.imageAlt} />
+
+{
+  seo.jsonLd.map((item) => (
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(item)} />
+  ))
+}
