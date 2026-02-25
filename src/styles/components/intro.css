@@ -13,7 +13,7 @@
   --intro-motion-immediate-duration: var(--motion-duration-fast);
   --intro-motion-immediate-delay: 0s;
 
-  height: calc(100vh - 2rem);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -21,9 +21,10 @@ This file is loaded into every agent session. Keep rules here **short** and **un
 
 ## Start Every Session (“Get bearings”)
 
-1. `git status`
-2. Read `README.md` and `docs/architecture.md` (if present).
-3. Discover the canonical build/test/lint entrypoints (see “Commands” below). If discovered, use them consistently.
+1. `git fetch --prune`
+2. `git status`
+3. Read `README.md` and `docs/architecture.md` (if present).
+4. Discover the canonical build/test/lint entrypoints (see “Commands” below). If discovered, use them consistently.
 
 ## Project Structure & Module Organization
 
