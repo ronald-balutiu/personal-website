@@ -1,64 +1,7 @@
 ---
-const toParagraphs = (text: string) =>
-  text
-    .trim()
-    .split(/\n\s*\n/g)
-    .map((paragraph: string) => paragraph.replace(/\s*\n\s*/g, ' ').trim())
-    .filter(Boolean)
+import { getCollection } from 'astro:content'
 
-const experiences = [
-  {
-    company: 'Amazon',
-    locations: ['New York, NY', 'Seattle, WA'],
-    roles: [
-      {
-        title: 'Software Engineer II (L5)',
-        dateRange: 'Apr 2022 – Present',
-      },
-      {
-        title: 'Software Engineer I (L4)',
-        dateRange: 'Aug 2020 – Apr 2022',
-      },
-    ],
-    highlights: `
-      Currently I work on the Native Commerce Ads (NCA) team where I build ad products for creators and publishers. 
-      For the creators launch, I developed the personalized recommendations pipeline, partnering closely with data scientists to productionalize a model for ad recommendations at scale. 
-      I also optimized keyword search in an existing advertising API by tuning both OpenSearch and DAX clusters and re-architecting clients with asynchronous, thread-safe queries. 
-      That work reduced latency by about 90% and improved reliability for high-volume ad-serving flows.
-
-      Previously on Amazon Payments, I spearheaded the engineering delivery for Seller Wallet's Third-Party Payments expansion in Europe, coordinating product, security, compliance, and payments stakeholders across regions.
-      For the U.S. Third-Party Payments launch, I defined and delivered core onboarding, screening, enforcement, and UI workflows, including a real-time enforcement mechanism to freeze funds in accordance with U.S. regulations.
-      Additionally, for this launch, I modernized a critical Payments Security backend by strengthening cryptographic functions and removing insecure components affecting downstream services.
-      Early in my career I established Seller Wallet's UI using micro-frontends, kicking off my career as a full-stack engineer.
-    `,
-  },
-  {
-    company: 'Visa',
-    locations: ['Austin, TX'],
-    roles: [
-      {
-        title: 'Software Engineering Intern',
-        dateRange: 'Jun 2019 – Sep 2019',
-      },
-    ],
-    highlights: `
-      As part of the Client Engineering team, I built a monitoring dashboard to track system health across 100+ internal systems, developed VisaGo (an internal link shortener), and created security and compliance automation for thousands of Macs. This work increased system visibility and helped enforce security standards across Visa's Mac fleet.
-    `,
-  },
-  {
-    company: 'University of Chicago',
-    locations: ['Chicago, IL'],
-    roles: [
-      {
-        title: 'CSIL System Administrator',
-        dateRange: 'May 2018 – Jun 2020',
-      },
-    ],
-    highlights: `
-      I supported daily operations for 65+ Mac lab machines used by thousands of students. I built and maintained the fleet's Mojave image using Jenkins and Ansible, and led infrastructure updates for imaging, backups, and web hosting.
-    `,
-  },
-]
+const experiences = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order)
 ---
 
 <section id="experience" class="experience-section" aria-labelledby="experience-title">
@@ -66,14 +9,14 @@ const experiences = [
     <h2 id="experience-title" class="section-title">Experience</h2>
     <div class="experience-list">
       {
-        experiences.map((company) => (
+        experiences.map((entry) => (
           <article class="experience-item">
             <header class="experience-company-row">
-              <h3 class="experience-company">{company.company}</h3>
-              <p class="experience-locations">{company.locations.join(' / ')}</p>
+              <h3 class="experience-company">{entry.data.company}</h3>
+              <p class="experience-locations">{entry.data.locations.join(' / ')}</p>
             </header>
-            <ul class="experience-roles" aria-label={`${company.company} roles`}>
-              {company.roles.map((role) => (
+            <ul class="experience-roles" aria-label={`${entry.data.company} roles`}>
+              {entry.data.roles.map((role) => (
                 <li class="experience-role-row">
                   <span class="experience-role-title">{role.title}</span>
                   <span class="experience-role-dates">{role.dateRange}</span>
@@ -81,10 +24,17 @@ const experiences = [
               ))}
             </ul>
             <div class="experience-summary">
-              {toParagraphs(company.highlights).map((paragraph) => (
+              {entry.data.highlights.map((paragraph) => (
                 <p class="experience-summary-paragraph">{paragraph}</p>
               ))}
             </div>
+            {entry.data.technologies.length > 0 && (
+              <ul class="experience-tech-list" aria-label={`${entry.data.company} technologies`}>
+                {entry.data.technologies.map((technology) => (
+                  <li class="experience-tech-chip">{technology}</li>
+                ))}
+              </ul>
+            )}
           </article>
         ))
       }

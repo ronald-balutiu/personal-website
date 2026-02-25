@@ -42,6 +42,7 @@ Production portfolio website built with Astro as a static web app. The codebase 
 |   |   `-- site.ts
 |   |-- content/
 |   |   |-- config.ts
+|   |   |-- experience/*.md
 |   |   `-- projects/*.md
 |   |-- layouts/Layout.astro
 |   |-- lib/seo.ts
