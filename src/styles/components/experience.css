@@ -92,3 +92,25 @@
 .experience-summary-paragraph {
   margin: 0;
 }
+
+.experience-tech-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.experience-tech-chip {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--brown);
+  color: var(--brown-light);
+  font-size: var(--font-size-label-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
