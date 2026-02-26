@@ -161,7 +161,7 @@ Include:
   - Ensure that only changes being pushed in the PR are new commits (ie. nothing already merged into origin/master)
   - If auth verification fails in the sandbox, retry with escalated privileges before concluding auth is invalid.
   - Push branch with `git push -u origin <branch-name>`.
-  - Open PR with `gh pr create --base master --head <branch-name> --fill` (or explicit `--title`/`--body`). Ensure that the pr description is written as if it were from my perspective.
+  - Open PR with `gh pr create --base master --head <branch-name> --fill` (or explicit `--title`/`--body`). Ensure that the pr description is written as if it were from my perspective, but avoid "I". Instead of "I updated" simply say "updated".
   - After creating the PR, always enable auto-merge using squash: `gh pr merge --auto --squash <pr-number>`.
   - Do not use rebase auto-merge because `master` requires signed commits.
   - If `gh` auth is invalid or PR creation fails, stop and alert the user.

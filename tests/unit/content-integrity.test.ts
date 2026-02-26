@@ -4,6 +4,7 @@ import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 type ProjectFrontmatter = {
+  order: string
   title: string
   description: string
   details: string
@@ -23,7 +24,7 @@ type ProjectEntry = {
   frontmatter: ProjectFrontmatter
 }
 
-const requiredKeys = ['title', 'description', 'details', 'link', 'icon'] as const
+const requiredKeys = ['order', 'title', 'description', 'details', 'link', 'icon'] as const
 const optionalKeys = [
   'seoTitle',
   'seoDescription',
@@ -226,8 +227,16 @@ describe('project content integrity', () => {
   it('uses valid non-empty text values and HTTPS/HTTP links', () => {
     const seenTitles = new Set<string>()
     const seenLinks = new Set<string>()
+    const seenOrders = new Set<number>()
 
     for (const { fileName, frontmatter } of entries) {
+      const parsedOrder = Number(frontmatter.order)
+      expect(Number.isInteger(parsedOrder), `${fileName} order must be an integer`).toBe(true)
+      expect(parsedOrder >= 0, `${fileName} order must be non-negative`).toBe(true)
+      expect(seenOrders.has(parsedOrder), `Duplicate project order found: "${parsedOrder}"`).toBe(
+        false
+      )
+
       expect(frontmatter.title.trim(), `${fileName} title must be non-empty`).not.toBe('')
       expect(frontmatter.description.trim(), `${fileName} description must be non-empty`).not.toBe(
         ''
@@ -258,6 +267,7 @@ describe('project content integrity', () => {
 
       seenTitles.add(frontmatter.title)
       seenLinks.add(frontmatter.link)
+      seenOrders.add(parsedOrder)
     }
   })
 

@@ -36,7 +36,7 @@
 
 .experience-locations {
   margin: 0;
-  font-size: var(--font-size-body-sm);
+  font-size: var(--font-size-body-md);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-normal);
   color: var(--gray-500);
@@ -71,7 +71,7 @@
 }
 
 .experience-role-dates {
-  font-size: var(--font-size-body-sm);
+  font-size: var(--font-size-body-md);
   font-weight: var(--font-weight-regular);
   color: var(--gray-500);
   margin-left: auto;
