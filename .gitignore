@@ -22,6 +22,6 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# Agent planning docs
+# Local planning notes; maintained documentation under docs/ remains versioned
 PLAN.md
-/docs
+/docs/*-plan/
