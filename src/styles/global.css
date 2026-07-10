@@ -33,12 +33,6 @@ main {
   margin-inline: auto;
 }
 
-.home-page {
-  opacity: 0;
-  transform: translateY(0.5rem);
-  animation: home-enter var(--home-fade-duration) var(--motion-ease-standard) forwards;
-}
-
 /* Common components */
 .section-title {
   font-size: var(--font-size-section-title);
@@ -76,6 +70,7 @@ main p a[href^='http'] {
 
 .site-footer-text {
   margin: 0;
+  text-align: center;
   color: var(--color-text-muted);
   font-size: var(--font-size-label-sm);
   line-height: var(--line-height-normal);
@@ -84,18 +79,5 @@ main p a[href^='http'] {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .home-page {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-}
-
-@keyframes home-enter {
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

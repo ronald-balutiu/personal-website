@@ -2,7 +2,8 @@
   display: grid;
   grid-template-areas:
     'primary portrait'
-    'details portrait';
+    'details portrait'
+    'socials portrait';
   grid-template-columns: minmax(0, 1fr) minmax(18rem, var(--portrait-width));
   grid-template-rows: auto 1fr;
   column-gap: var(--hero-column-gap);
@@ -49,11 +50,22 @@
   margin: 1.5rem 0 0;
 }
 
+.intro-description,
+.intro-portrait,
+.intro-about-details,
 .intro-social-links {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  animation: content-enter var(--home-reveal-duration) var(--motion-ease-standard)
+    var(--home-reveal-delay) forwards;
+}
+
+.intro-social-links {
+  grid-area: socials;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem clamp(1.25rem, 3vw, 2.5rem);
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .intro-social-link {
@@ -92,8 +104,7 @@
   -webkit-mask: url('/assets/peace.svg') center / contain no-repeat;
   mask: url('/assets/peace.svg') center / contain no-repeat;
   transform: rotate(12deg);
-  animation: peace-tilt var(--home-tilt-duration) var(--motion-ease-standard)
-    var(--home-fade-duration) both;
+  animation: peace-tilt var(--home-tilt-duration) var(--motion-ease-standard) both;
 }
 
 .intro-portrait {
@@ -129,7 +140,7 @@
 
 @media (max-width: 63.9375rem) {
   .intro {
-    grid-template-areas: 'primary' 'portrait' 'details';
+    grid-template-areas: 'primary' 'portrait' 'details' 'socials';
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto;
     max-width: 46rem;
@@ -143,6 +154,7 @@
 
   .intro-social-links {
     justify-content: center;
+    margin-top: 0.75rem;
   }
 
   .intro-portrait {
@@ -189,8 +201,21 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-peace-icon {
+  .intro-peace-icon,
+  .intro-description,
+  .intro-portrait,
+  .intro-about-details,
+  .intro-social-links {
+    opacity: 1;
+    transform: none;
     animation: none;
+  }
+}
+
+@keyframes content-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

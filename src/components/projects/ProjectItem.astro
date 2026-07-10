@@ -11,15 +11,16 @@ const { href, icon, title, description, external = false } = Astro.props
 ---
 
 <article class="project-item">
-  <img class="project-item-icon" src={icon} alt="" loading="lazy" />
-  <div class="project-item-copy">
-    <h3 class="project-item-heading">{title}</h3>
-    <p class="project-item-description">{description}</p>
-  </div>
   <a
     href={href}
     class="project-item-link"
     target={external ? '_blank' : undefined}
-    rel={external ? 'noopener noreferrer' : undefined}>{external ? 'GitHub ↗' : 'View project'}</a
+    rel={external ? 'noopener noreferrer' : undefined}
   >
+    <img class="project-item-icon" src={icon} alt="" loading="lazy" />
+    <div class="project-item-copy">
+      <h3 class="project-item-heading">{title}</h3>
+      <p class="project-item-description">{description}</p>
+    </div>
+  </a>
 </article>

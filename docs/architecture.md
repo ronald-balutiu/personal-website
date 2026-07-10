@@ -22,7 +22,9 @@ Astro Content Collection.
 - `src/components/theme/ThemeToggle.astro` provides the in-memory theme toggle.
 
 The homepage is organized into a responsive hero and a project list. The hero contains the greeting,
-About copy, social links, and optimized portrait in a single semantic section.
+About copy, social links, and optimized portrait in a single semantic section. The greeting and hand
+appear first; the remaining content enters after the hand animation. Each project row is a complete
+clickable target with hover and keyboard-focus feedback.
 
 ## Content Model
 

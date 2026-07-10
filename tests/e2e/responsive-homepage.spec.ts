@@ -15,7 +15,7 @@ const expectNoHorizontalOverflow = async (page: Page) => {
 }
 
 test.describe('responsive homepage structure', () => {
-  test('desktop uses a two-column hero and final project-link column', async ({ page }) => {
+  test('desktop uses a two-column hero with socials below all copy', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 853 })
     await page.goto('/')
 
@@ -24,12 +24,10 @@ test.describe('responsive homepage structure', () => {
     const socials = await getBox(page.locator('.intro-social-links'))
     const details = await getBox(page.locator('.intro-about-details'))
     expect(portrait.x).toBeGreaterThan(primary.x + primary.width)
-    expect(details.y).toBeGreaterThan(socials.y + socials.height)
+    expect(socials.y).toBeGreaterThan(details.y + details.height)
     expect(details.x).toBeLessThan(portrait.x)
-
-    const description = await getBox(page.locator('.project-item-description').first())
-    const link = await getBox(page.locator('.project-item-link').first())
-    expect(link.x).toBeGreaterThan(description.x)
+    await expect(page.locator('.project-item-link').first()).toHaveAttribute('href', /^https?:\/\//)
+    await expect(page.getByText('GitHub ↗')).toHaveCount(0)
     await expectNoHorizontalOverflow(page)
   })
 
@@ -44,11 +42,13 @@ test.describe('responsive homepage structure', () => {
       const primary = await getBox(page.locator('.intro-primary'))
       const portrait = await getBox(page.locator('.intro-portrait'))
       const details = await getBox(page.locator('.intro-about-details'))
+      const socials = await getBox(page.locator('.intro-social-links'))
       const projects = await getBox(page.locator('.projects-section'))
       expect(portrait.y).toBeGreaterThan(primary.y + primary.height)
       expect(portrait.width).toBeGreaterThan(portrait.height)
       expect(details.y).toBeGreaterThan(portrait.y + portrait.height)
-      expect(projects.y).toBeGreaterThanOrEqual(details.y + details.height - 1)
+      expect(socials.y).toBeGreaterThan(details.y + details.height)
+      expect(projects.y).toBeGreaterThanOrEqual(socials.y + socials.height - 1)
 
       const links = page.locator('.intro-social-link')
       const linkBoxes = await Promise.all(
@@ -61,18 +61,28 @@ test.describe('responsive homepage structure', () => {
     })
   }
 
-  test('phone project links follow their descriptions', async ({ page }) => {
+  test('project rows are complete clickable targets', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
     await page.goto('/')
-    const description = await getBox(page.locator('.project-item-description').first())
-    const link = await getBox(page.locator('.project-item-link').first())
-    expect(link.y).toBeGreaterThan(description.y + description.height)
+    const row = page.locator('.project-item-link').first()
+    await expect(row).toContainText('Personal Website')
+    await expect(row).toContainText('A side project')
+    await expect(row).toHaveAttribute('href', /^https?:\/\//)
   })
+})
+
+test('entrance motion stages the title before the remaining content', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.locator('.intro-title')).toHaveCSS('opacity', '1')
+  await expect(page.locator('.intro-peace-icon')).toHaveCSS('animation-name', 'peace-tilt')
+  await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'content-enter')
+  await expect(page.locator('.projects-section')).toHaveCSS('animation-name', 'projects-enter')
 })
 
 test('entrance motion respects reduced-motion preferences', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/')
-  await expect(page.locator('.home-page')).toHaveCSS('animation-name', 'none')
   await expect(page.locator('.intro-peace-icon')).toHaveCSS('animation-name', 'none')
+  await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'none')
+  await expect(page.locator('.projects-section')).toHaveCSS('animation-name', 'none')
 })

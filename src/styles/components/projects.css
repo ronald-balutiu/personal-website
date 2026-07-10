@@ -1,5 +1,24 @@
 .projects-section {
   padding: clamp(3.5rem, 7vw, 5.5rem) 0 1.5rem;
+  opacity: 0;
+  transform: translateY(0.75rem);
+  animation: projects-enter var(--home-reveal-duration) var(--motion-ease-standard)
+    var(--home-reveal-delay) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-section {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+@keyframes projects-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .projects-section .section-title {
@@ -13,12 +32,27 @@
 }
 
 .project-item {
+  border-top: 1px solid var(--color-accent-line);
+}
+
+.project-item-link {
   display: grid;
-  grid-template-columns: var(--project-icon-width) minmax(0, 1fr) auto;
+  grid-template-columns: var(--project-icon-width) minmax(0, 1fr);
   gap: clamp(1.25rem, 4vw, 3.5rem);
   align-items: center;
   padding: 1rem 0;
-  border-top: 1px solid var(--color-accent-line);
+  color: var(--color-text);
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.project-item-link:hover {
+  background-color: var(--color-accent-soft);
+  box-shadow: 0 8px 20px var(--color-shadow-soft);
+  transform: translateY(-0.2rem);
 }
 
 .project-item-icon {
@@ -46,15 +80,6 @@
   line-height: var(--line-height-normal);
 }
 
-.project-item-link {
-  grid-column: 3;
-  align-self: center;
-  color: var(--color-accent);
-  font-weight: var(--font-weight-medium);
-  text-underline-offset: 0.3em;
-  white-space: nowrap;
-}
-
 .project-item-link:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 4px;
@@ -62,13 +87,12 @@
 
 @media (max-width: 39.9375rem) {
   .project-item {
-    grid-template-columns: minmax(4.5rem, var(--project-icon-width-mobile)) minmax(0, 1fr);
-    gap: 1rem;
-    align-items: start;
+    gap: 0;
   }
 
   .project-item-link {
-    grid-column: 2;
-    margin-top: 0.7rem;
+    grid-template-columns: minmax(4.5rem, var(--project-icon-width-mobile)) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
   }
 }

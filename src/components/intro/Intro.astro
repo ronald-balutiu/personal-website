@@ -39,28 +39,6 @@ const socialLinks = [
       accessible user experiences where complex and critical workflows become reliable and intuitive
       to use.
     </p>
-    <nav class="intro-social-links" aria-label="Social links">
-      {
-        socialLinks.map(({ name, url, icon }) => (
-          <a
-            href={url}
-            target={url.startsWith('http') ? '_blank' : undefined}
-            rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
-            class="intro-social-link"
-          >
-            <img
-              src={icon}
-              alt=""
-              class="intro-social-icon"
-              loading="eager"
-              fetchpriority="high"
-              aria-hidden="true"
-            />
-            <span>{name}</span>
-          </a>
-        ))
-      }
-    </nav>
   </div>
   <figure class="intro-portrait">
     <Image
@@ -99,4 +77,26 @@ const socialLinks = [
       find endlessly interesting.
     </p>
   </div>
+  <nav class="intro-social-links" aria-label="Social links">
+    {
+      socialLinks.map(({ name, url, icon }) => (
+        <a
+          href={url}
+          target={url.startsWith('http') ? '_blank' : undefined}
+          rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
+          class="intro-social-link"
+        >
+          <img
+            src={icon}
+            alt=""
+            class="intro-social-icon"
+            loading="eager"
+            fetchpriority="high"
+            aria-hidden="true"
+          />
+          <span>{name}</span>
+        </a>
+      ))
+    }
+  </nav>
 </section>

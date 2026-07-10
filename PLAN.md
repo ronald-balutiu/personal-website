@@ -22,9 +22,8 @@ No broad folder reorganization is required.
 - Continue using the current social, peace-hand, and project SVGs where applicable.
 - Preserve all four current About paragraphs. Keep the first paragraph in the primary introduction
   and render the remaining three as a secondary About-details block.
-- On desktop, place the secondary About-details block below the four social links in the left column.
-- On tablet and phone, place the portrait after the social links and the secondary About-details block
-  immediately below the portrait.
+- Place the four social links after all About copy at every viewport. On desktop they are the final
+  row of the left text column; on tablet and phone they follow paragraphs 2-4 below the portrait.
 - Use the full-name greeting `Hello, I'm Ronald Balutiu.` while preserving the current name treatment:
   `Ronald` is filled and `Balutiu` is outlined.
 - Preserve the current DM Sans font throughout the redesigned homepage.
@@ -35,17 +34,18 @@ No broad folder reorganization is required.
   pixel-for-pixel reproduction.
 - Remove the Experience section because it is no longer needed.
 - Replace the current full-viewport intro with the compact layout shown in the mocks.
-- On entry, fade in the homepage content and then run the peace-hand's current tilt movement.
+- On entry, show the greeting and peace hand immediately, run the hand's current tilt movement, then
+  float the remaining homepage content into view.
 - Preserve Astro's static-output model and avoid unnecessary client-side JavaScript.
 - Keep the resulting component, content, style, test, and documentation structure clear and maintainable.
 
 ## Responsive Layout Specification
 
-| Viewport                     | Hero                                               | Social links                          | Photo and remaining About copy                                                                      | Projects                                                    |
-| ---------------------------- | -------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| Phone, below roughly `640px` | Single column and left-aligned                     | 2x2 grid with visible labels          | Landscape photo, approximately `16 / 10`, followed immediately by About paragraphs 2-4              | Icon on the left; title, description, and link on the right |
-| Tablet, `640px-1023px`       | Single centered column                             | One horizontal row                    | Full-width landscape photo, approximately `16 / 9`, followed immediately by About paragraphs 2-4    | Icon, copy, and GitHub link in three columns                |
-| Desktop, `1024px+`           | Primary copy on the left and portrait on the right | One horizontal row in the left column | Portrait, approximately `3 / 4`; About paragraphs 2-4 sit below the social links in the left column | Full-width rows below the complete hero                     |
+| Viewport                     | Hero                                               | Social links                      | Photo and remaining About copy                                                                   | Projects                                                    |
+| ---------------------------- | -------------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| Phone, below roughly `640px` | Single column and left-aligned                     | 2x2 grid with visible labels      | Landscape photo, approximately `16 / 10`, followed immediately by About paragraphs 2-4           | Icon on the left; title, description, and link on the right |
+| Tablet, `640px-1023px`       | Single centered column                             | One horizontal row after all copy | Full-width landscape photo, approximately `16 / 9`, followed immediately by About paragraphs 2-4 | Full-row clickable entries                                  |
+| Desktop, `1024px+`           | Primary copy on the left and portrait on the right | One horizontal row after all copy | Portrait, approximately `3 / 4`; About paragraphs 2-4 sit below paragraph 1 in the left column   | Full-row clickable entries below the complete hero          |
 
 Use content-driven breakpoints rather than device detection. Validate the implementation against the
 mock dimensions of 607x1280, 853x1280, and 1280x853.
@@ -131,10 +131,9 @@ Update `src/components/intro/Intro.astro` so it owns the complete hero:
 - Place the decorative, `aria-hidden` peace-hand mask before the greeting text, following the mocks.
   Keep it within the heading layout so it scales and wraps with the title without creating a second
   heading or duplicate accessible text.
-- Use a DOM order of primary introduction, portrait, secondary About details. Keep the social nav
-  inside the primary introduction after the first paragraph. This source order matches tablet and
-  phone; desktop CSS Grid will place the secondary details below the social nav in the left column
-  without duplicating content or changing DOM order with JavaScript.
+- Use a DOM order of primary introduction, portrait, secondary About details, then social nav. This
+  source order matches tablet and phone; desktop CSS Grid keeps the portrait on the right while the
+  remaining content forms the complete left column without duplication or JavaScript reordering.
 
 Target semantic structure:
 
@@ -143,7 +142,6 @@ Target semantic structure:
   <div class="intro-primary">
     <h1 id="intro-title">...</h1>
     <p class="intro-description">About paragraph 1</p>
-    <nav class="intro-social-links" aria-label="Social links">...</nav>
   </div>
   <figure class="intro-portrait">...</figure>
   <div class="intro-about-details">
@@ -151,6 +149,7 @@ Target semantic structure:
     <p>About paragraph 3</p>
     <p>About paragraph 4</p>
   </div>
+  <nav class="intro-social-links" aria-label="Social links">...</nav>
 </section>
 ```
 
@@ -176,7 +175,7 @@ For the portrait:
 Move all four paragraphs from `src/components/about/About.astro` into the hero.
 
 - Preserve every paragraph verbatim unless a copy change is explicitly approved.
-- Keep the first paragraph in `.intro-primary`, between the heading and social nav.
+- Keep the first paragraph in `.intro-primary`, below the heading.
 - Put paragraphs 2-4, in their current order, inside `.intro-about-details`.
 - Preserve strong emphasis around company and university names.
 - Preserve the Seller Wallet external link and its external-link safety attributes.
@@ -202,13 +201,12 @@ Desktop behavior:
 
 - Use CSS Grid with named areas and a flexible left column plus a roughly `18rem-22rem` portrait
   column.
-- Assign `.intro-primary` and `.intro-about-details` to the left column, with the details immediately
-  below the social links. Assign `.intro-portrait` to the right column.
+- Assign `.intro-primary`, `.intro-about-details`, and `.intro-social-links` to the left column in that
+  order. Assign `.intro-portrait` to the right column.
 - Use grid areas equivalent to `primary portrait` followed by `details portrait`; allow the portrait
   to span both rows.
 - Use a generous but bounded column gap.
-- Keep the social nav visually attached to the first paragraph and use a smaller vertical gap before
-  the secondary About details than the gap before the Projects section.
+- Keep the social nav visually attached to the end of the secondary About details.
 - Keep the image ratio near `3 / 4`.
 - Let the hero's height be determined by the taller of the portrait or complete left-column copy so
   Projects never overlap either one.
@@ -218,7 +216,7 @@ Tablet behavior:
 - Switch to one column.
 - Center the heading and social row.
 - Keep paragraph text left-aligned for readability.
-- Place the landscape image after the social links.
+- Place the landscape image after the first paragraph, and the social links after paragraphs 2-4.
 - Place `.intro-about-details` immediately below the image, before Projects.
 
 Phone behavior:
@@ -270,15 +268,14 @@ Update `src/components/projects/Projects.astro`:
 
 Update `src/components/projects/ProjectItem.astro`:
 
-- Replace the whole-card anchor with an `<article>` containing:
+- Use an `<article>` containing a full-row anchor with:
   - the decorative project icon;
   - an `<h3>` title;
   - the description; and
-  - an explicit `GitHub` or `View project` link with an external-link indicator.
 - Keep `/assets/laptop.svg` and `/assets/sudoku.svg`.
 - Keep the icon `alt=""` because the adjacent heading names the project.
 - Preserve external-link safety attributes on HTTP links.
-- Give the explicit link a clear focus state.
+- Give the full-row link clear hover and focus states.
 
 Rewrite `src/styles/components/projects.css`:
 
@@ -296,17 +293,15 @@ homepage presentation.
 
 Implement this CSS-driven sequence:
 
-1. The name, all four About paragraphs, social links, portrait, and projects fade in together with a
-   subtle upward translation.
-2. When the fade finishes, the peace hand performs its current movement, approximately
-   `12deg -> 24deg -> 12deg`.
-3. The hand remains at its final resting angle.
+1. The greeting and peace hand are visible immediately.
+2. The peace hand performs its current movement, approximately `12deg -> 24deg -> 12deg`.
+3. When the hand movement finishes, the About copy, portrait, social links, and projects fade and
+   float upward into view together.
 
 Implementation details:
 
-- Apply the shared fade to the homepage wrapper instead of assigning separate delays to each element.
-- Keep the hand movement as a separate animation whose delay equals the fade duration.
-- Align the theme-toggle fade timing with the homepage entrance so it does not appear much later.
+- Reuse shared reveal timing tokens across the content groups and projects.
+- Keep the hand movement separate and use its duration as the reveal delay.
 - Do not add JavaScript solely for animation.
 - Under `prefers-reduced-motion: reduce`, show all content immediately and disable the hand movement
   and translation.
@@ -390,17 +385,16 @@ Revise the homepage route smoke test to assert:
 Add responsive homepage tests at desktop, tablet, and phone widths using relative layout assertions:
 
 - The desktop portrait is to the right of the introduction.
-- On desktop, the secondary About-details block is in the left column below the social nav.
+- On desktop, the social nav is in the left column below the secondary About-details block.
 - Tablet and phone portraits are below the introduction and wider than tall.
 - On tablet and phone, the secondary About-details block is below the portrait and above Projects.
 - Phone social links form two rows.
-- Desktop and tablet project links occupy the final column.
-- Phone project links sit below their descriptions.
+- Every project row is one complete clickable link with hover and keyboard-focus feedback.
 - No viewport has horizontal overflow.
 
 Add motion coverage:
 
-- Normal motion exposes both the homepage fade and hand-tilt animations.
+- Normal motion exposes the hand-tilt animation followed by the content reveal animation.
 - Reduced-motion mode renders the homepage immediately with no animation.
 
 Extend accessibility coverage to include a tablet viewport and retain light- and dark-theme checks.
@@ -434,7 +428,7 @@ The redesign is complete when:
 - All four About paragraphs are preserved, with responsive ordering matching this plan.
 - Experience, the separate About section, rails, and jump-link dead code are gone.
 - The three responsive structures match the mocks.
-- Entrance motion follows the fade-then-hand sequence.
+- Entrance motion follows the hand-then-content-reveal sequence.
 - Reduced-motion users receive an immediate, static page.
 - Keyboard focus, external-link behavior, and semantic headings remain accessible.
 - `npm run release` completes successfully.
