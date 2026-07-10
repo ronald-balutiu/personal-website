@@ -2,6 +2,7 @@
 import '../styles/global.css'
 import SEO from '../components/SEO.astro'
 import ThemeToggle from '../components/theme/ThemeToggle.astro'
+import { siteConfig } from '../config/site'
 import { buildSeo, type SeoInput } from '../lib/seo'
 
 interface Props {
@@ -11,10 +12,11 @@ interface Props {
 
 const { seo, balancedRails = false } = Astro.props
 const resolvedSeo = buildSeo(seo)
+const currentYear = new Date().getFullYear()
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={siteConfig.language}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -44,7 +46,7 @@ const resolvedSeo = buildSeo(seo)
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Coustard:wght@400;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -69,7 +71,7 @@ const resolvedSeo = buildSeo(seo)
       )
     }
     <footer class="site-footer">
-      <p class="site-footer-text">© 2026 Ronald Balutiu. All rights reserved.</p>
+      <p class="site-footer-text">© {currentYear} Ronald Balutiu. All rights reserved.</p>
     </footer>
     <ThemeToggle />
   </body>

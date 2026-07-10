@@ -116,6 +116,14 @@
   animation-fill-mode: forwards;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .jump-links.fade-fast,
+  .jump-links.fade-slow {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 @keyframes jump-links-fade {
   from {
     opacity: 0;
