@@ -294,7 +294,7 @@ homepage presentation.
 Implement this CSS-driven sequence:
 
 1. The greeting and peace hand are visible immediately.
-2. The peace hand performs its current movement, approximately `12deg -> 24deg -> 12deg`.
+2. The peace hand performs its current movement, approximately `17deg -> 29deg -> 17deg`.
 3. When the hand movement finishes, the About copy, portrait, social links, and projects fade and
    float upward into view together.
 

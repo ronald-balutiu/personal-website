@@ -103,7 +103,7 @@
   background-color: var(--color-accent);
   -webkit-mask: url('/assets/peace.svg') center / contain no-repeat;
   mask: url('/assets/peace.svg') center / contain no-repeat;
-  transform: rotate(12deg);
+  transform: rotate(17deg);
   animation: peace-tilt var(--home-tilt-duration) var(--motion-ease-standard) both;
 }
 
@@ -232,9 +232,9 @@
 @keyframes peace-tilt {
   0%,
   100% {
-    transform: rotate(12deg);
+    transform: rotate(17deg);
   }
   50% {
-    transform: rotate(24deg);
+    transform: rotate(29deg);
   }
 }
