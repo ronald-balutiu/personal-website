@@ -49,7 +49,6 @@ const formatViolations = (violations: ViolationLike[]) => {
 }
 
 const incompleteAllowlist = new Set([
-  '/|aria-prohibited-attr|.intro-social-links',
   '/|color-contrast|.intro-title-outline',
   '/|color-contrast|#about-title',
 ])

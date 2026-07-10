@@ -42,13 +42,6 @@ const srcDir = path.resolve(import.meta.dirname, '../../src')
 const publicDir = path.resolve(import.meta.dirname, '../../public')
 const assetsDir = path.resolve(publicDir, 'assets')
 const assetReferencePattern = /\/assets\/[^"'`\s)>\]}]+/g
-const unusedAssetAllowlist = new Set([
-  // TODO: Remove once dark mode is implemented and these assets are actively referenced.
-  '/assets/email-white.svg',
-  '/assets/github-mark-white.svg',
-  '/assets/instagram-white.svg',
-  '/assets/linkedin-white.svg',
-])
 const textFileExtensions = new Set([
   '.astro',
   '.css',
@@ -300,7 +293,7 @@ describe('project content integrity', () => {
 
     const referencedAssetPaths = collectAssetReferences()
     const unreferencedAssetPaths = allAssetPaths.filter(
-      (assetPath) => !referencedAssetPaths.has(assetPath) && !unusedAssetAllowlist.has(assetPath)
+      (assetPath) => !referencedAssetPaths.has(assetPath)
     )
 
     expect(

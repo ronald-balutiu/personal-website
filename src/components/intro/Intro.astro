@@ -29,11 +29,11 @@ const socialLinks = [
       <span class="intro-title-solid">Ronald</span>
       <span class="intro-title-outline">
         Balutiu
-        <span class="intro-peace-icon inline-block transform rotate-10" aria-hidden="true"></span>
+        <span class="intro-peace-icon" aria-hidden="true"></span>
       </span>
     </h1>
     <p class="intro-description">Design-minded engineer shipping high quality, high impact work.</p>
-    <div class="intro-social-links" aria-label="Social links">
+    <nav class="intro-social-links" aria-label="Social links">
       {
         socialLinks.map(({ name, url, icon }) => (
           <a
@@ -54,20 +54,6 @@ const socialLinks = [
           </a>
         ))
       }
-    </div>
+    </nav>
   </div>
 </section>
-
-<style>
-  .intro-peace-icon {
-    width: 3rem; /* Adjust size as needed */
-    height: 3rem; /* Adjust size as needed */
-    background-color: var(--color-accent);
-    -webkit-mask: url('/assets/peace.svg') center / contain no-repeat;
-    mask: url('/assets/peace.svg') center / contain no-repeat;
-    margin-left: -0.3rem;
-    vertical-align: middle;
-    position: relative;
-    bottom: 0.2rem;
-  }
-</style>

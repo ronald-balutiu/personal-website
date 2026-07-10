@@ -35,6 +35,12 @@
   box-shadow: 0 18px 40px var(--color-shadow-strong);
 }
 
+.project-item:focus-visible {
+  outline-color: var(--color-focus);
+  outline-width: 2px;
+  outline-offset: 4px;
+}
+
 .project-item-content {
   height: 100%;
   padding: 3rem 2rem 2rem;

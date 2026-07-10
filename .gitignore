@@ -23,4 +23,5 @@ pnpm-debug.log*
 .DS_Store
 
 # Agent planning docs
+PLAN.md
 /docs

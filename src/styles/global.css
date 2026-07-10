@@ -4,6 +4,7 @@
 @import './components/experience.css';
 @import './components/jump-links.css';
 @import './components/projects.css';
+@import './components/project-page.css';
 @import './components/theme-toggle.css';
 
 /* Typography */
@@ -12,15 +13,6 @@ html {
   background: var(--color-background);
   color: var(--color-text);
   scroll-behavior: smooth;
-}
-
-/* Common text styles */
-.font-coustard {
-  font-family: 'Coustard', serif;
-}
-
-.text-brown {
-  color: var(--color-accent);
 }
 
 /* Layout */
@@ -68,15 +60,6 @@ main {
   color: var(--color-text);
 }
 
-/* Common shadows */
-.shadow-sm {
-  box-shadow: 0 4px 6px -1px var(--color-shadow-soft);
-}
-
-.shadow-lg {
-  box-shadow: 0 20px 25px -5px var(--color-shadow-strong);
-}
-
 /* Common links */
 .link {
   text-decoration: none;
@@ -97,11 +80,6 @@ main p a[href^='http'] {
   text-underline-offset: 0.2em;
 }
 
-/* Keep the special link styles for navigation */
-.nav-link {
-  text-decoration: none;
-}
-
 .site-footer {
   position: relative;
   z-index: 1;
@@ -115,4 +93,10 @@ main p a[href^='http'] {
   color: var(--color-text-muted);
   font-size: var(--font-size-label-sm);
   line-height: var(--line-height-normal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
