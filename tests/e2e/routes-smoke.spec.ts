@@ -80,6 +80,7 @@ const openHealthyRoute = async (page: Page, route: string) => {
 
 const smokeViewports = [
   { name: 'desktop', size: { width: 1440, height: 900 } },
+  { name: 'tablet', size: { width: 853, height: 1280 } },
   { name: 'mobile-iphone', size: { width: 390, height: 844 } },
 ]
 
@@ -92,10 +93,22 @@ for (const viewport of smokeViewports) {
     test('homepage renders and includes core sections', async ({ page }) => {
       await openHealthyRoute(page, '/')
 
-      await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-      await expect(page.getByRole('heading', { level: 2, name: 'About' })).toBeVisible()
-      await expect(page.getByRole('heading', { level: 2, name: 'Experience' })).toBeVisible()
-      await expect(page.getByRole('heading', { level: 2, name: 'Projects' })).toBeVisible()
+      const headings = page.getByRole('heading', { level: 1 })
+      await expect(headings).toHaveCount(1)
+      await expect(headings).toHaveText("Hello, I'm Ronald Balutiu.")
+      await expect(
+        page.getByRole('heading', { level: 2, name: 'A couple things I’ve made' })
+      ).toBeVisible()
+      await expect(page.getByRole('heading', { level: 2, name: /About|Experience/ })).toHaveCount(0)
+
+      for (const name of ['GitHub', 'LinkedIn', 'Instagram', 'Email']) {
+        await expect(page.getByRole('link', { name, exact: true })).toBeVisible()
+      }
+
+      await expect(page.locator('.intro-description')).toHaveCount(1)
+      await expect(page.locator('.intro-about-details p')).toHaveCount(3)
+      await expect(page.locator('.project-item')).toHaveCount(2)
+      await expect(page.locator('.project-item-link')).toHaveCount(2)
     })
 
     test('representative project route renders title, description, and primary link', async ({
@@ -117,14 +130,14 @@ for (const viewport of smokeViewports) {
       await expect(primaryLink).toHaveAttribute('href', /^https?:\/\//)
     })
 
-    test('project cards link directly to external URLs when detail pages are disabled', async ({
+    test('project rows link directly to external URLs when detail pages are disabled', async ({
       page,
     }) => {
       test.skip(PROJECT_DETAIL_PAGES_ENABLED, 'Project detail pages are enabled')
 
       await openHealthyRoute(page, '/')
 
-      const projectLinks = page.locator('#projects .project-item')
+      const projectLinks = page.locator('#projects .project-item-link')
       const count = await projectLinks.count()
       expect(count).toBeGreaterThan(0)
 

@@ -7,10 +7,9 @@ import { buildSeo, type SeoInput } from '../lib/seo'
 
 interface Props {
   seo: SeoInput
-  balancedRails?: boolean
 }
 
-const { seo, balancedRails = false } = Astro.props
+const { seo } = Astro.props
 const resolvedSeo = buildSeo(seo)
 const currentYear = new Date().getFullYear()
 ---
@@ -51,27 +50,11 @@ const currentYear = new Date().getFullYear()
     />
   </head>
   <body>
-    {
-      balancedRails ? (
-        <main class="page-shell">
-          <aside class="page-rail page-rail-left">
-            <slot name="left-rail" />
-          </aside>
-          <div class="page-content">
-            <slot />
-          </div>
-          <aside class="page-rail page-rail-right" aria-hidden="true">
-            <slot name="right-rail" />
-          </aside>
-        </main>
-      ) : (
-        <main>
-          <slot />
-        </main>
-      )
-    }
+    <main><slot /></main>
     <footer class="site-footer">
-      <p class="site-footer-text">© {currentYear} Ronald Balutiu. All rights reserved.</p>
+      <div class="site-footer-inner">
+        <p class="site-footer-text">© {currentYear} Ronald Balutiu. All rights reserved.</p>
+      </div>
     </footer>
     <ThemeToggle />
   </body>

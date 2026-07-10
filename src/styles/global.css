@@ -1,8 +1,5 @@
 @import './tokens.css';
 @import './components/intro.css';
-@import './components/about.css';
-@import './components/experience.css';
-@import './components/jump-links.css';
 @import './components/projects.css';
 @import './components/project-page.css';
 @import './components/theme-toggle.css';
@@ -30,33 +27,23 @@ main {
   width: 100%;
 }
 
-.page-shell {
-  display: grid;
-  grid-template-columns:
-    minmax(0, var(--layout-rail-width))
-    minmax(0, 1fr)
-    minmax(0, var(--layout-rail-width));
+.home-page,
+.site-footer-inner {
+  width: min(calc(100% - 2 * var(--content-inline-padding)), var(--home-max-width));
+  margin-inline: auto;
 }
 
-.page-content {
-  min-width: 0;
-}
-
-.page-rail {
-  min-width: 0;
-}
-
-.page-rail-right {
-  pointer-events: none;
+.home-page {
+  opacity: 0;
+  transform: translateY(0.5rem);
+  animation: home-enter var(--home-fade-duration) var(--motion-ease-standard) forwards;
 }
 
 /* Common components */
 .section-title {
-  text-align: center;
   font-size: var(--font-size-section-title);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-  margin-bottom: 3rem;
   color: var(--color-text);
 }
 
@@ -83,9 +70,8 @@ main p a[href^='http'] {
 .site-footer {
   position: relative;
   z-index: 1;
-  padding: 0.9rem var(--content-inline-padding) 1.15rem;
+  padding: 0.9rem 0 1.15rem;
   background-color: var(--color-background);
-  text-align: center;
 }
 
 .site-footer-text {
@@ -98,5 +84,18 @@ main p a[href^='http'] {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .home-page {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+@keyframes home-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

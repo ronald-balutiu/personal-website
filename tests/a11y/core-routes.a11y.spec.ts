@@ -27,6 +27,7 @@ const routes = [
 
 const viewports = [
   { name: 'desktop', size: { width: 1440, height: 900 } },
+  { name: 'tablet', size: { width: 853, height: 1280 } },
   { name: 'mobile-iphone', size: { width: 390, height: 844 } },
 ]
 
@@ -48,10 +49,7 @@ const formatViolations = (violations: ViolationLike[]) => {
     .join('\n')
 }
 
-const incompleteAllowlist = new Set([
-  '/|color-contrast|.intro-title-outline',
-  '/|color-contrast|#about-title',
-])
+const incompleteAllowlist = new Set(['/|color-contrast|.intro-title-outline'])
 
 const incompleteAllowlistPatterns = [
   /^\/\|color-contrast\|.*\.project-item-heading$/,
@@ -103,6 +101,9 @@ for (const viewport of viewports) {
           expect(response?.status(), `Expected ${route.path} to return status 200`).toBe(200)
           await expect(page.locator('main')).toBeVisible()
           await expect(page.locator('html')).toHaveAttribute('data-theme', colorScheme)
+          await page.evaluate(async () => {
+            await Promise.all(document.getAnimations().map((animation) => animation.finished))
+          })
 
           const results = await new AxeBuilderPlaywright({ page }).analyze()
           const blockingViolations = results.violations.filter(

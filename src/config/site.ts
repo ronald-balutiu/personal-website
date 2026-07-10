@@ -30,7 +30,7 @@ export interface SiteConfig {
 
   /**
    * Fallback page description for `meta[name="description"]`.
-   * @defaultValue `'Design-minded engineer shipping high quality, high impact work.'`
+   * @defaultValue `'New York-based software engineer building clear, dependable, and intuitive systems.'`
    */
   defaultDescription: string
 
@@ -85,7 +85,8 @@ export const siteConfig: SiteConfig = {
   siteName: 'Ronald Balutiu',
   defaultTitle: 'Ronald Balutiu',
   titleTemplate: '%s | Ronald Balutiu',
-  defaultDescription: 'Design-minded engineer shipping high quality, high impact work.',
+  defaultDescription:
+    'New York-based software engineer building clear, dependable, and intuitive systems.',
   defaultOgImage: '/assets/og-default.png',
   defaultOgImageAlt: 'Homepage hero of Ronald Balutiu portfolio with name and engineering tagline.',
   locale: 'en_US',

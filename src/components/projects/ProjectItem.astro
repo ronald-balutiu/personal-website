@@ -10,15 +10,16 @@ interface Props {
 const { href, icon, title, description, external = false } = Astro.props
 ---
 
-<a
-  href={href}
-  class="project-item"
-  target={external ? '_blank' : undefined}
-  rel={external ? 'noopener noreferrer' : undefined}
->
-  <div class="project-item-content">
-    <img class="project-item-icon" src={icon} alt="" loading="lazy" />
+<article class="project-item">
+  <img class="project-item-icon" src={icon} alt="" loading="lazy" />
+  <div class="project-item-copy">
     <h3 class="project-item-heading">{title}</h3>
     <p class="project-item-description">{description}</p>
   </div>
-</a>
+  <a
+    href={href}
+    class="project-item-link"
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener noreferrer' : undefined}>{external ? 'GitHub ↗' : 'View project'}</a
+  >
+</article>

@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets'
+import portrait from '../../assets/images/ronald-balutiu-portrait.jpg'
+
 const socialLinks = [
   {
     name: 'GitHub',
@@ -23,25 +26,27 @@ const socialLinks = [
 ]
 ---
 
-<section class="intro">
-  <div class="intro-content">
-    <h1 class="intro-title">
-      <span class="intro-title-solid">Ronald</span>
-      <span class="intro-title-outline">
-        Balutiu
-        <span class="intro-peace-icon" aria-hidden="true"></span>
-      </span>
+<section class="intro" aria-labelledby="intro-title">
+  <div class="intro-primary">
+    <h1 id="intro-title" class="intro-title">
+      <span class="intro-peace-icon" aria-hidden="true"></span>
+      <span class="intro-title-solid">Hello, I'm Ronald</span>{' '}
+      <span class="intro-title-outline">Balutiu.</span>
     </h1>
-    <p class="intro-description">Design-minded engineer shipping high quality, high impact work.</p>
+    <p class="intro-description">
+      I’m currently a New York-based software engineer at <strong>Amazon Ads</strong>, building
+      scalable systems that support millions of daily customers. I care deeply about clear,
+      accessible user experiences where complex and critical workflows become reliable and intuitive
+      to use.
+    </p>
     <nav class="intro-social-links" aria-label="Social links">
       {
         socialLinks.map(({ name, url, icon }) => (
           <a
             href={url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={url.startsWith('http') ? '_blank' : undefined}
+            rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
             class="intro-social-link"
-            aria-label={name}
           >
             <img
               src={icon}
@@ -51,9 +56,47 @@ const socialLinks = [
               fetchpriority="high"
               aria-hidden="true"
             />
+            <span>{name}</span>
           </a>
         ))
       }
     </nav>
+  </div>
+  <figure class="intro-portrait">
+    <Image
+      src={portrait}
+      alt="Portrait of Ronald Balutiu"
+      widths={[480, 720, 960, 1200]}
+      sizes="(min-width: 1024px) 22rem, (min-width: 640px) calc(100vw - 6rem), calc(100vw - 2rem)"
+      loading="eager"
+      fetchpriority="high"
+      quality={85}
+    />
+  </figure>
+  <div class="intro-about-details">
+    <p>
+      Previously I was an early engineer on <strong>Amazon Payments’</strong>{' '}
+      <a
+        href="https://sell.amazon.com/tools/seller-wallet"
+        class="link"
+        target="_blank"
+        rel="noopener noreferrer">Seller Wallet</a
+      >, building the product from the ground up while supporting both domestic and international
+      launches.
+    </p>
+    <p>
+      My passion for engineering started during undergrad at the{' '}<strong
+        >University of Chicago</strong
+      > with my first computer science course. After finishing internships in real estate and private
+      equity, I realized those paths weren’t a great fit and was drawn instead to technology for its constant
+      change and room to explore. That shift led to a role at the school's <strong
+        >Computer Science Instructional Library</strong
+      >{' '}and later an internship at <strong>Visa</strong> in Client Engineering, which helped set the
+      direction for the work I do today.
+    </p>
+    <p>
+      Outside of work I enjoy skiing, photography, and exploring the city I grew up in and still
+      find endlessly interesting.
+    </p>
   </div>
 </section>

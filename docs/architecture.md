@@ -8,8 +8,8 @@ the system's structure or behavior changes.
 Astro builds the site as static HTML, CSS, and JavaScript. The Astro configuration sets
 `output: 'static'`, and the production build is written to `dist/`.
 
-There is no application server or runtime data store. Project and experience content is read at
-build time from Astro Content Collections.
+There is no application server or runtime data store. Project content is read at build time from an
+Astro Content Collection.
 
 ## Routes and Layout
 
@@ -21,23 +21,20 @@ build time from Astro Content Collections.
 - `src/components/SEO.astro` renders resolved metadata, theme colors, and JSON-LD payloads.
 - `src/components/theme/ThemeToggle.astro` provides the in-memory theme toggle.
 
-The homepage is organized into Intro, About, Experience, and Projects sections. `JumpLinks.astro`
-provides sticky section navigation, active-section tracking, and hash/deep-link behavior.
+The homepage is organized into a responsive hero and a project list. The hero contains the greeting,
+About copy, social links, and optimized portrait in a single semantic section.
 
 ## Content Model
 
 Content collections are defined in `src/content.config.ts` and loaded from Markdown files:
 
 - `src/content/projects/` contains project entries.
-- `src/content/experience/` contains work experience entries.
 
 Project frontmatter includes ordering, project details, external links, icons, optional SEO metadata,
 and optional publication dates:
 
 - Required: `order`, `title`, `description`, `details`, `link`, and `icon`.
 - Optional: `seoTitle`, `seoDescription`, `ogImage`, `ogImageAlt`, `publishedAt`, and `updatedAt`.
-
-Experience frontmatter includes company, locations, ordering, roles, technologies, and highlights.
 
 The project detail route is controlled by the build-time constant
 `PROJECT_DETAIL_PAGES_ENABLED` in `src/config/features.ts`:

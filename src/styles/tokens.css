@@ -23,13 +23,16 @@
 
   color-scheme: light;
 
-  /* Rails grow only when there is meaningful extra viewport space. */
-  --layout-rail-width: clamp(0rem, calc((100vw - 72rem) / 2), 14rem);
-  /* Shared section side padding so horizontal spacing scales smoothly. */
+  --home-max-width: 72rem;
   --content-inline-padding: clamp(1rem, 1.6vw + 0.4rem, 2rem);
+  --hero-column-gap: clamp(2.5rem, 6vw, 6rem);
+  --portrait-width: 22rem;
+  --project-icon-width: clamp(6rem, 10vw, 8rem);
+  --project-icon-width-mobile: 5.5rem;
 
   /* Typography scale: use these tokens instead of raw font values in components. */
   --font-size-display: clamp(2.4rem, 5vw, 3rem);
+  --font-size-display-mobile: clamp(2.1rem, 10vw, 2.8rem);
   --font-size-intro-description: clamp(1.2rem, 2.5vw, 1.5rem);
   --font-size-page-title: clamp(2rem, 4vw, 2.5rem);
   --font-size-page-title-mobile: clamp(1.85rem, 8vw, 2.2rem);
@@ -65,6 +68,8 @@
   --motion-stagger-step: 0.5s;
   --motion-sequence-intro-step: 1;
   --motion-sequence-social-jump-step: calc(var(--motion-sequence-intro-step) + 2);
+  --home-fade-duration: 0.65s;
+  --home-tilt-duration: 0.8s;
 }
 
 :root[data-theme='dark'] {
