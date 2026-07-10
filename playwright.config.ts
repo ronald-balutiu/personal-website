@@ -8,6 +8,7 @@ const playwrightWorkers = process.env.PLAYWRIGHT_WORKERS ?? (isCI ? 1 : '50%')
 
 export default defineConfig({
   testDir: 'tests',
+  testMatch: '**/*.spec.ts',
 
   timeout: 30_000,
   expect: { timeout: 5_000 },
