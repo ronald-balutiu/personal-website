@@ -12,7 +12,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
     {
       projects.map((project) => (
         <ProjectItem
-          href={PROJECT_DETAIL_PAGES_ENABLED ? `/${project.slug}` : project.data.link}
+          href={PROJECT_DETAIL_PAGES_ENABLED ? `/${project.id}` : project.data.link}
           external={!PROJECT_DETAIL_PAGES_ENABLED}
           icon={project.data.icon}
           title={project.data.title}
