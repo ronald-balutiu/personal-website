@@ -153,6 +153,7 @@ Include:
 
 - Follow Conventional Commits (`feat:`, `fix:`, `chore:`, `build(deps-dev): ...`).
 - Keep each commit scoped to one logical change.
+- Before opening a pull request, squash the branch commits into one signed commit unless the user explicitly requests separate commits.
 - Please run `npm run release` before creating a new commit.
 - All commits must be signed; do not create unsigned commits.
 - Do not push commits directly to `master`; use a feature branch and open a PR.
