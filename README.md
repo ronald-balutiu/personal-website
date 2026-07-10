@@ -40,8 +40,8 @@ Production portfolio website built with Astro as a static web app. The codebase 
 |   |-- config/
 |   |   |-- features.ts
 |   |   `-- site.ts
+|   |-- content.config.ts
 |   |-- content/
-|   |   |-- config.ts
 |   |   |-- experience/*.md
 |   |   `-- projects/*.md
 |   |-- layouts/Layout.astro
@@ -127,7 +127,7 @@ npm run preview
 
 ## Content Management
 
-Project entries live in `src/content/projects/*.md` and are validated by `src/content/config.ts`.
+Project entries live in `src/content/projects/*.md` and are validated by `src/content.config.ts`.
 
 Required frontmatter:
 

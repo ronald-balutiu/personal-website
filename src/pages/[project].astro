@@ -12,13 +12,13 @@ export async function getStaticPaths() {
   const projects = await getCollection('projects')
 
   return projects.map((project) => ({
-    params: { project: project.slug },
-    props: { project, slug: project.slug },
+    params: { project: project.id },
+    props: { project, slug: project.id },
   }))
 }
 
 const { project, slug } = Astro.props
-const routeSlug = slug ?? project.slug
+const routeSlug = slug ?? project.id
 const { title, description, details, link, seoTitle, seoDescription, ogImage, ogImageAlt } =
   project.data
 const pageTitle = seoTitle ?? title
