@@ -1,5 +1,4 @@
 .theme-toggle {
-  /* The control belongs to the page header area, so it scrolls away with it. */
   position: absolute;
   top: max(1rem, env(safe-area-inset-top));
   right: max(1rem, env(safe-area-inset-right));
@@ -17,7 +16,7 @@
   cursor: pointer;
   opacity: 0;
   transform: translateY(0.75rem);
-  animation: theme-toggle-enter var(--home-reveal-duration) var(--motion-ease-standard)
+  animation: content-enter var(--home-reveal-duration) var(--motion-ease-standard)
     var(--home-reveal-delay) forwards;
   transition:
     background-color 0.2s ease,
@@ -97,11 +96,4 @@
   opacity: 1;
   transform: none;
   animation: none;
-}
-
-@keyframes theme-toggle-enter {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

@@ -78,8 +78,8 @@ test('entrance motion stages the title before the remaining content', async ({ p
   await expect(page.locator('.intro-title')).toHaveCSS('opacity', '1')
   await expect(page.locator('.intro-peace-icon')).toHaveCSS('animation-name', 'peace-tilt')
   await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'content-enter')
-  await expect(page.locator('.projects-section')).toHaveCSS('animation-name', 'projects-enter')
-  await expect(page.locator('.theme-toggle')).toHaveCSS('animation-name', 'theme-toggle-enter')
+  await expect(page.locator('.projects-section')).toHaveCSS('animation-name', 'content-enter')
+  await expect(page.locator('.theme-toggle')).toHaveCSS('animation-name', 'content-enter')
 })
 
 test('refresh below the top skips the entrance animation', async ({ page }) => {

@@ -20,11 +20,6 @@ export default [
     },
   },
 
-  /**
-   * Import hygiene for source files. Astro virtual modules (e.g. `astro:content`)
-   * are resolved by Astro/Vite, not Node/TypeScript, so we exclude them from
-   * import/no-unresolved.
-   */
   {
     files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
     plugins: { import: importPlugin },
@@ -49,14 +44,8 @@ export default [
     },
   },
 
-  /**
-   * Astro: recommended rules and parsing for .astro files.
-   */
   ...astroConfigs.recommended,
 
-  /**
-   * Accessibility checks for Astro templates.
-   */
   {
     files: ['**/*.astro'],
     plugins: { 'jsx-a11y': jsxA11y },
@@ -65,9 +54,6 @@ export default [
     },
   },
 
-  /**
-   * TypeScript: type-aware recommended rules for .ts/.tsx.
-   */
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -81,7 +67,7 @@ export default [
     rules: {
       ...tseslint.configs['recommended-type-checked'].rules,
 
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/consistent-type-imports': [
         'error',
         { prefer: 'type-imports', fixStyle: 'separate-type-imports' },
@@ -89,9 +75,6 @@ export default [
     },
   },
 
-  /**
-   * Test files: enable Vitest globals.
-   */
   {
     files: ['**/*.test.{ts,tsx,js,jsx}', '**/*.spec.{ts,tsx,js,jsx}'],
     languageOptions: {
@@ -99,8 +82,5 @@ export default [
     },
   },
 
-  /**
-   * Ensure ESLint does not conflict with Prettier. Keep this configuration last.
-   */
   eslintConfigPrettier,
 ]

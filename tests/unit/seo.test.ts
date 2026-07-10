@@ -10,9 +10,7 @@ describe('seo helpers', () => {
 
   it('builds homepage seo metadata with website open graph type', () => {
     const seo = buildSeo({
-      pageType: 'home',
       path: '/',
-      title: siteConfig.defaultTitle,
     })
 
     expect(seo.og.type).toBe('website')
@@ -21,11 +19,11 @@ describe('seo helpers', () => {
     expect(seo.themeColors).toEqual(siteConfig.themeColors)
   })
 
-  it('builds project seo metadata with article open graph type and title template', () => {
+  it('supports page-specific titles and open graph types', () => {
     const seo = buildSeo({
-      pageType: 'project',
       path: '/sudoku-creator-solver',
       title: 'Sudoku Creator Solver',
+      ogType: 'article',
     })
 
     expect(seo.og.type).toBe('article')
@@ -34,7 +32,6 @@ describe('seo helpers', () => {
 
   it('uses project-level og image override for both open graph and twitter', () => {
     const seo = buildSeo({
-      pageType: 'project',
       path: '/sudoku-creator-solver',
       ogImage: '/assets/sudoku.svg',
     })
@@ -45,7 +42,6 @@ describe('seo helpers', () => {
 
   it('sets noindex robots directive when requested', () => {
     const seo = buildSeo({
-      pageType: 'generic',
       path: '/private',
       noindex: true,
     })

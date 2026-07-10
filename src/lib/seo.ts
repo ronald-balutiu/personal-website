@@ -3,26 +3,15 @@ import { siteConfig } from '../config/site'
 /** JSON-LD payload object rendered in `<script type="application/ld+json">`. */
 export type JsonLdObject = Record<string, unknown>
 
-/** High-level page classification used to choose metadata defaults. */
-export type SeoPageType = 'home' | 'project' | 'generic'
-
 /** Open Graph page type. */
 export type OpenGraphType = 'website' | 'article'
 
 /**
  * Page-provided SEO input.
  *
- * Each optional field either:
- * - overrides a site default, or
- * - falls back to `siteConfig`/derived values when omitted.
+ * Optional values override the defaults in `siteConfig`.
  */
 export interface SeoInput {
-  /**
-   * Page classification used to determine default OG type.
-   * `project` resolves to `article`, all others resolve to `website`.
-   */
-  pageType: SeoPageType
-
   /**
    * Route path used to derive canonical URL when `canonical` is not provided.
    * @example `'/projects/my-project'`
@@ -50,7 +39,7 @@ export interface SeoInput {
 
   /**
    * Open Graph type override.
-   * If omitted, `pageType` selects the default.
+   * Defaults to `website`.
    */
   ogType?: OpenGraphType
 
@@ -131,8 +120,6 @@ export interface ResolvedSeo {
   jsonLd: JsonLdObject[]
 }
 
-const absoluteUrlPattern = /^https?:\/\//i
-
 /** Converts a path or URL-like value to an absolute URL using `siteConfig.siteUrl`. */
 export const toAbsoluteUrl = (value: string): string => {
   return new URL(value, siteConfig.siteUrl).toString()
@@ -147,24 +134,8 @@ const resolveTitle = (title?: string): string => {
   return siteConfig.titleTemplate.replace('%s', resolvedTitle)
 }
 
-const resolveOgType = (input: SeoInput): OpenGraphType => {
-  if (input.ogType) {
-    return input.ogType
-  }
-
-  return input.pageType === 'project' ? 'article' : 'website'
-}
-
 const resolveCanonical = (input: SeoInput): string => {
-  if (input.canonical) {
-    if (absoluteUrlPattern.test(input.canonical)) {
-      return input.canonical
-    }
-
-    return toAbsoluteUrl(input.canonical)
-  }
-
-  return toAbsoluteUrl(input.path)
+  return toAbsoluteUrl(input.canonical ?? input.path)
 }
 
 const resolveRobots = (input: SeoInput): string => {
@@ -184,14 +155,14 @@ const resolveRobots = (input: SeoInput): string => {
  *
  * Resolution priority is:
  * 1) explicit page input
- * 2) derived value (for canonical/og type)
+ * 2) derived value (for canonical URL)
  * 3) site-level defaults from `siteConfig`
  */
 export const buildSeo = (input: SeoInput): ResolvedSeo => {
   const title = resolveTitle(input.title)
   const description = input.description ?? siteConfig.defaultDescription
   const canonical = resolveCanonical(input)
-  const ogType = resolveOgType(input)
+  const ogType = input.ogType ?? 'website'
   const ogImage = toAbsoluteUrl(input.ogImage ?? siteConfig.defaultOgImage)
   const ogImageAlt = input.ogImageAlt ?? siteConfig.defaultOgImageAlt
 

@@ -3,7 +3,6 @@
 @import './components/projects.css';
 @import './components/theme-toggle.css';
 
-/* Typography */
 html {
   font-family: 'DM Sans', sans-serif;
   background: var(--color-background);
@@ -11,7 +10,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Layout */
 body {
   margin: 0;
   padding: 0;
@@ -32,7 +30,6 @@ main {
   margin-inline: auto;
 }
 
-/* Common components */
 .section-title {
   font-size: var(--font-size-section-title);
   font-weight: var(--font-weight-semibold);
@@ -40,7 +37,6 @@ main {
   color: var(--color-text);
 }
 
-/* Common links */
 .link {
   text-decoration: none;
   color: var(--color-text);
@@ -53,7 +49,6 @@ main {
   text-underline-offset: 0.2em;
 }
 
-/* Body-copy external links should always be underlined. */
 main p a[href^='http'] {
   text-decoration: underline;
   text-decoration-color: currentColor;
@@ -78,5 +73,12 @@ main p a[href^='http'] {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+@keyframes content-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

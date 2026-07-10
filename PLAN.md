@@ -263,7 +263,7 @@ Update `src/components/projects/Projects.astro`:
 - Change the heading to `A couple things I've made` using the final approved apostrophe style.
 - Keep `getCollection('projects')` and sort entries by `order`.
 - Keep project Markdown as the source of truth.
-- Continue respecting `PROJECT_DETAIL_PAGES_ENABLED`.
+- Link every row directly to the repository URL in its project content entry.
 - Render a semantic list or sequence of project articles rather than a card grid.
 
 Update `src/components/projects/ProjectItem.astro`:
@@ -286,8 +286,8 @@ Rewrite `src/styles/components/projects.css`:
 - Constrain icon dimensions while preserving their intrinsic aspect ratios.
 - Ensure long titles and descriptions wrap without pushing links beyond the viewport.
 
-Keep the optional project detail route and its feature flag unchanged; they are separate from the
-homepage presentation.
+Do not maintain a disabled project-detail route or feature flag. The homepage repository links are
+the complete project-navigation model.
 
 ### 8. Consolidate the entrance animation
 

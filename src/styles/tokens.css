@@ -7,16 +7,9 @@
   --color-accent-strong: #432929;
   --color-accent-soft: #f2e5dc;
   --color-accent-line: rgba(93, 58, 58, 0.25);
-  --color-accent-contrast: #ffffff;
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-text: #ffffff;
   --color-border: rgba(31, 41, 55, 0.14);
   --color-focus: #5d3a3a;
   --color-shadow-soft: rgba(17, 24, 39, 0.12);
-  --color-shadow-strong: rgba(17, 24, 39, 0.2);
-  --color-overlay-soft: rgba(255, 255, 255, 0.65);
-  --color-overlay-strong: rgba(255, 255, 255, 0.95);
   --color-transparent: transparent;
   --color-icon-filter: none;
   --color-icon-opacity: 1;
@@ -30,44 +23,25 @@
   --project-icon-width: clamp(6rem, 10vw, 8rem);
   --project-icon-width-mobile: 5.5rem;
 
-  /* Typography scale: use these tokens instead of raw font values in components. */
   --font-size-display: clamp(2.4rem, 5vw, 3rem);
   --font-size-display-mobile: clamp(2.1rem, 10vw, 2.8rem);
-  --font-size-intro-description: clamp(1.2rem, 2.5vw, 1.5rem);
-  --font-size-page-title: clamp(2rem, 4vw, 2.5rem);
-  --font-size-page-title-mobile: clamp(1.85rem, 8vw, 2.2rem);
   --font-size-section-title: clamp(2rem, 3.2vw, 2.25rem);
-  --font-size-heading-md: 1.5rem;
   --font-size-heading-sm: 1.25rem;
   --font-size-body-lg: 1.125rem;
   --font-size-body-md: 1rem;
-  --font-size-body-sm: 0.95rem;
   --font-size-label-sm: 0.75rem;
-  --font-size-label-xs: 0.7rem;
 
-  --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
-  --line-height-relaxed: 1.65;
   --line-height-comfy: 1.7;
 
   --letter-spacing-tight: -0.01em;
-  --letter-spacing-wide: 0.1em;
-  --letter-spacing-wider: 0.18em;
 
-  /* Motion primitives: adjust these first to scale the whole motion system. */
   --motion-ease-standard: ease;
-  --motion-duration-fast: 0.3s;
-  --motion-duration-soft: 0.5s;
-  --motion-duration-standard: 1s;
-  --motion-delay-base: 0.25s;
-  --motion-stagger-step: 0.5s;
-  --motion-sequence-intro-step: 1;
-  --motion-sequence-social-jump-step: calc(var(--motion-sequence-intro-step) + 2);
   --home-tilt-duration: 0.95s;
   --home-reveal-duration: 0.65s;
   --home-reveal-delay: var(--home-tilt-duration);
@@ -82,16 +56,9 @@
   --color-accent-strong: #d3a29a;
   --color-accent-soft: #493632;
   --color-accent-line: rgba(195, 143, 132, 0.35);
-  --color-accent-contrast: #251b18;
-  --color-primary: #7897c1;
-  --color-primary-hover: #8ba8cf;
-  --color-primary-text: #1b202b;
   --color-border: rgba(225, 222, 218, 0.16);
   --color-focus: #d3a29a;
   --color-shadow-soft: rgba(0, 0, 0, 0.24);
-  --color-shadow-strong: rgba(0, 0, 0, 0.38);
-  --color-overlay-soft: rgba(52, 50, 50, 0.72);
-  --color-overlay-strong: rgba(52, 50, 50, 0.96);
   --color-icon-filter: brightness(0) saturate(100%) invert(86%) sepia(11%) saturate(488%)
     hue-rotate(324deg) brightness(106%) contrast(91%);
   --color-icon-opacity: 0.72;
@@ -109,16 +76,9 @@
     --color-accent-strong: #d3a29a;
     --color-accent-soft: #493632;
     --color-accent-line: rgba(195, 143, 132, 0.35);
-    --color-accent-contrast: #251b18;
-    --color-primary: #7897c1;
-    --color-primary-hover: #8ba8cf;
-    --color-primary-text: #1b202b;
     --color-border: rgba(225, 222, 218, 0.16);
     --color-focus: #d3a29a;
     --color-shadow-soft: rgba(0, 0, 0, 0.24);
-    --color-shadow-strong: rgba(0, 0, 0, 0.38);
-    --color-overlay-soft: rgba(52, 50, 50, 0.72);
-    --color-overlay-strong: rgba(52, 50, 50, 0.96);
     --color-icon-filter: brightness(0) saturate(100%) invert(86%) sepia(11%) saturate(488%)
       hue-rotate(324deg) brightness(106%) contrast(91%);
     --color-icon-opacity: 0.72;

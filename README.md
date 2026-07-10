@@ -72,7 +72,6 @@ npm run preview
 | `npm run format:check`       | Check formatting without modifying files.                            |
 | `npm run release`            | Run the local quality gate; linting and formatting may modify files. |
 | `npm run release:ci`         | Run the CI-equivalent quality gate.                                  |
-| `npm run clean`              | Remove the generated Astro cache.                                    |
 
 Use `npm run release` before committing. CI uses `npm run release:ci`, which also runs the full
 cross-browser test suite.
