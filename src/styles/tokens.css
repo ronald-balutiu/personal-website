@@ -68,7 +68,7 @@
   --motion-stagger-step: 0.5s;
   --motion-sequence-intro-step: 1;
   --motion-sequence-social-jump-step: calc(var(--motion-sequence-intro-step) + 2);
-  --home-tilt-duration: 0.8s;
+  --home-tilt-duration: 0.95s;
   --home-reveal-duration: 0.65s;
   --home-reveal-delay: var(--home-tilt-duration);
 }

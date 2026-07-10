@@ -39,6 +39,22 @@ const currentYear = new Date().getFullYear()
           inactiveThemeColor.dataset.systemMedia = inactiveThemeColor.media
           inactiveThemeColor.media = 'not all'
         }
+
+        try {
+          const navigation = performance.getEntriesByType('navigation')[0]
+          const restoredScrollY = Number(sessionStorage.getItem('home-refresh-scroll-y') ?? 0)
+          sessionStorage.removeItem('home-refresh-scroll-y')
+
+          if (navigation?.type === 'reload' && restoredScrollY > 1) {
+            root.classList.add('skip-home-entrance')
+          }
+
+          window.addEventListener('pagehide', () => {
+            sessionStorage.setItem('home-refresh-scroll-y', String(window.scrollY))
+          })
+        } catch {
+          // Storage may be unavailable; the entrance remains a safe visual enhancement.
+        }
       })()
     </script>
     <link rel="icon" type="image/svg+xml" href="/assets/laptop.svg" />

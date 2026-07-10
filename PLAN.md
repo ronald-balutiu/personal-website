@@ -302,7 +302,11 @@ Implementation details:
 
 - Reuse shared reveal timing tokens across the content groups and projects.
 - Keep the hand movement separate and use its duration as the reveal delay.
-- Do not add JavaScript solely for animation.
+- Fade the theme toggle in with the other delayed content.
+- When a reload restores the page below the top, skip every entrance animation and render the final
+  state immediately so the visitor does not see an in-progress sequence mid-page.
+- Keep animation CSS-driven; use only the minimal reload/scroll-state script needed to skip it when
+  the browser restores a nonzero position.
 - Under `prefers-reduced-motion: reduce`, show all content immediately and disable the hand movement
   and translation.
 - Remove the `intro-enter-immediate` behavior currently coupled to `JumpLinks`.

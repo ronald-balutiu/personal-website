@@ -14,6 +14,12 @@
   }
 }
 
+:root.skip-home-entrance .projects-section {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
 @keyframes projects-enter {
   to {
     opacity: 1;
@@ -45,14 +51,12 @@
   text-decoration: none;
   transition:
     background-color 0.2s ease,
-    transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 
 .project-item-link:hover {
   background-color: var(--color-accent-soft);
   box-shadow: 0 8px 20px var(--color-shadow-soft);
-  transform: translateY(-0.2rem);
 }
 
 .project-item-icon {

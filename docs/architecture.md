@@ -24,7 +24,8 @@ Astro Content Collection.
 The homepage is organized into a responsive hero and a project list. The hero contains the greeting,
 About copy, social links, and optimized portrait in a single semantic section. The greeting and hand
 appear first; the remaining content enters after the hand animation. Each project row is a complete
-clickable target with hover and keyboard-focus feedback.
+clickable target with hover and keyboard-focus feedback. A reload restored below the top skips the
+entrance sequence, using the previous scroll position kept briefly in session storage.
 
 ## Content Model
 

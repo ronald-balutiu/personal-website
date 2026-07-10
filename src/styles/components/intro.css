@@ -65,7 +65,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem clamp(1.25rem, 3vw, 2.5rem);
-  margin-top: 1rem;
+  margin-top: 1.75rem;
 }
 
 .intro-social-link {
@@ -154,7 +154,7 @@
 
   .intro-social-links {
     justify-content: center;
-    margin-top: 0.75rem;
+    margin-top: 1.5rem;
   }
 
   .intro-portrait {
@@ -210,6 +210,16 @@
     transform: none;
     animation: none;
   }
+}
+
+:root.skip-home-entrance .intro-peace-icon,
+:root.skip-home-entrance .intro-description,
+:root.skip-home-entrance .intro-portrait,
+:root.skip-home-entrance .intro-about-details,
+:root.skip-home-entrance .intro-social-links {
+  opacity: 1;
+  transform: none;
+  animation: none;
 }
 
 @keyframes content-enter {
