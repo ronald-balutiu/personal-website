@@ -29,11 +29,7 @@ const socialLinks = [
       <span class="intro-title-solid">Ronald</span>
       <span class="intro-title-outline">
         Balutiu
-        <img
-          src="/assets/peace.svg"
-          alt="Peace"
-          class="intro-peace-icon inline-block transform rotate-10"
-        />
+        <span class="intro-peace-icon inline-block transform rotate-10" aria-hidden="true"></span>
       </span>
     </h1>
     <p class="intro-description">Design-minded engineer shipping high quality, high impact work.</p>
@@ -66,7 +62,9 @@ const socialLinks = [
   .intro-peace-icon {
     width: 3rem; /* Adjust size as needed */
     height: 3rem; /* Adjust size as needed */
-    color: var(--text); /* Ensure it matches the text color */
+    background-color: var(--color-accent);
+    -webkit-mask: url('/assets/peace.svg') center / contain no-repeat;
+    mask: url('/assets/peace.svg') center / contain no-repeat;
     margin-left: -0.3rem;
     vertical-align: middle;
     position: relative;

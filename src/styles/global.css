@@ -4,12 +4,13 @@
 @import './components/experience.css';
 @import './components/jump-links.css';
 @import './components/projects.css';
+@import './components/theme-toggle.css';
 
 /* Typography */
 html {
   font-family: 'DM Sans', sans-serif;
-  background: var(--background);
-  color: var(--text);
+  background: var(--color-background);
+  color: var(--color-text);
   scroll-behavior: smooth;
 }
 
@@ -19,7 +20,7 @@ html {
 }
 
 .text-brown {
-  color: var(--brown);
+  color: var(--color-accent);
 }
 
 /* Layout */
@@ -64,28 +65,28 @@ main {
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
   margin-bottom: 3rem;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 /* Common shadows */
 .shadow-sm {
-  box-shadow: 0 4px 6px -1px var(--shadow-black-soft);
+  box-shadow: 0 4px 6px -1px var(--color-shadow-soft);
 }
 
 .shadow-lg {
-  box-shadow: 0 20px 25px -5px var(--shadow-black-soft);
+  box-shadow: 0 20px 25px -5px var(--color-shadow-strong);
 }
 
 /* Common links */
 .link {
   text-decoration: none;
-  color: var(--text);
-  transition: all 0.2s;
+  color: var(--color-text);
+  transition: color 0.2s ease;
 }
 
 .link:hover {
   text-decoration: underline;
-  text-decoration-color: var(--brown);
+  text-decoration-color: var(--color-accent);
   text-underline-offset: 0.2em;
 }
 
@@ -105,13 +106,13 @@ main p a[href^='http'] {
   position: relative;
   z-index: 1;
   padding: 0.9rem var(--content-inline-padding) 1.15rem;
-  background-color: var(--background);
+  background-color: var(--color-background);
   text-align: center;
 }
 
 .site-footer-text {
   margin: 0;
-  color: var(--gray-500);
+  color: var(--color-text-muted);
   font-size: var(--font-size-label-sm);
   line-height: var(--line-height-normal);
 }

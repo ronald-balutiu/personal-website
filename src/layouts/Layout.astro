@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css'
 import SEO from '../components/SEO.astro'
+import ThemeToggle from '../components/theme/ThemeToggle.astro'
 import { buildSeo, type SeoInput } from '../lib/seo'
 
 interface Props {
@@ -18,6 +19,27 @@ const resolvedSeo = buildSeo(seo)
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO seo={resolvedSeo} />
+    <script is:inline>
+      ;(() => {
+        const root = document.documentElement
+        const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        root.dataset.theme = theme
+        root.style.colorScheme = theme
+
+        const activeThemeColor = document.getElementById('theme-color-' + theme)
+        const inactiveThemeColor = document.getElementById(
+          'theme-color-' + (theme === 'dark' ? 'light' : 'dark')
+        )
+        if (activeThemeColor) {
+          activeThemeColor.dataset.systemMedia = activeThemeColor.media
+          activeThemeColor.media = 'all'
+        }
+        if (inactiveThemeColor) {
+          inactiveThemeColor.dataset.systemMedia = inactiveThemeColor.media
+          inactiveThemeColor.media = 'not all'
+        }
+      })()
+    </script>
     <link rel="icon" type="image/svg+xml" href="/assets/laptop.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -49,5 +71,6 @@ const resolvedSeo = buildSeo(seo)
     <footer class="site-footer">
       <p class="site-footer-text">© 2026 Ronald Balutiu. All rights reserved.</p>
     </footer>
+    <ThemeToggle />
   </body>
 </html>

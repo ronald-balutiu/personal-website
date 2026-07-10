@@ -159,6 +159,16 @@ Current feature-flag behavior:
 - A11y tests block serious/critical violations for desktop and mobile viewport presets.
 - Playwright output is stored in `playwright_output/`.
 
+## Theme behavior
+
+The site follows the visitor's system light or dark preference on every page load. The upper-right
+toggle can temporarily switch the current page to the other theme, but the choice is kept only in
+memory and is never written to cookies, localStorage, sessionStorage, IndexedDB, or another
+persistent store. Reloading or navigating to a new page returns to the system preference.
+
+When JavaScript is disabled, the toggle stays hidden and the CSS media-query fallback still follows
+the system preference.
+
 ## CI
 
 GitHub Actions workflow: `.github/workflows/release-ci.yml`

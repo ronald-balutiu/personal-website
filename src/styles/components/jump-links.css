@@ -33,7 +33,7 @@
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
-  color: var(--gray-500);
+  color: var(--color-text-muted);
   font-size: var(--font-size-label-sm);
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
@@ -45,7 +45,7 @@
   content: '';
   width: 1.5rem;
   height: 1px;
-  background: var(--brown-alpha-25);
+  background: var(--color-accent-line);
   transition:
     width 0.2s ease,
     background 0.2s ease;
@@ -53,27 +53,27 @@
 
 .jump-link:hover,
 .jump-link:focus-visible {
-  color: var(--brown);
+  color: var(--color-accent);
 }
 
 .jump-link-active {
-  color: var(--brown);
+  color: var(--color-accent);
   font-weight: var(--font-weight-semibold);
 }
 
 .jump-link:hover::before,
 .jump-link:focus-visible::before {
   width: 2.25rem;
-  background: var(--brown);
+  background: var(--color-accent);
 }
 
 .jump-link-active::before {
   width: 2.25rem;
-  background: var(--brown);
+  background: var(--color-accent);
 }
 
 .jump-link:focus-visible {
-  outline: 2px solid var(--brown-alpha-40);
+  outline: 2px solid var(--color-focus);
   outline-offset: 4px;
 }
 
