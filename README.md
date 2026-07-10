@@ -1,190 +1,116 @@
 # Ronald Balutiu - Personal Website
 
-Production portfolio website built with Astro as a static web app. The codebase is structured for clean component boundaries, token-driven styling, content-managed projects, and strong automated quality gates.
+Source for [ronaldbalutiu.com](https://ronaldbalutiu.com), a static portfolio built with Astro.
 
-## Live Site
+The site presents Intro, About, Experience, and Projects sections. Project and experience entries
+are managed as Markdown content, while shared design tokens keep the visual system consistent.
 
-- Production: `https://ronaldbalutiu.com`
+## Documentation
+
+- [Architecture](docs/architecture.md): routes, content schema, SEO, theme behavior, styling, testing, and deployment.
+- [AGENTS.md](AGENTS.md): repository-specific instructions for coding agents.
 
 ## Highlights
 
-- Section-based homepage (`Intro`, `About`, `Experience`, `Projects`)
-- Markdown-backed projects via Astro Content Collections
-- Optional project detail pages controlled by a feature flag
-- Shared SEO metadata utilities and JSON-LD support
-- Unit, e2e, and accessibility testing in local and CI pipelines
+- Section-based homepage with sticky jump-link navigation.
+- Markdown-backed project and experience content via Astro Content Collections.
+- Optional project detail pages controlled by a build-time toggle.
+- Shared SEO metadata utilities and JSON-LD support.
+- System light/dark theme support with a temporary in-memory toggle.
+- Unit, end-to-end, and accessibility testing in local and CI pipelines.
 
 ## Tech Stack
 
-- Astro 5 (static output)
-- TypeScript
-- Vanilla CSS + design tokens
-- Vitest
-- Playwright + axe-core
-- ESLint + Prettier
-- GitHub Actions
-
-## Project Architecture
-
-```text
-.
-|-- src/
-|   |-- components/
-|   |   |-- about/About.astro
-|   |   |-- experience/Experience.astro
-|   |   |-- intro/Intro.astro
-|   |   |-- projects/ProjectItem.astro
-|   |   |-- projects/Projects.astro
-|   |   |-- JumpLinks.astro
-|   |   `-- SEO.astro
-|   |-- config/
-|   |   |-- features.ts
-|   |   `-- site.ts
-|   |-- content.config.ts
-|   |-- content/
-|   |   |-- experience/*.md
-|   |   `-- projects/*.md
-|   |-- layouts/Layout.astro
-|   |-- lib/seo.ts
-|   |-- pages/
-|   |   |-- index.astro
-|   |   `-- [project].astro
-|   `-- styles/
-|       |-- tokens.css
-|       |-- global.css
-|       `-- components/*.css
-|-- public/assets/
-|-- tests/
-|   |-- unit/
-|   |-- e2e/
-|   `-- a11y/
-|-- docs/metadata-tags-plan/
-|-- playwright.config.ts
-|-- vitest.config.ts
-|-- wrangler.jsonc
-`-- .github/workflows/release-ci.yml
-```
+- Astro 5 with static output
+- TypeScript with Astro's strict configuration
+- Vanilla CSS with centralized design tokens
+- Astro Content Collections for project and experience content
+- Vitest for unit tests
+- Playwright and axe-core for browser and accessibility tests
+- ESLint and Prettier for code quality
+- GitHub Actions for continuous integration
 
 ## Prerequisites
 
-- Node.js 24+
+- Node.js 24.x, matching CI
 - npm
 
-## Local Setup
+## Getting Started
 
-```bash
-npm install
+Install the locked dependency versions and start the development server:
+
+```sh
+npm ci
 npm run dev
 ```
 
-Local dev server: `http://localhost:4321`
+The development server runs at `http://localhost:4321`.
 
 ## Build and Preview
 
-```bash
+```sh
 npm run build
 npm run preview
 ```
 
-## Commands
+## Common Commands
 
-### Development
+| Command                      | Purpose                                                              |
+| ---------------------------- | -------------------------------------------------------------------- |
+| `npm run dev`                | Start the Astro development server.                                  |
+| `npm run build`              | Build the static site into `dist/`.                                  |
+| `npm run preview`            | Serve the production build locally.                                  |
+| `npm run check`              | Run Astro and TypeScript diagnostics.                                |
+| `npm run test:unit`          | Run Vitest unit tests.                                               |
+| `npm run test:e2e`           | Run Chromium end-to-end tests.                                       |
+| `npm run test:a11y`          | Run Chromium accessibility tests.                                    |
+| `npm run test`               | Run the fast local verification suite.                               |
+| `npm run test:cross-browser` | Run e2e and accessibility tests on Chromium, Firefox, and WebKit.    |
+| `npm run lint`               | Run ESLint with autofix.                                             |
+| `npm run lint:check`         | Run ESLint without modifying files.                                  |
+| `npm run format`             | Format files with Prettier.                                          |
+| `npm run format:check`       | Check formatting without modifying files.                            |
+| `npm run release`            | Run the local quality gate; linting and formatting may modify files. |
+| `npm run release:ci`         | Run the CI-equivalent quality gate.                                  |
+| `npm run clean`              | Remove the generated Astro cache.                                    |
 
-| Command           | Description                          |
-| ----------------- | ------------------------------------ |
-| `npm run dev`     | Start Astro dev server               |
-| `npm run build`   | Build static output into `dist/`     |
-| `npm run preview` | Preview the production build locally |
-| `npm run clean`   | Remove local Astro cache (`.astro/`) |
-| `npm run astro`   | Run Astro CLI directly               |
+Use `npm run release` before committing. CI uses `npm run release:ci`, which also runs the full
+cross-browser test suite.
 
-### Quality and Formatting
+## Content
 
-| Command                | Description                   |
-| ---------------------- | ----------------------------- |
-| `npm run lint`         | Run ESLint with autofix       |
-| `npm run lint:check`   | Run ESLint in check mode      |
-| `npm run format`       | Run Prettier in write mode    |
-| `npm run format:check` | Run Prettier in check mode    |
-| `npm run check`        | Run `astro check` diagnostics |
+Project entries live in [`src/content/projects/`](src/content/projects/), and experience entries live
+in [`src/content/experience/`](src/content/experience/). Both collections are validated by
+[`src/content.config.ts`](src/content.config.ts). See the [architecture documentation](docs/architecture.md#content-model)
+for their schemas and the project-detail route behavior.
 
-### Tests
+## Testing
 
-| Command                      | Description                                              |
-| ---------------------------- | -------------------------------------------------------- |
-| `npm run test:unit`          | Run Vitest unit tests                                    |
-| `npm run test:e2e`           | Run Playwright e2e tests (Chromium)                      |
-| `npm run test:a11y`          | Run Playwright accessibility tests (Chromium)            |
-| `npm run test`               | Run aggregate local test flow (`check`, unit, e2e, a11y) |
-| `npm run test:cross-browser` | Run tests across Chromium, Firefox, and WebKit           |
+The repository runs unit, end-to-end, accessibility, and cross-browser tests. Playwright output is
+written to `playwright_output/`, which is ignored by Git. See the
+[architecture documentation](docs/architecture.md#verification) for coverage details.
 
-### Release Gates
+## CI and Deployment
 
-| Command              | Description                                                      |
-| -------------------- | ---------------------------------------------------------------- |
-| `npm run release`    | Local pre-commit gate: lint + format + check + build + test      |
-| `npm run release:ci` | CI gate: sync + lint/format checks + build + cross-browser tests |
+GitHub Actions runs [`.github/workflows/release-ci.yml`](.github/workflows/release-ci.yml) on pushes
+and pull requests targeting `master`. The workflow installs dependencies with `npm ci`, installs
+Playwright browsers, and runs `npm run release:ci`.
 
-## Content Management
+The site is configured for static deployment. Cloudflare Pages uses `dist/` as its build output
+directory, as also specified in [`wrangler.jsonc`](wrangler.jsonc). Use Cloudflare Pages commands
+for deployment rather than Workers deploy commands.
 
-Project entries live in `src/content/projects/*.md` and are validated by `src/content.config.ts`.
+## Documentation Maintenance
 
-Required frontmatter:
+Keep documentation changes in the same change as the code they describe:
 
-- `title`
-- `description`
-- `details`
-- `link` (must be a URL)
-- `icon`
+- Update this README when setup, commands, content editing, testing, or deployment changes.
+- Update [`docs/architecture.md`](docs/architecture.md) when the application's implementation or
+  behavior changes.
+- Update [`AGENTS.md`](AGENTS.md) only when repository conventions or verification expectations change.
 
-Optional frontmatter:
-
-- `seoTitle`
-- `seoDescription`
-- `ogImage`
-- `ogImageAlt`
-- `publishedAt`
-- `updatedAt`
-
-Current feature-flag behavior:
-
-- `PROJECT_DETAIL_PAGES_ENABLED` in `src/config/features.ts` is currently `false`.
-- With this setting, project cards link to each project's external `link`.
-- If set to `true`, Astro generates static project detail routes via `src/pages/[project].astro`.
-
-## Testing Strategy
-
-- Unit tests validate content integrity and SEO utility behavior.
-- E2E tests validate route health, navigation, and interaction behavior.
-- A11y tests block serious/critical violations for desktop and mobile viewport presets.
-- Playwright output is stored in `playwright_output/`.
-
-## Theme behavior
-
-The site follows the visitor's system light or dark preference on every page load. The upper-right
-toggle can temporarily switch the current page to the other theme, but the choice is kept only in
-memory and is never written to cookies, localStorage, sessionStorage, IndexedDB, or another
-persistent store. Reloading or navigating to a new page returns to the system preference.
-
-When JavaScript is disabled, the toggle stays hidden and the CSS media-query fallback still follows
-the system preference.
-
-## CI
-
-GitHub Actions workflow: `.github/workflows/release-ci.yml`
-
-On push/PR to `master`, CI runs:
-
-1. `npm ci`
-2. `npx playwright install --with-deps`
-3. `npm run release:ci`
-
-## Deployment
-
-This project uses static output and Cloudflare Pages configuration.
-
-- Build output directory: `dist` (also defined in `wrangler.jsonc`)
-- Use `wrangler pages ...` commands for deployment
+The executable configuration in `package.json`, CI workflow files, and source code remains the source
+of truth; documentation should explain and link to it rather than duplicate implementation details.
 
 ## License
 
