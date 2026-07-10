@@ -17,6 +17,16 @@ test.describe('metadata tags', () => {
       'content',
       /^https?:\/\//
     )
+    await expect(page.locator('#theme-color-light')).toHaveAttribute(
+      'media',
+      '(prefers-color-scheme: light)'
+    )
+    await expect(page.locator('#theme-color-light')).toHaveAttribute('content', '#f8f2ee')
+    await expect(page.locator('#theme-color-dark')).toHaveAttribute(
+      'media',
+      '(prefers-color-scheme: dark)'
+    )
+    await expect(page.locator('#theme-color-dark')).toHaveAttribute('content', '#292827')
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
       'content',
       'summary_large_image'

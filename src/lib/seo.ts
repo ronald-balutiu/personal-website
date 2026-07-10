@@ -123,8 +123,8 @@ export interface ResolvedSeo {
   canonical: string
   /** Final robots directive. */
   robots: string
-  /** Final theme color rendered in `meta[name="theme-color"]`. */
-  themeColor: string
+  /** Theme colors rendered in the light/dark `meta[name="theme-color"]` elements. */
+  themeColors: { light: string; dark: string }
   og: ResolvedOpenGraph
   twitter: ResolvedTwitter
   /** Structured data blocks rendered as JSON-LD scripts. */
@@ -200,7 +200,7 @@ export const buildSeo = (input: SeoInput): ResolvedSeo => {
     description,
     canonical,
     robots: resolveRobots(input),
-    themeColor: siteConfig.themeColor,
+    themeColors: siteConfig.themeColors,
     og: {
       type: ogType,
       title,

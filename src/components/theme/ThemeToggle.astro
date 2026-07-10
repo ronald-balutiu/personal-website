@@ -1,0 +1,92 @@
+<button
+  id="theme-toggle"
+  class="theme-toggle"
+  type="button"
+  aria-label="Switch to dark mode"
+  aria-pressed="false"
+  data-theme="light"
+  hidden
+>
+  <svg
+    class="theme-toggle-icon"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle class="theme-toggle-sun" cx="12" cy="12" r="4"></circle>
+    <path
+      class="theme-toggle-sun"
+      d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"
+    ></path>
+    <path class="theme-toggle-moon" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"
+    ></path>
+  </svg>
+</button>
+
+<script>
+  type Theme = 'light' | 'dark'
+
+  const root = document.documentElement
+  const button = document.querySelector<HTMLButtonElement>('#theme-toggle')
+  const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  const themeColors = {
+    light: document.querySelector<HTMLMetaElement>('#theme-color-light'),
+    dark: document.querySelector<HTMLMetaElement>('#theme-color-dark'),
+  } satisfies Record<Theme, HTMLMetaElement | null>
+  const defaultMedia: Record<Theme, string> = {
+    light:
+      themeColors.light?.dataset.systemMedia ??
+      themeColors.light?.getAttribute('media') ??
+      '(prefers-color-scheme: light)',
+    dark:
+      themeColors.dark?.dataset.systemMedia ??
+      themeColors.dark?.getAttribute('media') ??
+      '(prefers-color-scheme: dark)',
+  }
+
+  if (button) {
+    let manualOverride = false
+
+    const updateThemeColorMedia = (theme: Theme) => {
+      ;(['light', 'dark'] as const).forEach((colorTheme) => {
+        const element = themeColors[colorTheme]
+        if (!element) return
+        element.media = manualOverride
+          ? colorTheme === theme
+            ? 'all'
+            : 'not all'
+          : defaultMedia[colorTheme]
+      })
+    }
+
+    const applyTheme = (theme: Theme) => {
+      root.dataset.theme = theme
+      root.style.colorScheme = theme
+      button.dataset.theme = theme
+      button.setAttribute('aria-pressed', String(theme === 'dark'))
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`)
+      button.title = `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`
+      updateThemeColorMedia(theme)
+    }
+
+    const initialTheme: Theme = root.dataset.theme === 'dark' ? 'dark' : 'light'
+    applyTheme(initialTheme)
+    button.hidden = false
+
+    button.addEventListener('click', () => {
+      manualOverride = true
+      applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark')
+    })
+
+    darkModeQuery.addEventListener('change', (event) => {
+      if (manualOverride) return
+      applyTheme(event.matches ? 'dark' : 'light')
+    })
+  }
+</script>

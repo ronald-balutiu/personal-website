@@ -1,6 +1,6 @@
 .experience-section {
   padding: 0 var(--content-inline-padding) clamp(1.5rem, 2vw, 2rem);
-  background-color: var(--transparent);
+  background-color: var(--color-transparent);
 }
 
 .experience-content {
@@ -31,7 +31,7 @@
   font-size: var(--font-size-heading-md);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .experience-locations {
@@ -39,7 +39,7 @@
   font-size: var(--font-size-body-md);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-normal);
-  color: var(--gray-500);
+  color: var(--color-text-muted);
   margin-left: auto;
   text-align: right;
   white-space: normal;
@@ -65,7 +65,7 @@
 
 .experience-role-title {
   font-weight: var(--font-weight-medium);
-  color: var(--gray-500);
+  color: var(--color-text-muted);
   flex: 1 1 18ch;
   min-width: 0;
 }
@@ -73,7 +73,7 @@
 .experience-role-dates {
   font-size: var(--font-size-body-md);
   font-weight: var(--font-weight-regular);
-  color: var(--gray-500);
+  color: var(--color-text-muted);
   margin-left: auto;
   text-align: right;
   white-space: normal;
@@ -86,7 +86,7 @@
   font-size: var(--font-size-body-md);
   line-height: var(--line-height-relaxed);
   font-weight: var(--font-weight-regular);
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .experience-summary-paragraph {
@@ -108,8 +108,8 @@
   align-items: center;
   padding: 0.3rem 0.75rem;
   border-radius: 9999px;
-  background-color: var(--brown);
-  color: var(--brown-light);
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
   font-size: var(--font-size-label-sm);
   font-weight: var(--font-weight-medium);
   line-height: 1.25;

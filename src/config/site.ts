@@ -59,10 +59,13 @@ export interface SiteConfig {
   language: string
 
   /**
-   * Browser UI tint color (`meta[name="theme-color"]`).
-   * @defaultValue `'#f8f2ee'`
+   * Browser UI tint colors for each supported color scheme.
+   * @defaultValue `{ light: '#f8f2ee', dark: '#292827' }`
    */
-  themeColor: string
+  themeColors: {
+    light: string
+    dark: string
+  }
 
   /**
    * Default robots directive for public pages.
@@ -87,7 +90,10 @@ export const siteConfig: SiteConfig = {
   defaultOgImageAlt: 'Homepage hero of Ronald Balutiu portfolio with name and engineering tagline.',
   locale: 'en_US',
   language: 'en-US',
-  themeColor: '#f8f2ee',
+  themeColors: {
+    light: '#f8f2ee',
+    dark: '#292827',
+  },
   robots: 'index,follow',
   twitterCard: 'summary_large_image',
 }

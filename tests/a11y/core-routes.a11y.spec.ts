@@ -94,30 +94,36 @@ for (const viewport of viewports) {
     })
 
     for (const route of routes) {
-      test(`a11y: ${route.label} blocks serious/critical violations`, async ({ page }) => {
-        const response = await page.goto(route.path)
-        expect(response, `Expected ${route.path} to return a response`).not.toBeNull()
-        expect(response?.status(), `Expected ${route.path} to return status 200`).toBe(200)
-        await expect(page.locator('main')).toBeVisible()
+      for (const colorScheme of ['light', 'dark'] as const) {
+        test(`a11y: ${route.label} (${colorScheme}) blocks serious/critical violations`, async ({
+          page,
+        }) => {
+          await page.emulateMedia({ colorScheme })
+          const response = await page.goto(route.path)
+          expect(response, `Expected ${route.path} to return a response`).not.toBeNull()
+          expect(response?.status(), `Expected ${route.path} to return status 200`).toBe(200)
+          await expect(page.locator('main')).toBeVisible()
+          await expect(page.locator('html')).toHaveAttribute('data-theme', colorScheme)
 
-        const results = await new AxeBuilderPlaywright({ page }).analyze()
-        const blockingViolations = results.violations.filter(
-          (violation) => violation.impact && blockingImpacts.has(violation.impact)
-        )
-        const blockingIncomplete = collectBlockingIncomplete(route.path, results.incomplete)
+          const results = await new AxeBuilderPlaywright({ page }).analyze()
+          const blockingViolations = results.violations.filter(
+            (violation) => violation.impact && blockingImpacts.has(violation.impact)
+          )
+          const blockingIncomplete = collectBlockingIncomplete(route.path, results.incomplete)
 
-        expect(
-          blockingViolations,
-          `Blocking accessibility violations found on ${route.path}:\n${formatViolations(blockingViolations)}`
-        ).toEqual([])
+          expect(
+            blockingViolations,
+            `Blocking accessibility violations found on ${route.path} (${colorScheme}):\n${formatViolations(blockingViolations)}`
+          ).toEqual([])
 
-        expect(
-          blockingIncomplete,
-          `Blocking incomplete accessibility findings found on ${route.path} (not allowlisted):\n${formatViolations(
-            blockingIncomplete
-          )}`
-        ).toEqual([])
-      })
+          expect(
+            blockingIncomplete,
+            `Blocking incomplete accessibility findings found on ${route.path} (${colorScheme}) (not allowlisted):\n${formatViolations(
+              blockingIncomplete
+            )}`
+          ).toEqual([])
+        })
+      }
     }
   })
 }

@@ -18,6 +18,7 @@ describe('seo helpers', () => {
     expect(seo.og.type).toBe('website')
     expect(seo.canonical).toBe('https://ronaldbalutiu.com/')
     expect(seo.og.image).toBe('https://ronaldbalutiu.com/assets/og-default.png')
+    expect(seo.themeColors).toEqual(siteConfig.themeColors)
   })
 
   it('builds project seo metadata with article open graph type and title template', () => {
