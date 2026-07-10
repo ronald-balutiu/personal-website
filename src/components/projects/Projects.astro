@@ -1,7 +1,6 @@
 ---
 import ProjectItem from './ProjectItem.astro'
 import { getCollection } from 'astro:content'
-import { PROJECT_DETAIL_PAGES_ENABLED } from '../../config/features'
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
 ---
@@ -12,8 +11,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
     {
       projects.map((project) => (
         <ProjectItem
-          href={PROJECT_DETAIL_PAGES_ENABLED ? `/${project.id}` : project.data.link}
-          external={!PROJECT_DETAIL_PAGES_ENABLED}
+          href={project.data.link}
           icon={project.data.icon}
           title={project.data.title}
           description={project.data.description}

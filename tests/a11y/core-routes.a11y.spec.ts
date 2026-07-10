@@ -1,29 +1,9 @@
-import { readdirSync } from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-
 import AxeBuilderPlaywright from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
-import { PROJECT_DETAIL_PAGES_ENABLED } from '../../src/config/features'
-
 const blockingImpacts = new Set(['serious', 'critical'])
 
-const thisFile = fileURLToPath(import.meta.url)
-const thisDir = path.dirname(thisFile)
-const projectsContentDir = path.resolve(thisDir, '../../src/content/projects')
-
-const projectSlugs = PROJECT_DETAIL_PAGES_ENABLED
-  ? readdirSync(projectsContentDir, { withFileTypes: true })
-      .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
-      .map((entry) => entry.name.replace(/\.md$/, ''))
-      .sort()
-  : []
-
-const routes = [
-  { path: '/', label: 'homepage' },
-  ...projectSlugs.map((slug) => ({ path: `/${slug}`, label: `project route "${slug}"` })),
-]
+const routes = [{ path: '/', label: 'homepage' }]
 
 const viewports = [
   { name: 'desktop', size: { width: 1440, height: 900 } },

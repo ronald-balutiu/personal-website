@@ -14,7 +14,6 @@ Astro Content Collection.
 ## Routes and Layout
 
 - `src/pages/index.astro` renders the main portfolio page.
-- `src/pages/[project].astro` provides optional static project detail pages.
 - `src/layouts/Layout.astro` provides the shared document shell, SEO metadata, theme setup, and page
   metadata.
 - `src/components/` contains feature-oriented UI components and shared navigation.
@@ -33,19 +32,8 @@ Content collections are defined in `src/content.config.ts` and loaded from Markd
 
 - `src/content/projects/` contains project entries.
 
-Project frontmatter includes ordering, project details, external links, icons, optional SEO metadata,
-and optional publication dates:
-
-- Required: `order`, `title`, `description`, `details`, `link`, and `icon`.
-- Optional: `seoTitle`, `seoDescription`, `ogImage`, `ogImageAlt`, `publishedAt`, and `updatedAt`.
-
-The project detail route is controlled by the build-time constant
-`PROJECT_DETAIL_PAGES_ENABLED` in `src/config/features.ts`:
-
-- When `false`, project cards link directly to the external project URL.
-- When `true`, Astro generates a static detail page for each project slug.
-
-This is a build-time toggle, not an environment-backed runtime feature flag.
+Project frontmatter contains `order`, `title`, `description`, `link`, and `icon`. The schema validates
+these fields at build time, and each project row links directly to its external repository.
 
 ## SEO and Theme Behavior
 

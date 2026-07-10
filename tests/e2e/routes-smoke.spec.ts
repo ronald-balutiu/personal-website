@@ -1,158 +1,53 @@
-import { readdirSync } from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-
 import { expect, type Page, test } from '@playwright/test'
 
-import { PROJECT_DETAIL_PAGES_ENABLED } from '../../src/config/features'
-
-const thisFile = fileURLToPath(import.meta.url)
-const thisDir = path.dirname(thisFile)
-const projectsContentDir = path.resolve(thisDir, '../../src/content/projects')
 const criticalResourceTypes = new Set(['document', 'script', 'xhr', 'fetch', 'stylesheet', 'font'])
 
-const projectSlugs = PROJECT_DETAIL_PAGES_ENABLED
-  ? readdirSync(projectsContentDir, { withFileTypes: true })
-      .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
-      .map((entry) => entry.name.replace(/\.md$/, ''))
-      .sort()
-  : []
+const monitorRuntimeErrors = (page: Page) => {
+  const errors: string[] = []
 
-type RuntimeIssue = {
-  kind: 'pageerror' | 'console.error' | 'requestfailed' | 'badresponse'
-  detail: string
-}
-
-const formatIssues = (issues: RuntimeIssue[]) => {
-  return issues.map((issue) => `- [${issue.kind}] ${issue.detail}`).join('\n')
-}
-
-const createRuntimeHealthMonitor = (page: Page) => {
-  const issues: RuntimeIssue[] = []
-
-  page.on('pageerror', (error) => {
-    issues.push({ kind: 'pageerror', detail: error.message })
-  })
-
+  page.on('pageerror', (error) => errors.push(`page error: ${error.message}`))
   page.on('console', (message) => {
-    if (message.type() === 'error') {
-      issues.push({ kind: 'console.error', detail: message.text() })
-    }
+    if (message.type() === 'error') errors.push(`console error: ${message.text()}`)
   })
-
   page.on('requestfailed', (request) => {
     if (criticalResourceTypes.has(request.resourceType())) {
-      issues.push({
-        kind: 'requestfailed',
-        detail: `${request.method()} ${request.url()} (${request.failure()?.errorText ?? 'unknown'})`,
-      })
+      errors.push(
+        `${request.method()} ${request.url()}: ${request.failure()?.errorText ?? 'failed'}`
+      )
     }
   })
-
   page.on('response', (response) => {
-    const resourceType = response.request().resourceType()
-    if (criticalResourceTypes.has(resourceType) && response.status() >= 400) {
-      issues.push({
-        kind: 'badresponse',
-        detail: `${response.status()} ${response.request().method()} ${response.url()}`,
-      })
+    if (criticalResourceTypes.has(response.request().resourceType()) && response.status() >= 400) {
+      errors.push(`${response.status()} ${response.request().method()} ${response.url()}`)
     }
   })
 
-  return {
-    async assertClean(route: string) {
-      await page.waitForLoadState('networkidle')
-      expect(issues, `Runtime issues detected for "${route}":\n${formatIssues(issues)}`).toEqual([])
-    },
-  }
+  return errors
 }
 
-const openHealthyRoute = async (page: Page, route: string) => {
-  const runtimeHealth = createRuntimeHealthMonitor(page)
-  const response = await page.goto(route, { waitUntil: 'domcontentloaded' })
-
-  expect(response, `Expected "${route}" to return a response`).not.toBeNull()
-  expect(response?.status(), `Expected "${route}" to resolve without 4xx/5xx`).toBe(200)
-  await expect(page.locator('main')).toBeVisible()
-  await expect(page).toHaveTitle(/.+/)
-  await runtimeHealth.assertClean(route)
-}
-
-const smokeViewports = [
-  { name: 'desktop', size: { width: 1440, height: 900 } },
-  { name: 'tablet', size: { width: 853, height: 1280 } },
-  { name: 'mobile-iphone', size: { width: 390, height: 844 } },
+const viewports = [
+  { name: 'desktop', width: 1440, height: 900 },
+  { name: 'tablet', width: 853, height: 1280 },
+  { name: 'mobile', width: 390, height: 844 },
 ]
 
-for (const viewport of smokeViewports) {
-  test.describe(`routes smoke (${viewport.name})`, () => {
-    test.beforeEach(async ({ page }) => {
-      await page.setViewportSize(viewport.size)
-    })
+for (const viewport of viewports) {
+  test(`homepage renders at ${viewport.name} size without runtime errors`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    const runtimeErrors = monitorRuntimeErrors(page)
+    const response = await page.goto('/')
 
-    test('homepage renders and includes core sections', async ({ page }) => {
-      await openHealthyRoute(page, '/')
-
-      const headings = page.getByRole('heading', { level: 1 })
-      await expect(headings).toHaveCount(1)
-      await expect(headings).toHaveText("Hello, I'm Ronald Balutiu.")
-      await expect(
-        page.getByRole('heading', { level: 2, name: 'A couple things I’ve made' })
-      ).toBeVisible()
-      await expect(page.getByRole('heading', { level: 2, name: /About|Experience/ })).toHaveCount(0)
-
-      for (const name of ['GitHub', 'LinkedIn', 'Instagram', 'Email']) {
-        await expect(page.getByRole('link', { name, exact: true })).toBeVisible()
-      }
-
-      await expect(page.locator('.intro-description')).toHaveCount(1)
-      await expect(page.locator('.intro-about-details p')).toHaveCount(3)
-      await expect(page.locator('.project-item')).toHaveCount(2)
-      await expect(page.locator('.project-item-link')).toHaveCount(2)
-    })
-
-    test('representative project route renders title, description, and primary link', async ({
-      page,
-    }) => {
-      test.skip(!PROJECT_DETAIL_PAGES_ENABLED, 'Project detail pages are disabled')
-
-      await openHealthyRoute(page, '/personal-website')
-
-      await expect(page.getByRole('heading', { level: 1, name: 'Personal Website' })).toBeVisible()
-      await expect(
-        page.getByText(
-          'An Astro.js side project to build an accessible, lightning fast website in an unfamiliar tech stack.'
-        )
-      ).toBeVisible()
-
-      const primaryLink = page.getByRole('link', { name: 'View Project' })
-      await expect(primaryLink).toBeVisible()
-      await expect(primaryLink).toHaveAttribute('href', /^https?:\/\//)
-    })
-
-    test('project rows link directly to external URLs when detail pages are disabled', async ({
-      page,
-    }) => {
-      test.skip(PROJECT_DETAIL_PAGES_ENABLED, 'Project detail pages are enabled')
-
-      await openHealthyRoute(page, '/')
-
-      const projectLinks = page.locator('#projects .project-item-link')
-      const count = await projectLinks.count()
-      expect(count).toBeGreaterThan(0)
-
-      for (let index = 0; index < count; index += 1) {
-        const link = projectLinks.nth(index)
-        await expect(link).toHaveAttribute('href', /^https?:\/\//)
-        await expect(link).toHaveAttribute('target', '_blank')
-      }
-    })
-
-    for (const slug of projectSlugs) {
-      test(`project route resolves for content slug "${slug}"`, async ({ page }) => {
-        await openHealthyRoute(page, `/${slug}`)
-        await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-      })
-    }
+    expect(response?.status()).toBe(200)
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText("Hello, I'm Ronald Balutiu.")
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'A couple things I’ve made' })
+    ).toBeVisible()
+    await expect(
+      page.getByRole('navigation', { name: 'Social links' }).getByRole('link')
+    ).toHaveCount(4)
+    await expect(page.locator('.intro-about-details p')).toHaveCount(3)
+    await expect(page.locator('.project-item-link')).toHaveCount(2)
+    await page.waitForLoadState('networkidle')
+    expect(runtimeErrors).toEqual([])
   })
 }

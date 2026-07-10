@@ -14,7 +14,7 @@ entries are managed as Markdown content, while shared design tokens keep the vis
 
 - Responsive hero with an optimized portrait, social links, and About copy.
 - Markdown-backed project content via an Astro Content Collection.
-- Optional project detail pages controlled by a build-time toggle.
+- Project rows that link directly to their repositories.
 - Shared SEO metadata utilities and JSON-LD support.
 - System light/dark theme support with a temporary in-memory toggle.
 - Unit, end-to-end, and accessibility testing in local and CI pipelines.
@@ -81,7 +81,7 @@ cross-browser test suite.
 
 Project entries live in [`src/content/projects/`](src/content/projects/) and are validated by
 [`src/content.config.ts`](src/content.config.ts). See the [architecture documentation](docs/architecture.md#content-model)
-for the schema and project-detail route behavior.
+for the schema and rendering behavior.
 
 ## Testing
 

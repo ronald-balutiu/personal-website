@@ -10,17 +10,10 @@ const projects = defineCollection({
   loader: glob({ base: './src/content/projects', pattern: '**/*.md' }),
   schema: z.object({
     order: z.number().int().nonnegative(),
-    title: z.string(),
-    description: z.string(),
-    details: z.string(),
+    title: z.string().min(1),
+    description: z.string().min(1),
     link: externalUrl,
-    icon: z.string(),
-    seoTitle: z.string().optional(),
-    seoDescription: z.string().optional(),
-    ogImage: z.string().optional(),
-    ogImageAlt: z.string().optional(),
-    publishedAt: z.coerce.date().optional(),
-    updatedAt: z.coerce.date().optional(),
+    icon: z.string().regex(/^\/assets\/[a-z0-9-]+\.svg$/),
   }),
 })
 
