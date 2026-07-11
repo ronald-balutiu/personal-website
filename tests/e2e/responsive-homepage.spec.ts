@@ -2,6 +2,8 @@ import { expect, type Locator, type Page, test } from '@playwright/test'
 
 type Box = { x: number; y: number; width: number; height: number }
 
+const responsiveWidths = Array.from({ length: 121 }, (_, index) => 1280 - index * 8)
+
 const getBox = async (locator: Locator): Promise<Box> => {
   const bounds = await locator.boundingBox()
   expect(bounds).not.toBeNull()
@@ -31,6 +33,17 @@ test.describe('responsive homepage structure', () => {
     await expectNoHorizontalOverflow(page)
   })
 
+  test('stacks the hero before the greeting needs a second line', async ({ page }) => {
+    await page.setViewportSize({ width: 1100, height: 900 })
+    await page.goto('/')
+
+    const primary = await getBox(page.locator('.intro-primary'))
+    const portrait = await getBox(page.locator('.intro-portrait'))
+    expect(Math.abs(portrait.x - primary.x)).toBeLessThan(1)
+    expect(portrait.y).toBeGreaterThan(primary.y + primary.height)
+    await expectNoHorizontalOverflow(page)
+  })
+
   for (const viewport of [
     { name: 'tablet', width: 853, height: 1280, socialRows: 1 },
     { name: 'phone', width: 390, height: 844, socialRows: 2 },
@@ -49,6 +62,7 @@ test.describe('responsive homepage structure', () => {
       expect(details.y).toBeGreaterThan(portrait.y + portrait.height)
       expect(socials.y).toBeGreaterThan(details.y + details.height)
       expect(projects.y).toBeGreaterThanOrEqual(socials.y + socials.height - 1)
+      expect(portrait.width / portrait.height).toBeLessThanOrEqual(1.51)
 
       const links = page.locator('.intro-social-link')
       const linkBoxes = await Promise.all(
@@ -61,6 +75,32 @@ test.describe('responsive homepage structure', () => {
     })
   }
 
+  test('keeps display typography stable as the viewport narrows', async ({ page }) => {
+    await page.setViewportSize({ width: responsiveWidths[0], height: 900 })
+    await page.goto('/')
+    await page.evaluate(() => document.fonts.ready)
+
+    const title = page.locator('.intro-title')
+    const samples: { fontSize: string; height: number }[] = []
+
+    for (const width of responsiveWidths) {
+      await page.setViewportSize({ width, height: 900 })
+      samples.push(
+        await title.evaluate((element) => ({
+          fontSize: getComputedStyle(element).fontSize,
+          height: Math.round(element.getBoundingClientRect().height),
+        }))
+      )
+      await expectNoHorizontalOverflow(page)
+    }
+
+    expect(new Set(samples.map(({ fontSize }) => fontSize)).size).toBe(1)
+
+    for (let index = 1; index < samples.length; index += 1) {
+      expect(samples[index].height).toBeGreaterThanOrEqual(samples[index - 1].height)
+    }
+  })
+
   test('project rows are complete clickable targets', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
     await page.goto('/')
@@ -69,6 +109,8 @@ test.describe('responsive homepage structure', () => {
     await expect(row).toContainText('A side project')
     await expect(row).toHaveAttribute('href', /^https?:\/\//)
     await row.hover()
+    await expect(row).toHaveCSS('background-color', 'rgb(242, 229, 220)')
+    await expect(row).not.toHaveCSS('box-shadow', 'none')
     await expect(row).toHaveCSS('transform', 'none')
   })
 })

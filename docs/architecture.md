@@ -26,6 +26,11 @@ appear first; the remaining content enters after the hand animation. Each projec
 clickable target with hover and keyboard-focus feedback. A reload restored below the top skips the
 entrance sequence, using the previous scroll position kept briefly in session storage.
 
+The hero stays side-by-side only when the available width keeps the complete greeting on one line;
+narrower desktop and tablet widths stack the portrait below the introduction. Stacked portrait crops
+use taller landscape ratios on tablet and phone to keep the framing natural. The greeting keeps one
+display size across breakpoints and wraps naturally when the available inline space is insufficient.
+
 ## Content Model
 
 Content collections are defined in `src/content.config.ts` and loaded from Markdown files:
@@ -57,10 +62,12 @@ styles.
 
 The repository uses layered verification:
 
-- Unit tests in `tests/unit/` validate content, asset, and SEO utility behavior.
+- Unit tests in `tests/unit/` validate SEO utility behavior.
 - End-to-end tests in `tests/e2e/` cover routes, runtime health, navigation, metadata, and theme
-  interactions.
-- Accessibility tests in `tests/a11y/` use axe-core across desktop and mobile viewport presets.
+  interactions. Responsive coverage sweeps the 320px–1280px range to ensure display typography
+  remains stable and wrapping only increases as available width decreases.
+- Accessibility tests in `tests/a11y/` use axe-core across desktop, tablet, and mobile viewports in
+  both color schemes.
 - `npm run test:cross-browser` runs browser tests on Chromium, Firefox, and WebKit.
 
 The local quality gate is `npm run release`. CI runs `npm run release:ci` after installing all three

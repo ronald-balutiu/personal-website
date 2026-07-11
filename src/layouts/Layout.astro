@@ -41,17 +41,19 @@ const currentYear = new Date().getFullYear()
         }
 
         try {
-          const navigation = performance.getEntriesByType('navigation')[0]
           const restoredScrollY = Number(sessionStorage.getItem('home-refresh-scroll-y') ?? 0)
           sessionStorage.removeItem('home-refresh-scroll-y')
 
-          if (navigation?.type === 'reload' && restoredScrollY > 1) {
+          if (restoredScrollY > 1) {
             root.classList.add('skip-home-entrance')
           }
 
-          window.addEventListener('pagehide', () => {
+          const rememberScrollPosition = () => {
             sessionStorage.setItem('home-refresh-scroll-y', String(window.scrollY))
-          })
+          }
+
+          window.addEventListener('scroll', rememberScrollPosition, { passive: true })
+          window.addEventListener('pagehide', rememberScrollPosition)
         } catch {
           // Storage may be unavailable; the entrance remains a safe visual enhancement.
         }
@@ -69,7 +71,7 @@ const currentYear = new Date().getFullYear()
     <main><slot /></main>
     <footer class="site-footer">
       <div class="site-footer-inner">
-        <p class="site-footer-text">© {currentYear} Ronald Balutiu. All rights reserved.</p>
+        <p class="site-footer-text">© {currentYear} {siteConfig.siteName}. All rights reserved.</p>
       </div>
     </footer>
     <ThemeToggle />

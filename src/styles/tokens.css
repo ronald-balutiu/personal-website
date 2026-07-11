@@ -23,8 +23,7 @@
   --project-icon-width: clamp(6rem, 10vw, 8rem);
   --project-icon-width-mobile: 5.5rem;
 
-  --font-size-display: clamp(2.4rem, 5vw, 3rem);
-  --font-size-display-mobile: clamp(2.1rem, 10vw, 2.8rem);
+  --font-size-display: 3rem;
   --font-size-section-title: clamp(2rem, 3.2vw, 2.25rem);
   --font-size-heading-sm: 1.25rem;
   --font-size-body-lg: 1.125rem;
