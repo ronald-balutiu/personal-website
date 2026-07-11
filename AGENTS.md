@@ -26,7 +26,7 @@ Before branch, rebase, push, pull request, or other remote Git work, run `git fe
 
 - Keep the site statically generated with Astro unless a requirement explicitly changes that model.
 - Preserve existing public features and UI options unless removal or renaming is explicitly requested.
-- Treat `src/content.config.ts` as the source of truth for project and experience frontmatter.
+- Treat `src/content.config.ts` as the source of truth for project frontmatter.
 - Put new design values in `src/styles/tokens.css` before consuming them in component styles.
 - Keep components organized by feature under `src/components/` and styles colocated under
   `src/styles/components/`.

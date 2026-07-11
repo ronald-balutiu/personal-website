@@ -2,6 +2,7 @@
 dist/
 test-results/
 playwright_output/
+output/playwright/
 
 # generated types
 .astro/
@@ -22,6 +23,5 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# Local planning notes; maintained documentation under docs/ remains versioned
-PLAN.md
+# Local planning-note directories; maintained documentation remains versioned
 /docs/*-plan/

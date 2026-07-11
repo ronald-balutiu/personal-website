@@ -7,10 +7,9 @@ import { buildSeo, type SeoInput } from '../lib/seo'
 
 interface Props {
   seo: SeoInput
-  balancedRails?: boolean
 }
 
-const { seo, balancedRails = false } = Astro.props
+const { seo } = Astro.props
 const resolvedSeo = buildSeo(seo)
 const currentYear = new Date().getFullYear()
 ---
@@ -40,6 +39,24 @@ const currentYear = new Date().getFullYear()
           inactiveThemeColor.dataset.systemMedia = inactiveThemeColor.media
           inactiveThemeColor.media = 'not all'
         }
+
+        try {
+          const restoredScrollY = Number(sessionStorage.getItem('home-refresh-scroll-y') ?? 0)
+          sessionStorage.removeItem('home-refresh-scroll-y')
+
+          if (restoredScrollY > 1) {
+            root.classList.add('skip-home-entrance')
+          }
+
+          const rememberScrollPosition = () => {
+            sessionStorage.setItem('home-refresh-scroll-y', String(window.scrollY))
+          }
+
+          window.addEventListener('scroll', rememberScrollPosition, { passive: true })
+          window.addEventListener('pagehide', rememberScrollPosition)
+        } catch {
+          // Storage may be unavailable; the entrance remains a safe visual enhancement.
+        }
       })()
     </script>
     <link rel="icon" type="image/svg+xml" href="/assets/laptop.svg" />
@@ -51,27 +68,11 @@ const currentYear = new Date().getFullYear()
     />
   </head>
   <body>
-    {
-      balancedRails ? (
-        <main class="page-shell">
-          <aside class="page-rail page-rail-left">
-            <slot name="left-rail" />
-          </aside>
-          <div class="page-content">
-            <slot />
-          </div>
-          <aside class="page-rail page-rail-right" aria-hidden="true">
-            <slot name="right-rail" />
-          </aside>
-        </main>
-      ) : (
-        <main>
-          <slot />
-        </main>
-      )
-    }
+    <main><slot /></main>
     <footer class="site-footer">
-      <p class="site-footer-text">© {currentYear} Ronald Balutiu. All rights reserved.</p>
+      <div class="site-footer-inner">
+        <p class="site-footer-text">© {currentYear} {siteConfig.siteName}. All rights reserved.</p>
+      </div>
     </footer>
     <ThemeToggle />
   </body>

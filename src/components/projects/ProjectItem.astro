@@ -4,21 +4,17 @@ interface Props {
   icon: string
   title: string
   description: string
-  external?: boolean
 }
 
-const { href, icon, title, description, external = false } = Astro.props
+const { href, icon, title, description } = Astro.props
 ---
 
-<a
-  href={href}
-  class="project-item"
-  target={external ? '_blank' : undefined}
-  rel={external ? 'noopener noreferrer' : undefined}
->
-  <div class="project-item-content">
+<article class="project-item">
+  <a href={href} class="project-item-link" target="_blank" rel="noopener noreferrer">
     <img class="project-item-icon" src={icon} alt="" loading="lazy" />
-    <h3 class="project-item-heading">{title}</h3>
-    <p class="project-item-description">{description}</p>
-  </div>
-</a>
+    <div class="project-item-copy">
+      <h3 class="project-item-heading">{title}</h3>
+      <p class="project-item-description">{description}</p>
+    </div>
+  </a>
+</article>

@@ -1,5 +1,4 @@
 .theme-toggle {
-  /* The control belongs to the page header area, so it scrolls away with it. */
   position: absolute;
   top: max(1rem, env(safe-area-inset-top));
   right: max(1rem, env(safe-area-inset-right));
@@ -16,12 +15,9 @@
   color: var(--color-accent);
   cursor: pointer;
   opacity: 0;
-  animation: theme-toggle-fade-in var(--motion-duration-soft) var(--motion-ease-standard)
-    calc(
-      var(--motion-delay-base) + var(--motion-sequence-social-jump-step) *
-        var(--motion-stagger-step)
-    )
-    forwards;
+  transform: translateY(0.75rem);
+  animation: content-enter var(--home-reveal-duration) var(--motion-ease-standard)
+    var(--home-reveal-delay) forwards;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
@@ -86,6 +82,7 @@
 @media (prefers-reduced-motion: reduce) {
   .theme-toggle {
     opacity: 1;
+    transform: none;
     animation: none;
     transition: none;
   }
@@ -95,12 +92,8 @@
   }
 }
 
-@keyframes theme-toggle-fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+:root.skip-home-entrance .theme-toggle {
+  opacity: 1;
+  transform: none;
+  animation: none;
 }

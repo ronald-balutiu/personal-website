@@ -1,82 +1,27 @@
-/**
- * Central source of truth for site-level SEO defaults.
- */
 export interface SiteConfig {
-  /**
-   * Absolute production origin used to build canonical and asset URLs.
-   * @defaultValue `'https://ronaldbalutiu.com'`
-   * @remarks Must not end with `/`.
-   */
+  /** Production origin used for canonical and asset URLs. Must not end in `/`. */
   siteUrl: string
-
-  /**
-   * Human-readable site name used in Open Graph metadata.
-   * @defaultValue `'Ronald Balutiu'`
-   */
+  /** Name reported to Open Graph consumers. */
   siteName: string
-
-  /**
-   * Fallback document title used when a page does not provide a custom title.
-   * @defaultValue `'Ronald Balutiu'`
-   */
   defaultTitle: string
-
-  /**
-   * Template applied to non-default page titles.
-   * `%s` is replaced with the page-provided title.
-   * @defaultValue `'%s | Ronald Balutiu'`
-   */
+  /** `%s` is replaced with a page-specific title. */
   titleTemplate: string
-
-  /**
-   * Fallback page description for `meta[name="description"]`.
-   * @defaultValue `'Design-minded engineer shipping high quality, high impact work.'`
-   */
   defaultDescription: string
-
-  /**
-   * Fallback social preview image path under `public/`.
-   * @defaultValue `'/assets/og-default.png'`
-   */
+  /** Public path to the fallback social sharing image. */
   defaultOgImage: string
-
-  /**
-   * Fallback alt text used for OG/Twitter image metadata.
-   * @defaultValue `'Homepage hero of Ronald Balutiu portfolio with name and engineering tagline.'`
-   */
   defaultOgImageAlt: string
-
-  /**
-   * Open Graph locale identifier.
-   * @defaultValue `'en_US'`
-   */
+  /** Open Graph locale format, such as `en_US`. */
   locale: string
-
-  /**
-   * Language code used in structured data (`inLanguage`).
-   * @defaultValue `'en-US'`
-   */
+  /** BCP 47 language tag used by HTML and structured data. */
   language: string
-
-  /**
-   * Browser UI tint colors for each supported color scheme.
-   * @defaultValue `{ light: '#f8f2ee', dark: '#292827' }`
-   */
+  /** Browser chrome colors for each color scheme. */
   themeColors: {
     light: string
     dark: string
   }
-
-  /**
-   * Default robots directive for public pages.
-   * @defaultValue `'index,follow'`
-   */
+  /** Default search-engine indexing directive. */
   robots: string
-
-  /**
-   * Default Twitter card format.
-   * @defaultValue `'summary_large_image'`
-   */
+  /** Default Twitter/X preview format. */
   twitterCard: string
 }
 
@@ -85,7 +30,8 @@ export const siteConfig: SiteConfig = {
   siteName: 'Ronald Balutiu',
   defaultTitle: 'Ronald Balutiu',
   titleTemplate: '%s | Ronald Balutiu',
-  defaultDescription: 'Design-minded engineer shipping high quality, high impact work.',
+  defaultDescription:
+    'New York-based software engineer building clear, dependable, and intuitive systems.',
   defaultOgImage: '/assets/og-default.png',
   defaultOgImageAlt: 'Homepage hero of Ronald Balutiu portfolio with name and engineering tagline.',
   locale: 'en_US',

@@ -2,8 +2,8 @@
 
 Source for [ronaldbalutiu.com](https://ronaldbalutiu.com), a static portfolio built with Astro.
 
-The site presents Intro, About, Experience, and Projects sections. Project and experience entries
-are managed as Markdown content, while shared design tokens keep the visual system consistent.
+The site presents a responsive introduction with About copy and a compact project list. Project
+entries are managed as Markdown content, while shared design tokens keep the visual system consistent.
 
 ## Documentation
 
@@ -12,19 +12,19 @@ are managed as Markdown content, while shared design tokens keep the visual syst
 
 ## Highlights
 
-- Section-based homepage with sticky jump-link navigation.
-- Markdown-backed project and experience content via Astro Content Collections.
-- Optional project detail pages controlled by a build-time toggle.
+- Responsive hero with an optimized portrait, social links, and About copy.
+- Markdown-backed project content via an Astro Content Collection.
+- Project rows that link directly to their repositories.
 - Shared SEO metadata utilities and JSON-LD support.
 - System light/dark theme support with a temporary in-memory toggle.
 - Unit, end-to-end, and accessibility testing in local and CI pipelines.
 
 ## Tech Stack
 
-- Astro 5 with static output
+- Astro 7 with static output
 - TypeScript with Astro's strict configuration
 - Vanilla CSS with centralized design tokens
-- Astro Content Collections for project and experience content
+- Astro Content Collections for project content
 - Vitest for unit tests
 - Playwright and axe-core for browser and accessibility tests
 - ESLint and Prettier for code quality
@@ -72,17 +72,15 @@ npm run preview
 | `npm run format:check`       | Check formatting without modifying files.                            |
 | `npm run release`            | Run the local quality gate; linting and formatting may modify files. |
 | `npm run release:ci`         | Run the CI-equivalent quality gate.                                  |
-| `npm run clean`              | Remove the generated Astro cache.                                    |
 
 Use `npm run release` before committing. CI uses `npm run release:ci`, which also runs the full
 cross-browser test suite.
 
 ## Content
 
-Project entries live in [`src/content/projects/`](src/content/projects/), and experience entries live
-in [`src/content/experience/`](src/content/experience/). Both collections are validated by
+Project entries live in [`src/content/projects/`](src/content/projects/) and are validated by
 [`src/content.config.ts`](src/content.config.ts). See the [architecture documentation](docs/architecture.md#content-model)
-for their schemas and the project-detail route behavior.
+for the schema and rendering behavior.
 
 ## Testing
 

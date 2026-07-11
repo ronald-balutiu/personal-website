@@ -1,13 +1,8 @@
 @import './tokens.css';
 @import './components/intro.css';
-@import './components/about.css';
-@import './components/experience.css';
-@import './components/jump-links.css';
 @import './components/projects.css';
-@import './components/project-page.css';
 @import './components/theme-toggle.css';
 
-/* Typography */
 html {
   font-family: 'DM Sans', sans-serif;
   background: var(--color-background);
@@ -15,7 +10,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Layout */
 body {
   margin: 0;
   padding: 0;
@@ -30,37 +24,19 @@ main {
   width: 100%;
 }
 
-.page-shell {
-  display: grid;
-  grid-template-columns:
-    minmax(0, var(--layout-rail-width))
-    minmax(0, 1fr)
-    minmax(0, var(--layout-rail-width));
+.home-page,
+.site-footer-inner {
+  width: min(calc(100% - 2 * var(--content-inline-padding)), var(--home-max-width));
+  margin-inline: auto;
 }
 
-.page-content {
-  min-width: 0;
-}
-
-.page-rail {
-  min-width: 0;
-}
-
-.page-rail-right {
-  pointer-events: none;
-}
-
-/* Common components */
 .section-title {
-  text-align: center;
   font-size: var(--font-size-section-title);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-  margin-bottom: 3rem;
   color: var(--color-text);
 }
 
-/* Common links */
 .link {
   text-decoration: none;
   color: var(--color-text);
@@ -73,7 +49,6 @@ main {
   text-underline-offset: 0.2em;
 }
 
-/* Body-copy external links should always be underlined. */
 main p a[href^='http'] {
   text-decoration: underline;
   text-decoration-color: currentColor;
@@ -83,13 +58,13 @@ main p a[href^='http'] {
 .site-footer {
   position: relative;
   z-index: 1;
-  padding: 0.9rem var(--content-inline-padding) 1.15rem;
+  padding: 0.9rem 0 1.15rem;
   background-color: var(--color-background);
-  text-align: center;
 }
 
 .site-footer-text {
   margin: 0;
+  text-align: center;
   color: var(--color-text-muted);
   font-size: var(--font-size-label-sm);
   line-height: var(--line-height-normal);
@@ -98,5 +73,12 @@ main p a[href^='http'] {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+@keyframes content-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

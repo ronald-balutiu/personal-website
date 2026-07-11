@@ -8,44 +8,37 @@ the system's structure or behavior changes.
 Astro builds the site as static HTML, CSS, and JavaScript. The Astro configuration sets
 `output: 'static'`, and the production build is written to `dist/`.
 
-There is no application server or runtime data store. Project and experience content is read at
-build time from Astro Content Collections.
+There is no application server or runtime data store. Project content is read at build time from an
+Astro Content Collection.
 
 ## Routes and Layout
 
 - `src/pages/index.astro` renders the main portfolio page.
-- `src/pages/[project].astro` provides optional static project detail pages.
 - `src/layouts/Layout.astro` provides the shared document shell, SEO metadata, theme setup, and page
   metadata.
 - `src/components/` contains feature-oriented UI components and shared navigation.
 - `src/components/SEO.astro` renders resolved metadata, theme colors, and JSON-LD payloads.
 - `src/components/theme/ThemeToggle.astro` provides the in-memory theme toggle.
 
-The homepage is organized into Intro, About, Experience, and Projects sections. `JumpLinks.astro`
-provides sticky section navigation, active-section tracking, and hash/deep-link behavior.
+The homepage is organized into a responsive hero and a project list. The hero contains the greeting,
+About copy, social links, and optimized portrait in a single semantic section. The greeting and hand
+appear first; the remaining content enters after the hand animation. Each project row is a complete
+clickable target with hover and keyboard-focus feedback. A reload restored below the top skips the
+entrance sequence, using the previous scroll position kept briefly in session storage.
+
+The hero stays side-by-side only when the available width keeps the complete greeting on one line;
+narrower desktop and tablet widths stack the portrait below the introduction. Stacked portrait crops
+use taller landscape ratios on tablet and phone to keep the framing natural. The greeting keeps one
+display size across breakpoints and wraps naturally when the available inline space is insufficient.
 
 ## Content Model
 
 Content collections are defined in `src/content.config.ts` and loaded from Markdown files:
 
 - `src/content/projects/` contains project entries.
-- `src/content/experience/` contains work experience entries.
 
-Project frontmatter includes ordering, project details, external links, icons, optional SEO metadata,
-and optional publication dates:
-
-- Required: `order`, `title`, `description`, `details`, `link`, and `icon`.
-- Optional: `seoTitle`, `seoDescription`, `ogImage`, `ogImageAlt`, `publishedAt`, and `updatedAt`.
-
-Experience frontmatter includes company, locations, ordering, roles, technologies, and highlights.
-
-The project detail route is controlled by the build-time constant
-`PROJECT_DETAIL_PAGES_ENABLED` in `src/config/features.ts`:
-
-- When `false`, project cards link directly to the external project URL.
-- When `true`, Astro generates a static detail page for each project slug.
-
-This is a build-time toggle, not an environment-backed runtime feature flag.
+Project frontmatter contains `order`, `title`, `description`, `link`, and `icon`. The schema validates
+these fields at build time, and each project row links directly to its external repository.
 
 ## SEO and Theme Behavior
 
@@ -69,10 +62,12 @@ styles.
 
 The repository uses layered verification:
 
-- Unit tests in `tests/unit/` validate content, asset, and SEO utility behavior.
+- Unit tests in `tests/unit/` validate SEO utility behavior.
 - End-to-end tests in `tests/e2e/` cover routes, runtime health, navigation, metadata, and theme
-  interactions.
-- Accessibility tests in `tests/a11y/` use axe-core across desktop and mobile viewport presets.
+  interactions. Responsive coverage sweeps the 320px–1280px range to ensure display typography
+  remains stable and wrapping only increases as available width decreases.
+- Accessibility tests in `tests/a11y/` use axe-core across desktop, tablet, and mobile viewports in
+  both color schemes.
 - `npm run test:cross-browser` runs browser tests on Chromium, Firefox, and WebKit.
 
 The local quality gate is `npm run release`. CI runs `npm run release:ci` after installing all three
