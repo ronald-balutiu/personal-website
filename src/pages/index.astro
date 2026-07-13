@@ -4,6 +4,9 @@ import { siteConfig } from '../config/site'
 import Intro from '../components/intro/Intro.astro'
 import Projects from '../components/projects/Projects.astro'
 
+// Keep the project section available without rendering it on the homepage.
+const showProjects = false
+
 const homeJsonLd = [
   {
     '@context': 'https://schema.org',
@@ -29,6 +32,6 @@ const homeJsonLd = [
 >
   <div class="home-page">
     <Intro />
-    <Projects />
+    {showProjects && <Projects />}
   </div>
 </Layout>

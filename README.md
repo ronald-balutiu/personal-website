@@ -2,8 +2,9 @@
 
 Source for [ronaldbalutiu.com](https://ronaldbalutiu.com), a static portfolio built with Astro.
 
-The site presents a responsive introduction with About copy and a compact project list. Project
-entries are managed as Markdown content, while shared design tokens keep the visual system consistent.
+The site presents a responsive introduction with About copy. Project entries are managed as Markdown
+content and remain available for the homepage project section, which is currently hidden by a local
+render flag, while shared design tokens keep the visual system consistent.
 
 ## Documentation
 
@@ -14,7 +15,6 @@ entries are managed as Markdown content, while shared design tokens keep the vis
 
 - Responsive hero with an optimized portrait, social links, and About copy.
 - Markdown-backed project content via an Astro Content Collection.
-- Project rows that link directly to their repositories.
 - Shared SEO metadata utilities and JSON-LD support.
 - System light/dark theme support with a temporary in-memory toggle.
 - Unit, end-to-end, and accessibility testing in local and CI pipelines.

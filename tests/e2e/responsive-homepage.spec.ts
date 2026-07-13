@@ -28,7 +28,7 @@ test.describe('responsive homepage structure', () => {
     expect(portrait.x).toBeGreaterThan(primary.x + primary.width)
     expect(socials.y).toBeGreaterThan(details.y + details.height)
     expect(details.x).toBeLessThan(portrait.x)
-    await expect(page.locator('.project-item-link').first()).toHaveAttribute('href', /^https?:\/\//)
+    await expect(page.locator('.projects-section')).toHaveCount(0)
     await expect(page.getByText('GitHub ↗')).toHaveCount(0)
     await expectNoHorizontalOverflow(page)
   })
@@ -56,12 +56,11 @@ test.describe('responsive homepage structure', () => {
       const portrait = await getBox(page.locator('.intro-portrait'))
       const details = await getBox(page.locator('.intro-about-details'))
       const socials = await getBox(page.locator('.intro-social-links'))
-      const projects = await getBox(page.locator('.projects-section'))
       expect(portrait.y).toBeGreaterThan(primary.y + primary.height)
       expect(portrait.width).toBeGreaterThan(portrait.height)
       expect(details.y).toBeGreaterThan(portrait.y + portrait.height)
       expect(socials.y).toBeGreaterThan(details.y + details.height)
-      expect(projects.y).toBeGreaterThanOrEqual(socials.y + socials.height - 1)
+      await expect(page.locator('.projects-section')).toHaveCount(0)
       expect(portrait.width / portrait.height).toBeLessThanOrEqual(1.51)
 
       const links = page.locator('.intro-social-link')
@@ -100,19 +99,6 @@ test.describe('responsive homepage structure', () => {
       expect(samples[index].height).toBeGreaterThanOrEqual(samples[index - 1].height)
     }
   })
-
-  test('project rows are complete clickable targets', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 })
-    await page.goto('/')
-    const row = page.locator('.project-item-link').first()
-    await expect(row).toContainText('Personal Website')
-    await expect(row).toContainText('A side project')
-    await expect(row).toHaveAttribute('href', /^https?:\/\//)
-    await row.hover()
-    await expect(row).toHaveCSS('background-color', 'rgb(242, 229, 220)')
-    await expect(row).not.toHaveCSS('box-shadow', 'none')
-    await expect(row).toHaveCSS('transform', 'none')
-  })
 })
 
 test('entrance motion stages the title before the remaining content', async ({ page }) => {
@@ -120,7 +106,6 @@ test('entrance motion stages the title before the remaining content', async ({ p
   await expect(page.locator('.intro-title')).toHaveCSS('opacity', '1')
   await expect(page.locator('.intro-peace-icon')).toHaveCSS('animation-name', 'peace-tilt')
   await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'content-enter')
-  await expect(page.locator('.projects-section')).toHaveCSS('animation-name', 'content-enter')
   await expect(page.locator('.theme-toggle')).toHaveCSS('animation-name', 'content-enter')
 })
 
@@ -140,7 +125,6 @@ test('refresh below the top skips the entrance animation', async ({ page }) => {
   await expect(page.locator('html')).toHaveClass(/skip-home-entrance/)
   await expect(page.locator('.intro-peace-icon')).toHaveCSS('animation-name', 'none')
   await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'none')
-  await expect(page.locator('.projects-section')).toHaveCSS('animation-name', 'none')
   await expect(page.locator('.theme-toggle')).toHaveCSS('animation-name', 'none')
 })
 
@@ -149,6 +133,5 @@ test('entrance motion respects reduced-motion preferences', async ({ page }) => 
   await page.goto('/')
   await expect(page.locator('.intro-peace-icon')).toHaveCSS('animation-name', 'none')
   await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'none')
-  await expect(page.locator('.projects-section')).toHaveCSS('animation-name', 'none')
   await expect(page.locator('.theme-toggle')).toHaveCSS('animation-name', 'none')
 })
