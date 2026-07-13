@@ -20,11 +20,14 @@ Astro Content Collection.
 - `src/components/SEO.astro` renders resolved metadata, theme colors, and JSON-LD payloads.
 - `src/components/theme/ThemeToggle.astro` provides the in-memory theme toggle.
 
-The homepage is organized into a responsive hero and a project list. The hero contains the greeting,
-About copy, social links, and optimized portrait in a single semantic section. The greeting and hand
-appear first; the remaining content enters after the hand animation. Each project row is a complete
-clickable target with hover and keyboard-focus feedback. A reload restored below the top skips the
-entrance sequence, using the previous scroll position kept briefly in session storage.
+The homepage is organized around a responsive hero. The project list remains implemented as a
+separate component and its Markdown content remains available, but the homepage render is currently
+disabled by the `showProjects` flag in `src/pages/index.astro`. The hero contains the greeting, About
+copy, social links, and optimized portrait in a single semantic section. The greeting and hand appear
+first; the remaining content enters after the hand animation. Each project row is a complete clickable
+target with hover and keyboard-focus feedback when the project section is enabled. A reload restored
+below the top skips the entrance sequence, using the previous scroll position kept briefly in session
+storage.
 
 The hero stays side-by-side only when the available width keeps the complete greeting on one line;
 narrower desktop and tablet widths stack the portrait below the introduction. Stacked portrait crops
