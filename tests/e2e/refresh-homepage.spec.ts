@@ -20,7 +20,7 @@ for (const position of ['middle', 'bottom'] as const) {
     await expect(page.locator('body')).toHaveCSS('visibility', 'visible')
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBeCloseTo(scrollY, 0)
     await expect(hand).toHaveCSS('transform', restingTransform)
-    await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'none')
+    await expect(page.locator('.intro-description').first()).toHaveCSS('animation-name', 'none')
     await expect(hand).toHaveCSS('animation-name', 'none')
     await expect(page.locator('.theme-toggle')).toHaveCSS('animation-name', 'none')
   })

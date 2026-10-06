@@ -50,6 +50,12 @@
   margin: 1.5rem 0 0;
 }
 
+.intro-description strong,
+.intro-about-details strong {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
 .intro-description,
 .intro-portrait,
 .intro-about-details,

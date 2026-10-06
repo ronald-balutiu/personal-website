@@ -39,7 +39,9 @@ native browser restoration. Global smooth scrolling is omitted so restoration ha
 Skipping the entrance preserves the hand's resting tilt, including with reduced motion enabled.
 
 The hero uses a two-column layout at the desktop breakpoint and stacks on narrower screens, with
-tablet and phone portrait crops defined in `src/styles/components/intro.css`. Stacked layouts use a
+tablet and phone portrait crops defined in `src/styles/components/intro.css`. Stacked layouts show
+the introduction, recent creator platform work, portrait, earlier experience, and social links in that
+order. They use a
 square crop, while phones below the mobile breakpoint use a wider 4:3 crop. Both scale with the
 available width up to a maximum size. Their size, ratio, and vertical position use tokens in `src/styles/tokens.css`; the image
 fills the frame independently of its intrinsic dimensions. The greeting keeps one
@@ -86,4 +88,5 @@ session-storage scroll value described above supports reload restoration and ent
 - `src/styles/components/` contains feature-level styles, including the theme toggle.
 
 `global.css` imports the tokens and component styles, and the shared layout imports `global.css`.
+Emphasized names in the Intro copy use the theme's accent color and the semibold weight token.
 The generated palette CSS also supplies system theme fallbacks for visitors without JavaScript.
