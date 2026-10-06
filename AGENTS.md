@@ -2,32 +2,31 @@
 
 ## Scope
 
-These instructions apply to work in this repository. Keep them concise, concrete, and specific to
-this codebase.
+These instructions apply to work in this repository.
 
 ## Start of Work
 
 1. Run `git status`.
-2. Read `README.md` and `docs/architecture.md`.
-3. Use the canonical commands documented below and in `package.json`.
+2. Read `README.md` for setup and verification, and `docs/architecture.md` for implementation context.
+3. Use the scripts in `package.json`; do not duplicate their steps manually.
 
-Before branch, rebase, push, pull request, or other remote Git work, run `git fetch --prune`.
+Run `git fetch --prune` before the first branch or remote Git operation in a work phase. Reuse that
+fetch for consecutive operations; fetch again before integrating or merging changes, or when remote
+state may have changed.
 
 ## Documentation
 
-- `package.json` defines the available commands.
-- `.github/workflows/` defines CI behavior.
-- `README.md` documents setup, common commands, content editing, testing, and deployment.
-- `docs/architecture.md` documents the current technical design.
-- Update the relevant documentation in the same change as the behavior it describes; do not record
-  implementation detail in more than one document unless each document needs it for its own purpose.
+- Follow the [documentation ownership](README.md#documentation-maintenance).
+- Update the owning document in the same change as the behavior it describes. Link to executable
+  configuration or another document instead of repeating its details.
 
 ## Project Conventions
 
 - Keep the site statically generated with Astro unless a requirement explicitly changes that model.
 - Preserve existing public features and UI options unless removal or renaming is explicitly requested.
 - Treat `src/content.config.ts` as the source of truth for project frontmatter.
-- Put new design values in `src/styles/tokens.css` before consuming them in component styles.
+- Put palette values in `src/config/theme.ts` and other design values in `src/styles/tokens.css`
+  before consuming their CSS tokens in component styles.
 - Keep components organized by feature under `src/components/` and styles colocated under
   `src/styles/components/`.
 - Keep SEO behavior centralized in `src/lib/seo.ts` and `src/components/SEO.astro`.
@@ -35,19 +34,16 @@ Before branch, rebase, push, pull request, or other remote Git work, run `git fe
 - Add or update tests when behavior changes, especially for content integrity, routes, navigation,
   runtime health, theme behavior, metadata, and accessibility.
 
-## Commands
+## Verification
 
-- `npm ci`: install the locked dependencies.
-- `npm run dev`: start the local Astro server.
-- `npm run check`: run Astro and TypeScript diagnostics.
-- `npm run test:unit`: run unit tests.
-- `npm run test:e2e`: run Chromium end-to-end tests.
-- `npm run test:a11y`: run Chromium accessibility tests.
-- `npm run test:cross-browser`: run e2e and accessibility tests across Chromium, Firefox, and WebKit.
-- `npm run release`: run the local quality gate. It may modify files through linting and formatting.
-
-Use the smallest relevant verification command while iterating, then run `npm run release` before
-creating a commit. Never claim a check was run unless it actually completed.
+- Use the smallest relevant command from [README Testing](README.md#testing) while iterating.
+- Before committing application, dependency, configuration, or test changes, run `npm run release`.
+  It may modify files through linting and formatting; inspect the resulting diff.
+- For documentation-only changes, check the edited Markdown with Prettier, verify local links, and
+  compare documented commands and behavior with the source. Application tests are unnecessary unless
+  the change also affects executable files.
+- A passing gate remains valid for the same file contents; do not rerun it solely to commit or push.
+- Never claim a check passed unless it completed; report failures and checks that could not run.
 
 ## Formatting and Naming
 

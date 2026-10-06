@@ -46,6 +46,11 @@ test.describe('theme toggle', () => {
 
     await page.reload()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+    await expect(page.locator('html')).toHaveCSS(
+      'background-color',
+      expectedColors.light.background
+    )
+    await expect(page.locator('html')).toHaveCSS('color', expectedColors.light.text)
   })
 
   test('follows system changes until manually overridden', async ({ page }) => {
@@ -80,6 +85,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       expectedColors[colorScheme].background
     )
     await expect(page.locator('#theme-toggle')).toBeHidden()
+    await expect(page.locator('html')).toHaveCSS('color', expectedColors[colorScheme].text)
 
     await context.close()
   })

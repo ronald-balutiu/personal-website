@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
 const host = '127.0.0.1'
-const port = 4173
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 4173)
 const baseURL = `http://${host}:${port}`
 const isCI = Boolean(process.env.CI)
 const playwrightWorkers = process.env.PLAYWRIGHT_WORKERS ?? (isCI ? 1 : '50%')
@@ -41,9 +41,10 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: `npm run build && npm run preview -- --host ${host} --port ${port}`,
+    // Keep Astro in the foreground so Playwright owns the server's lifecycle, including agent runs.
+    command: `npm run build && npm run preview -- --ignore-lock --host ${host} --port ${port}`,
     url: baseURL,
     timeout: 120_000,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 })

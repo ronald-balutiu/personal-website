@@ -2,22 +2,14 @@
 
 Source for [ronaldbalutiu.com](https://ronaldbalutiu.com), a static portfolio built with Astro.
 
-The site presents a responsive introduction with About copy. Project entries are managed as Markdown
-content and remain available for the homepage project section, which is currently hidden by a local
-render flag, while shared design tokens keep the visual system consistent.
+The homepage presents an introduction, About copy, an optimized portrait, social links, and a
+temporary light/dark theme toggle. Project content and components are retained, but the project
+section is currently hidden.
 
 ## Documentation
 
-- [Architecture](docs/architecture.md): routes, content schema, SEO, theme behavior, styling, testing, and deployment.
+- [Architecture](docs/architecture.md): routes, content rendering, SEO, theme behavior, and styling.
 - [AGENTS.md](AGENTS.md): repository-specific instructions for coding agents.
-
-## Highlights
-
-- Responsive hero with an optimized portrait, social links, and About copy.
-- Markdown-backed project content via an Astro Content Collection.
-- Shared SEO metadata utilities and JSON-LD support.
-- System light/dark theme support with a temporary in-memory toggle.
-- Unit, end-to-end, and accessibility testing in local and CI pipelines.
 
 ## Tech Stack
 
@@ -64,6 +56,7 @@ npm run preview
 | `npm run test:unit`          | Run Vitest unit tests.                                               |
 | `npm run test:e2e`           | Run Chromium end-to-end tests.                                       |
 | `npm run test:a11y`          | Run Chromium accessibility tests.                                    |
+| `npm run test:browser`       | Run e2e and accessibility tests together on Chromium.                |
 | `npm run test`               | Run the fast local verification suite.                               |
 | `npm run test:cross-browser` | Run e2e and accessibility tests on Chromium, Firefox, and WebKit.    |
 | `npm run lint`               | Run ESLint with autofix.                                             |
@@ -73,20 +66,73 @@ npm run preview
 | `npm run release`            | Run the local quality gate; linting and formatting may modify files. |
 | `npm run release:ci`         | Run the CI-equivalent quality gate.                                  |
 
-Use `npm run release` before committing. CI uses `npm run release:ci`, which also runs the full
-cross-browser test suite.
+Scripts in [`package.json`](package.json) are the source of truth. See [Testing](#testing) for
+verification choices and browser setup.
 
 ## Content
 
-Project entries live in [`src/content/projects/`](src/content/projects/) and are validated by
-[`src/content.config.ts`](src/content.config.ts). See the [architecture documentation](docs/architecture.md#content-model)
-for the schema and rendering behavior.
+- Edit introduction and About copy, social links, and the portrait reference in
+  [`Intro.astro`](src/components/intro/Intro.astro).
+- Edit default titles, descriptions, sharing metadata, and the production origin in
+  [`site.ts`](src/config/site.ts). Astro's sitemap configuration uses this same origin.
+- Edit light and dark palettes in [`theme.ts`](src/config/theme.ts). They supply both CSS color
+  tokens and browser theme-color metadata; other design tokens live in `src/styles/tokens.css`.
+- Add or edit project entries in [`src/content/projects/`](src/content/projects/). Use an existing
+  entry as a starting point and follow the schema in [`src/content.config.ts`](src/content.config.ts).
+  The [content model](docs/architecture.md#content-model) explains sorting and rendering.
+- Project content edits do not enable the hidden section. Its `showProjects` flag lives in
+  [`index.astro`](src/pages/index.astro); enabling it also requires updating tests that assert it is
+  absent.
 
 ## Testing
 
-The repository runs unit, end-to-end, accessibility, and cross-browser tests. Playwright output is
-written to `playwright_output/`, which is ignored by Git. See the
-[architecture documentation](docs/architecture.md#verification) for coverage details.
+Install Chromium before running local browser tests:
+
+```sh
+npx playwright install chromium
+```
+
+For the cross-browser suite, install all configured engines:
+
+```sh
+npx playwright install chromium firefox webkit
+```
+
+Repeat browser installation after upgrading Playwright. Linux environments may also need browser
+system dependencies; CI installs them with `npx playwright install --with-deps`.
+
+Choose verification by the change:
+
+| Change                                    | Verification while iterating                                                               |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
+| SEO utilities                             | `npm run test:unit`                                                                        |
+| Astro or TypeScript                       | `npm run check`                                                                            |
+| Routes, layout, metadata, or theme        | `npm run test:e2e`                                                                         |
+| Accessibility, colors, or semantic markup | `npm run test:a11y`                                                                        |
+| Browser-specific behavior                 | `npm run test:cross-browser`                                                               |
+| Documentation only                        | `npx prettier --check README.md AGENTS.md docs/architecture.md` and review links and facts |
+
+Before committing executable changes, run `npm run release`. For documentation-only changes, the
+Markdown checks above are sufficient. CI runs `npm run release:ci` for every PR, including
+documentation changes. Both gates cover linting, formatting, type diagnostics, a production build,
+and tests; the local gate uses Chromium, while CI also tests Firefox and WebKit. The local gate
+autofixes lint and formatting issues, so review its resulting diff before committing.
+
+Unit tests cover SEO resolution. Browser tests cover homepage rendering, resource and runtime errors,
+metadata, responsive layout and motion, and theme behavior with and without JavaScript. Accessibility
+tests reject serious and critical axe-core findings across desktop, tablet, and phone viewports in
+both color schemes.
+
+[`playwright.config.ts`](playwright.config.ts) builds and serves the production site on
+`http://127.0.0.1:4173`. Stop any existing server at that address before testing: each invocation
+starts a fresh build and refuses to reuse an existing server. Playwright artifacts use `test-results/`,
+which is ignored by Git. Set `PLAYWRIGHT_WORKERS=1` when a constrained machine needs fewer workers.
+Set `PLAYWRIGHT_PORT` to an unused port if a separate preview server is already running.
+
+Each quality gate generates Astro's types before typed linting, runs type diagnostics and unit tests
+once, then one Playwright invocation covers
+both browser suites against one production build. Standalone `test:e2e` and `test:a11y` commands
+also build before testing. Test commands fail when no tests are discovered.
 
 ## CI and Deployment
 
@@ -102,13 +148,13 @@ for deployment rather than Workers deploy commands.
 
 Keep documentation changes in the same change as the code they describe:
 
-- Update this README when setup, commands, content editing, testing, or deployment changes.
-- Update [`docs/architecture.md`](docs/architecture.md) when the application's implementation or
-  behavior changes.
-- Update [`AGENTS.md`](AGENTS.md) only when repository conventions or verification expectations change.
+- This README owns setup, commands, content editing, test coverage and execution, and deployment.
+- [`docs/architecture.md`](docs/architecture.md) owns implementation structure and application behavior.
+- [`AGENTS.md`](AGENTS.md) owns repository conventions, agent workflow, and verification expectations.
 
 The executable configuration in `package.json`, CI workflow files, and source code remains the source
-of truth; documentation should explain and link to it rather than duplicate implementation details.
+of truth. Keep details in their owning document and link to them elsewhere. Record historical
+decisions separately if they need to survive implementation changes.
 
 ## License
 

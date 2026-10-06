@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import { siteConfig } from '../config/site'
 import Intro from '../components/intro/Intro.astro'
+import HomeEntrance from '../components/intro/HomeEntrance.astro'
 import Projects from '../components/projects/Projects.astro'
 
 // Keep the project section available without rendering it on the homepage.
@@ -30,6 +31,7 @@ const homeJsonLd = [
     jsonLd: homeJsonLd,
   }}
 >
+  <HomeEntrance slot="head" />
   <div class="home-page">
     <Intro />
     {showProjects && <Projects />}

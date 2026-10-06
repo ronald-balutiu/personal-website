@@ -1,12 +1,13 @@
 # Architecture
 
-This document describes the current implementation of the personal website. Keep it updated when
-the system's structure or behavior changes.
+This document describes the current implementation. See the [README](../README.md) for setup,
+editing instructions, verification, deployment, and documentation ownership.
 
 ## Runtime Model
 
-Astro builds the site as static HTML, CSS, and JavaScript. The Astro configuration sets
-`output: 'static'`, and the production build is written to `dist/`.
+[`astro.config.mjs`](../astro.config.mjs) configures static output, the production site origin,
+sitemap generation, and inlined stylesheets. Astro builds HTML, CSS, JavaScript, and optimized image
+assets into `dist/`.
 
 There is no application server or runtime data store. Project content is read at build time from an
 Astro Content Collection.
@@ -16,9 +17,12 @@ Astro Content Collection.
 - `src/pages/index.astro` renders the main portfolio page.
 - `src/layouts/Layout.astro` provides the shared document shell, SEO metadata, theme setup, and page
   metadata.
-- `src/components/` contains feature-oriented UI components and shared navigation.
+- `src/components/intro/Intro.astro` contains the hero, About copy, portrait, and social navigation.
+- `src/components/projects/` contains the retained project list and row components.
 - `src/components/SEO.astro` renders resolved metadata, theme colors, and JSON-LD payloads.
 - `src/components/theme/ThemeToggle.astro` provides the in-memory theme toggle.
+- `src/components/theme/ThemeHead.astro` emits palette CSS with the initial system theme.
+- `src/components/intro/HomeEntrance.astro` manages the homepage entrance via the layout's head slot.
 
 The homepage is organized around a responsive hero. The project list remains implemented as a
 separate component and its Markdown content remains available, but the homepage render is currently
@@ -27,12 +31,22 @@ copy, social links, and optimized portrait in a single semantic section. The gre
 first; the remaining content enters after the hand animation. Each project row is a complete clickable
 target with hover and keyboard-focus feedback when the project section is enabled. A reload restored
 below the top skips the entrance sequence, using the previous scroll position kept briefly in session
-storage.
+storage. It is written on `pagehide` and consumed on the next homepage visit, with storage access
+guarded so unavailable or full storage cannot introduce runtime errors. On a scrolled reload, the
+page briefly stays hidden while restoring that position once. Restoration runs after the DOM is ready,
+waiting up to 200 ms for fonts so slow requests do not hold the page hidden. Other navigation uses
+native browser restoration. Global smooth scrolling is omitted so restoration happens immediately.
+Skipping the entrance preserves the hand's resting tilt, including with reduced motion enabled.
 
-The hero stays side-by-side only when the available width keeps the complete greeting on one line;
-narrower desktop and tablet widths stack the portrait below the introduction. Stacked portrait crops
-use taller landscape ratios on tablet and phone to keep the framing natural. The greeting keeps one
-display size across breakpoints and wraps naturally when the available inline space is insufficient.
+The hero uses a two-column layout at the desktop breakpoint and stacks on narrower screens, with
+tablet and phone portrait crops defined in `src/styles/components/intro.css`. Stacked layouts use a
+square crop, while phones below the mobile breakpoint use a wider 4:3 crop. Both scale with the
+available width up to a maximum size. Their size, ratio, and vertical position use tokens in `src/styles/tokens.css`; the image
+fills the frame independently of its intrinsic dimensions. The greeting keeps one
+display size across breakpoints and wraps naturally. Reduced-motion preferences disable the entrance
+animations. The portrait is imported from `src/assets/images/` and processed through Astro's `Image`
+component; icons in `public/assets/` are served unchanged. The layout loads DM Sans from Google Fonts,
+so browser resource-health tests also depend on those external requests succeeding.
 
 ## Content Model
 
@@ -40,51 +54,36 @@ Content collections are defined in `src/content.config.ts` and loaded from Markd
 
 - `src/content/projects/` contains project entries.
 
-Project frontmatter contains `order`, `title`, `description`, `link`, and `icon`. The schema validates
-these fields at build time, and each project row links directly to its external repository.
+[`src/content.config.ts`](../src/content.config.ts) is the source of truth for frontmatter validation.
+The list sorts entries by ascending `order` and passes frontmatter to `ProjectItem.astro`; Markdown
+bodies are not rendered. Links open the configured external HTTP(S) URL in a new tab, and icons refer
+to SVG files under `public/assets/`. There are no individual project routes.
 
 ## SEO and Theme Behavior
 
 `src/config/site.ts` holds site-level SEO defaults, while `src/lib/seo.ts` resolves page-specific
 metadata and structured data. The shared `SEO.astro` component renders the result for each route.
 
-The site follows the visitor's system light or dark preference. The theme toggle can temporarily
-switch the current page to the other theme, but the choice is kept only in memory and is not written
-to browser storage. Reloading or navigating to a new page returns to the system preference.
+The homepage supplies WebSite and Person JSON-LD through the layout's SEO input. Astro's
+configuration imports `siteConfig.siteUrl` for sitemap generation, so the origin is defined once.
+
+The light palette defines the token shape required for both themes at compile time.
+`ThemeHead.astro` renders CSS variables from the palettes in `src/config/theme.ts`, including the
+system dark fallback. Those same palettes supply browser theme-color metadata through `siteConfig`.
+CSS supplies the initial system theme before JavaScript runs. `ThemeToggle.astro` initializes
+`data-theme` and follows system preference changes until the visitor toggles manually, then holds the
+override in memory for the current page. It updates the button's accessible state and browser
+theme-color metadata.
+Reloading or navigating to a new page returns to the system preference. Without JavaScript, CSS
+provides the system theme and the toggle remains hidden. Theme choices are never stored; the
+session-storage scroll value described above supports reload restoration and entrance motion.
 
 ## Styling
 
-- `src/styles/tokens.css` contains shared color, typography, spacing, and motion values.
+- `src/config/theme.ts` defines shared palette values emitted as CSS tokens by `ThemeHead.astro`.
+- `src/styles/tokens.css` contains shared typography, spacing, motion, and non-palette values.
 - `src/styles/global.css` defines global styles and shared layout primitives.
 - `src/styles/components/` contains feature-level styles, including the theme toggle.
 
-New reusable design values should be added to the token layer instead of duplicated in component
-styles.
-
-## Verification
-
-The repository uses layered verification:
-
-- Unit tests in `tests/unit/` validate SEO utility behavior.
-- End-to-end tests in `tests/e2e/` cover routes, runtime health, navigation, metadata, and theme
-  interactions. Responsive coverage sweeps the 320px–1280px range to ensure display typography
-  remains stable and wrapping only increases as available width decreases.
-- Accessibility tests in `tests/a11y/` use axe-core across desktop, tablet, and mobile viewports in
-  both color schemes.
-- `npm run test:cross-browser` runs browser tests on Chromium, Firefox, and WebKit.
-
-The local quality gate is `npm run release`. CI runs `npm run release:ci` after installing all three
-Playwright browser engines.
-
-## Deployment
-
-The site can be deployed to a static host. The repository is configured for Cloudflare Pages, with
-`dist/` as the build output directory in `wrangler.jsonc`.
-
-## Documentation Ownership
-
-- `README.md` owns setup, common commands, content editing, testing, and deployment instructions.
-- `AGENTS.md` owns repository conventions and agent verification expectations.
-- This document owns the current technical architecture.
-- Historical decisions should be recorded separately if they need to be preserved after the
-  architecture changes.
+`global.css` imports the tokens and component styles, and the shared layout imports `global.css`.
+The generated palette CSS also supplies system theme fallbacks for visitors without JavaScript.

@@ -8,7 +8,6 @@ export default defineConfig({
     include: ['tests/unit/**/*.test.{ts,tsx,js}'],
     environment: 'node',
     globals: true,
-    passWithNoTests: true,
     maxWorkers: vitestMaxWorkers,
   },
 })
