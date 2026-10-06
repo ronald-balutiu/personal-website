@@ -46,24 +46,13 @@
 }
 
 .intro-description {
-  max-width: 62ch;
-  margin: 1.5rem 0 0;
+  max-width: var(--copy-max-width);
 }
 
 .intro-description strong,
 .intro-about-details strong {
   color: var(--color-accent);
   font-weight: var(--font-weight-semibold);
-}
-
-.intro-description,
-.intro-portrait,
-.intro-about-details,
-.intro-social-links {
-  opacity: 0;
-  transform: translateY(0.75rem);
-  animation: content-enter var(--home-reveal-duration) var(--motion-ease-standard)
-    var(--home-reveal-delay) forwards;
 }
 
 .intro-social-links {
@@ -83,8 +72,8 @@
   font-weight: var(--font-weight-medium);
   text-decoration: none;
   transition:
-    color 0.2s ease,
-    transform 0.2s ease;
+    color var(--transition-duration) var(--motion-ease-standard),
+    transform var(--transition-duration) var(--motion-ease-standard);
 }
 
 .intro-social-link:hover {
@@ -135,16 +124,8 @@
 
 .intro-about-details {
   grid-area: details;
-  max-width: 62ch;
-  margin-top: 2.25rem;
-}
-
-.intro-about-details p {
-  margin: 0 0 1.15rem;
-}
-
-.intro-about-details p:last-child {
-  margin-bottom: 0;
+  max-width: var(--copy-max-width);
+  margin-top: var(--paragraph-gap);
 }
 
 @media (max-width: 71.9375rem) {
@@ -168,7 +149,7 @@
 
   .intro-portrait {
     max-width: var(--portrait-narrow-max-width);
-    margin: 2.5rem auto 0;
+    margin: var(--portrait-stack-gap) auto 0;
     aspect-ratio: var(--portrait-narrow-aspect-ratio);
   }
 
@@ -178,7 +159,7 @@
 
   .intro-about-details {
     max-width: none;
-    margin-top: 1.75rem;
+    margin-top: var(--portrait-copy-gap);
   }
 }
 
@@ -204,7 +185,7 @@
   }
 
   .intro-portrait {
-    margin-top: 2rem;
+    margin-top: var(--portrait-phone-gap);
     aspect-ratio: var(--portrait-mobile-aspect-ratio);
   }
 
@@ -214,27 +195,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-description,
-  .intro-portrait,
-  .intro-about-details,
-  .intro-social-links {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-
   .intro-peace-icon {
     animation: none;
   }
-}
-
-:root.skip-home-entrance .intro-description,
-:root.skip-home-entrance .intro-portrait,
-:root.skip-home-entrance .intro-about-details,
-:root.skip-home-entrance .intro-social-links {
-  opacity: 1;
-  transform: none;
-  animation: none;
 }
 
 :root.skip-home-entrance .intro-peace-icon {

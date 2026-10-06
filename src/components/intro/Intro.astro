@@ -27,19 +27,19 @@ const socialLinks = [
 ---
 
 <section class="intro" aria-labelledby="intro-title">
-  <div class="intro-primary">
+  <div class="intro-primary text-flow">
     <h1 id="intro-title" class="intro-title">
       <span class="intro-peace-icon" aria-hidden="true"></span>
       <span class="intro-title-solid">Hello, I'm Ronald</span>{' '}
       <span class="intro-title-outline">Balutiu.</span>
     </h1>
-    <p class="intro-description">
+    <p class="intro-description home-reveal">
       I’m currently a New York-based senior software engineer at <strong>Amazon Ads</strong>,
       building scalable systems that support millions of daily customers. I care deeply about clear,
       accessible user experiences where complex and critical workflows become reliable and intuitive
       to use.
     </p>
-    <p class="intro-description">
+    <p class="intro-description home-reveal">
       Most recently, I launched <strong>Sponsored Products for Creators</strong>, helping build
       Amazon’s creator monetization business from the ground up. The platform connects creators and
       influencers with performance advertising through a revenue-sharing model. I’ve helped design
@@ -47,7 +47,7 @@ const socialLinks = [
       identify high-earning products and automate content workflows.
     </p>
   </div>
-  <figure class="intro-portrait">
+  <figure class="intro-portrait home-reveal">
     <Image
       src={portrait}
       alt="Portrait of Ronald Balutiu"
@@ -58,12 +58,12 @@ const socialLinks = [
       quality={85}
     />
   </figure>
-  <div class="intro-about-details">
+  <div class="intro-about-details text-flow home-reveal">
     <p>
       Before moving into advertising, I helped build <strong>Amazon Payments’</strong>{' '}
       <a
         href="https://sell.amazon.com/tools/seller-wallet"
-        class="link"
+        class="text-link"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -78,7 +78,7 @@ const socialLinks = [
       skiing, photography, and exploring the city I grew up in and still find endlessly interesting.
     </p>
   </div>
-  <nav class="intro-social-links" aria-label="Social links">
+  <nav class="intro-social-links home-reveal" aria-label="Social links">
     {socialLinks.map(({ name, url, icon }) => (
       <a
         href={url}
