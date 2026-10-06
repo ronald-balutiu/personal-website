@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test'
 
+import { siteConfig } from '../../src/config/site'
+
 test.describe('metadata tags', () => {
   test('homepage exposes core metadata and json-ld', async ({ page }) => {
     const response = await page.goto('/', { waitUntil: 'domcontentloaded' })
@@ -9,7 +11,10 @@ test.describe('metadata tags', () => {
 
     await expect(page).toHaveTitle(/Ronald Balutiu/i)
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.+/)
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /^https?:\/\//)
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      `${siteConfig.siteUrl}/`
+    )
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'website')
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       'content',
@@ -33,4 +38,10 @@ test.describe('metadata tags', () => {
     const jsonLdScripts = page.locator('script[type="application/ld+json"]')
     await expect(jsonLdScripts).toHaveCount(2)
   })
+})
+
+test('sitemap uses the same production origin as canonical metadata', async ({ request }) => {
+  const response = await request.get('/sitemap-0.xml')
+  expect(response.status()).toBe(200)
+  expect(await response.text()).toContain(`<loc>${siteConfig.siteUrl}/</loc>`)
 })

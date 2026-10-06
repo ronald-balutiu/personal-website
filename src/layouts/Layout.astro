@@ -2,6 +2,7 @@
 import '../styles/global.css'
 import SEO from '../components/SEO.astro'
 import ThemeToggle from '../components/theme/ThemeToggle.astro'
+import ThemeHead from '../components/theme/ThemeHead.astro'
 import { siteConfig } from '../config/site'
 import { buildSeo, type SeoInput } from '../lib/seo'
 
@@ -20,45 +21,8 @@ const currentYear = new Date().getFullYear()
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO seo={resolvedSeo} />
-    <script is:inline>
-      ;(() => {
-        const root = document.documentElement
-        const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        root.dataset.theme = theme
-        root.style.colorScheme = theme
-
-        const activeThemeColor = document.getElementById('theme-color-' + theme)
-        const inactiveThemeColor = document.getElementById(
-          'theme-color-' + (theme === 'dark' ? 'light' : 'dark')
-        )
-        if (activeThemeColor) {
-          activeThemeColor.dataset.systemMedia = activeThemeColor.media
-          activeThemeColor.media = 'all'
-        }
-        if (inactiveThemeColor) {
-          inactiveThemeColor.dataset.systemMedia = inactiveThemeColor.media
-          inactiveThemeColor.media = 'not all'
-        }
-
-        try {
-          const restoredScrollY = Number(sessionStorage.getItem('home-refresh-scroll-y') ?? 0)
-          sessionStorage.removeItem('home-refresh-scroll-y')
-
-          if (restoredScrollY > 1) {
-            root.classList.add('skip-home-entrance')
-          }
-
-          const rememberScrollPosition = () => {
-            sessionStorage.setItem('home-refresh-scroll-y', String(window.scrollY))
-          }
-
-          window.addEventListener('scroll', rememberScrollPosition, { passive: true })
-          window.addEventListener('pagehide', rememberScrollPosition)
-        } catch {
-          // Storage may be unavailable; the entrance remains a safe visual enhancement.
-        }
-      })()
-    </script>
+    <ThemeHead />
+    <slot name="head" />
     <link rel="icon" type="image/svg+xml" href="/assets/laptop.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

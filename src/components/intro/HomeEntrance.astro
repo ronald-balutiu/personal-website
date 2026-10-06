@@ -1,0 +1,40 @@
+<script is:inline>
+  ;(() => {
+    const storageKey = 'home-refresh-scroll-y'
+    const root = document.documentElement
+    history.scrollRestoration = 'auto'
+    try {
+      const scrollY = Number(sessionStorage.getItem(storageKey))
+      const navigation = performance.getEntriesByType('navigation')[0]
+      if (navigation?.type === 'reload' && Number.isFinite(scrollY) && scrollY > 1) {
+        root.classList.add('skip-home-entrance', 'restoring-home-scroll')
+        history.scrollRestoration = 'manual'
+        document.addEventListener(
+          'DOMContentLoaded',
+          async () => {
+            // Fonts can change the page height; do not hold up a reload on a slow request.
+            await Promise.race([
+              document.fonts.ready,
+              new Promise((resolve) => setTimeout(resolve, 200)),
+            ])
+            window.scrollTo(0, scrollY)
+            root.classList.remove('restoring-home-scroll')
+          },
+          { once: true }
+        )
+      }
+      sessionStorage.removeItem(storageKey)
+    } catch {
+      // Storage may be unavailable; fall back to the browser's scroll restoration.
+    }
+
+    window.addEventListener('pagehide', () => {
+      history.scrollRestoration = 'auto'
+      try {
+        sessionStorage.setItem(storageKey, String(window.scrollY))
+      } catch {
+        // A failed write must not become an uncaught page error.
+      }
+    })
+  })()
+</script>

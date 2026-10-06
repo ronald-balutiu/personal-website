@@ -41,16 +41,6 @@
     light: document.querySelector<HTMLMetaElement>('#theme-color-light'),
     dark: document.querySelector<HTMLMetaElement>('#theme-color-dark'),
   } satisfies Record<Theme, HTMLMetaElement | null>
-  const defaultMedia: Record<Theme, string> = {
-    light:
-      themeColors.light?.dataset.systemMedia ??
-      themeColors.light?.getAttribute('media') ??
-      '(prefers-color-scheme: light)',
-    dark:
-      themeColors.dark?.dataset.systemMedia ??
-      themeColors.dark?.getAttribute('media') ??
-      '(prefers-color-scheme: dark)',
-  }
 
   if (button) {
     let manualOverride = false
@@ -63,13 +53,12 @@
           ? colorTheme === theme
             ? 'all'
             : 'not all'
-          : defaultMedia[colorTheme]
+          : `(prefers-color-scheme: ${colorTheme})`
       })
     }
 
     const applyTheme = (theme: Theme) => {
       root.dataset.theme = theme
-      root.style.colorScheme = theme
       button.dataset.theme = theme
       button.setAttribute('aria-pressed', String(theme === 'dark'))
       button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`)
@@ -77,7 +66,7 @@
       updateThemeColorMedia(theme)
     }
 
-    const initialTheme: Theme = root.dataset.theme === 'dark' ? 'dark' : 'light'
+    const initialTheme: Theme = darkModeQuery.matches ? 'dark' : 'light'
     applyTheme(initialTheme)
     button.hidden = false
 

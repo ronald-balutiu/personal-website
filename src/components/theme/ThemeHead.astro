@@ -1,0 +1,14 @@
+---
+import { themePalettes } from '../../config/theme'
+
+const declarations = (theme: keyof typeof themePalettes) =>
+  Object.entries(themePalettes[theme])
+    .map(([name, value]) => `--color-${name}:${value};`)
+    .join('') + `color-scheme:${theme};`
+
+const light = declarations('light')
+const dark = declarations('dark')
+const themeStyles = `:root{${light}}:root[data-theme="dark"]{${dark}}@media(prefers-color-scheme:dark){:root:not([data-theme]){${dark}}}`
+---
+
+<style is:inline set:html={themeStyles} />

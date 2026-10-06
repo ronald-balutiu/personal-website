@@ -7,7 +7,6 @@ html {
   font-family: 'DM Sans', sans-serif;
   background: var(--color-background);
   color: var(--color-text);
-  scroll-behavior: smooth;
 }
 
 body {
@@ -68,12 +67,6 @@ main p a[href^='http'] {
   color: var(--color-text-muted);
   font-size: var(--font-size-label-sm);
   line-height: var(--line-height-normal);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 @keyframes content-enter {

@@ -1,3 +1,5 @@
+import { themePalettes } from './theme'
+
 export interface SiteConfig {
   /** Production origin used for canonical and asset URLs. Must not end in `/`. */
   siteUrl: string
@@ -37,8 +39,8 @@ export const siteConfig: SiteConfig = {
   locale: 'en_US',
   language: 'en-US',
   themeColors: {
-    light: '#f8f2ee',
-    dark: '#292827',
+    light: themePalettes.light.background,
+    dark: themePalettes.dark.background,
   },
   robots: 'index,follow',
   twitterCard: 'summary_large_image',

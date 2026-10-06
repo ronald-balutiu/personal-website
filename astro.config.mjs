@@ -1,8 +1,10 @@
 import sitemap from '@astrojs/sitemap'
 import { defineConfig } from 'astro/config'
 
+import { siteConfig } from './src/config/site.ts'
+
 export default defineConfig({
-  site: 'https://ronaldbalutiu.com',
+  site: siteConfig.siteUrl,
 
   integrations: [sitemap()],
 
