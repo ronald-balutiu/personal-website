@@ -17,6 +17,33 @@ const expectNoHorizontalOverflow = async (page: Page) => {
 }
 
 test.describe('responsive homepage structure', () => {
+  for (const width of [1280, 853, 390]) {
+    test(`paragraph gaps stay consistent at ${width}px, including added copy`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 })
+      await page.emulateMedia({ reducedMotion: 'reduce' })
+      await page.goto('/')
+      await page.evaluate(async () => {
+        await document.fonts.ready
+        const paragraph = document.createElement('p')
+        paragraph.textContent = 'An additional paragraph should follow the same spacing rules.'
+        document.querySelector('.intro-about-details')?.append(paragraph)
+      })
+
+      const paragraphs = page.locator('.intro-description, .intro-about-details p')
+      const boxes = await Promise.all(
+        Array.from({ length: await paragraphs.count() }, (_, index) =>
+          getBox(paragraphs.nth(index))
+        )
+      )
+      const gaps = boxes.slice(1).flatMap((box, index) => {
+        // The portrait separates these two paragraphs in stacked layouts.
+        if (width < 1152 && index === 1) return []
+        return [box.y - (boxes[index].y + boxes[index].height)]
+      })
+      for (const gap of gaps) expect(gap).toBeCloseTo(24, 0)
+    })
+  }
+
   test('desktop uses a two-column hero with socials below all copy', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 853 })
     await page.goto('/')

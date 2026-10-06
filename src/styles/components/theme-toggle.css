@@ -14,31 +14,26 @@
   background-color: var(--color-transparent);
   color: var(--color-accent);
   cursor: pointer;
-  opacity: 0;
-  transform: translateY(0.75rem);
-  animation: content-enter var(--home-reveal-duration) var(--motion-ease-standard)
-    var(--home-reveal-delay) forwards;
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+    background-color var(--transition-duration) var(--motion-ease-standard),
+    border-color var(--transition-duration) var(--motion-ease-standard),
+    color var(--transition-duration) var(--motion-ease-standard),
+    transform var(--transition-duration) var(--motion-ease-standard);
 }
 
 .theme-toggle::before {
   content: '';
   position: absolute;
   inset: 2px;
-  box-sizing: border-box;
   border: 1px solid var(--color-border);
   border-radius: inherit;
   background-color: var(--color-surface);
   box-shadow: 0 4px 14px var(--color-shadow-soft);
   pointer-events: none;
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease;
+    background-color var(--transition-duration) var(--motion-ease-standard),
+    border-color var(--transition-duration) var(--motion-ease-standard),
+    transform var(--transition-duration) var(--motion-ease-standard);
 }
 
 .theme-toggle:hover {
@@ -81,19 +76,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .theme-toggle {
-    opacity: 1;
-    transform: none;
-    animation: none;
     transition: none;
   }
 
   .theme-toggle::before {
     transition: none;
   }
-}
-
-:root.skip-home-entrance .theme-toggle {
-  opacity: 1;
-  transform: none;
-  animation: none;
 }

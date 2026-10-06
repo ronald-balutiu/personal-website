@@ -4,6 +4,11 @@
   --home-max-width: 72rem;
   --content-inline-padding: clamp(1rem, 1.6vw + 0.4rem, 2rem);
   --hero-column-gap: clamp(2.5rem, 6vw, 6rem);
+  --paragraph-gap: 1.5rem;
+  --copy-max-width: 62ch;
+  --portrait-stack-gap: 2.5rem;
+  --portrait-phone-gap: 2rem;
+  --portrait-copy-gap: 1.75rem;
   --portrait-width: 22rem;
   --portrait-narrow-max-width: 32rem;
   --portrait-narrow-aspect-ratio: 1;
@@ -31,6 +36,8 @@
   --letter-spacing-tight: -0.01em;
 
   --motion-ease-standard: ease;
+  --transition-duration: 0.2s;
+  --home-reveal-offset: 0.75rem;
   --home-tilt-duration: 0.95s;
   --home-reveal-duration: 0.65s;
   --home-reveal-delay: var(--home-tilt-duration);

@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content'
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
 ---
 
-<section id="projects" class="projects-section" aria-labelledby="projects-title">
+<section id="projects" class="projects-section home-reveal" aria-labelledby="projects-title">
   <h2 id="projects-title" class="section-title">
     A couple things I’ve made
   </h2>

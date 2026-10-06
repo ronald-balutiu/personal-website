@@ -88,5 +88,12 @@ session-storage scroll value described above supports reload restoration and ent
 - `src/styles/components/` contains feature-level styles, including the theme toggle.
 
 `global.css` imports the tokens and component styles, and the shared layout imports `global.css`.
+The reusable `text-flow` class clears child block margins and spaces text blocks using the shared
+`--paragraph-gap` token. Intro uses that same token between its text containers on desktop; stacked
+layouts retain separate spacing around the portrait.
+Global styles use border-box sizing and an explicit `text-link` class for inline links. The shared
+`home-reveal` class owns content entrance animations, reduced-motion handling, and the scrolled-reload
+bypass; the hand animation and theme toggle hover behavior remain in their component styles.
+Copy width, portrait spacing, and interaction transition timing use the shared design tokens.
 Emphasized names in the Intro copy use the theme's accent color and the semibold weight token.
 The generated palette CSS also supplies system theme fallbacks for visitors without JavaScript.

@@ -3,6 +3,12 @@
 @import './components/projects.css';
 @import './components/theme-toggle.css';
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   font-family: 'DM Sans', sans-serif;
   background: var(--color-background);
@@ -16,6 +22,16 @@ body {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+}
+
+.text-flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--paragraph-gap);
+}
+
+.text-flow > * {
+  margin-block: 0;
 }
 
 main {
@@ -36,22 +52,16 @@ main {
   color: var(--color-text);
 }
 
-.link {
-  text-decoration: none;
-  color: var(--color-text);
-  transition: color 0.2s ease;
-}
-
-.link:hover {
-  text-decoration: underline;
-  text-decoration-color: var(--color-accent);
-  text-underline-offset: 0.2em;
-}
-
-main p a[href^='http'] {
+.text-link {
+  color: inherit;
   text-decoration: underline;
   text-decoration-color: currentColor;
   text-underline-offset: 0.2em;
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  text-decoration-color: var(--color-accent);
 }
 
 .site-footer {
@@ -67,6 +77,27 @@ main p a[href^='http'] {
   color: var(--color-text-muted);
   font-size: var(--font-size-label-sm);
   line-height: var(--line-height-normal);
+}
+
+.home-reveal {
+  opacity: 0;
+  transform: translateY(var(--home-reveal-offset));
+  animation: content-enter var(--home-reveal-duration) var(--motion-ease-standard)
+    var(--home-reveal-delay) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+:root.skip-home-entrance .home-reveal {
+  opacity: 1;
+  transform: none;
+  animation: none;
 }
 
 @keyframes content-enter {
