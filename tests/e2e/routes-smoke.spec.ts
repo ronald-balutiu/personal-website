@@ -45,7 +45,13 @@ for (const viewport of viewports) {
     await expect(
       page.getByRole('navigation', { name: 'Social links' }).getByRole('link')
     ).toHaveCount(4)
-    await expect(page.locator('.intro-about-details p')).toHaveCount(3)
+    await expect(page.locator('.intro-about-details p')).toHaveCount(2)
+    await expect(page.locator('.intro-description').nth(1)).toContainText(
+      'Sponsored Products for Creators'
+    )
+    await expect(page.locator('.intro-about-details p').first()).toContainText(
+      'Seller Wallet as an early engineer'
+    )
     await expect(page.locator('.project-item-link')).toHaveCount(0)
     await page.waitForLoadState('networkidle')
     expect(runtimeErrors).toEqual([])

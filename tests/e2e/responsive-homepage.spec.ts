@@ -118,7 +118,10 @@ test('entrance motion stages the title before the remaining content', async ({ p
   await page.goto('/')
   await expect(page.locator('.intro-title')).toHaveCSS('opacity', '1')
   await expect(page.locator('.intro-peace-icon')).toHaveCSS('animation-name', 'peace-tilt')
-  await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'content-enter')
+  await expect(page.locator('.intro-description').first()).toHaveCSS(
+    'animation-name',
+    'content-enter'
+  )
   await expect(page.locator('.theme-toggle')).toHaveCSS('animation-name', 'content-enter')
 })
 
@@ -171,6 +174,6 @@ test('entrance motion respects reduced-motion preferences', async ({ page }) => 
   await page.goto('/')
   await expect(page.locator('.intro-peace-icon')).toHaveCSS('animation-name', 'none')
   await expect(page.locator('.intro-peace-icon')).not.toHaveCSS('transform', 'none')
-  await expect(page.locator('.intro-description')).toHaveCSS('animation-name', 'none')
+  await expect(page.locator('.intro-description').first()).toHaveCSS('animation-name', 'none')
   await expect(page.locator('.theme-toggle')).toHaveCSS('animation-name', 'none')
 })
