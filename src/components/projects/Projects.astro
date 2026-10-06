@@ -6,17 +6,17 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 ---
 
 <section id="projects" class="projects-section" aria-labelledby="projects-title">
-  <h2 id="projects-title" class="section-title">A couple things I’ve made</h2>
+  <h2 id="projects-title" class="section-title">
+    A couple things I’ve made
+  </h2>
   <div class="projects-list">
-    {
-      projects.map((project) => (
-        <ProjectItem
-          href={project.data.link}
-          icon={project.data.icon}
-          title={project.data.title}
-          description={project.data.description}
-        />
-      ))
-    }
+    {projects.map((project) => (
+      <ProjectItem
+        href={project.data.link}
+        icon={project.data.icon}
+        title={project.data.title}
+        description={project.data.description}
+      />
+    ))}
   </div>
 </section>

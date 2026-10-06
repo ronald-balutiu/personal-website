@@ -68,10 +68,14 @@ const currentYear = new Date().getFullYear()
     />
   </head>
   <body>
-    <main><slot /></main>
+    <main>
+      <slot />
+    </main>
     <footer class="site-footer">
       <div class="site-footer-inner">
-        <p class="site-footer-text">© {currentYear} {siteConfig.siteName}. All rights reserved.</p>
+        <p class="site-footer-text">
+          © {currentYear} {siteConfig.siteName}. All rights reserved.
+        </p>
       </div>
     </footer>
     <ThemeToggle />

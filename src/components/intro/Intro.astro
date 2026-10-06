@@ -58,19 +58,21 @@ const socialLinks = [
         href="https://sell.amazon.com/tools/seller-wallet"
         class="link"
         target="_blank"
-        rel="noopener noreferrer">Seller Wallet</a
-      >, building the product from the ground up while supporting both domestic and international
+        rel="noopener noreferrer"
+      >
+        Seller Wallet
+      </a>
+      , building the product from the ground up while supporting both domestic and international
       launches.
     </p>
     <p>
-      My passion for engineering started during undergrad at the{' '}<strong
-        >University of Chicago</strong
-      > with my first computer science course. After finishing internships in real estate and private
-      equity, I realized those paths weren’t a great fit and was drawn instead to technology for its constant
-      change and room to explore. That shift led to a role at the school's <strong
-        >Computer Science Instructional Library</strong
-      >{' '}and later an internship at <strong>Visa</strong> in Client Engineering, which helped set the
-      direction for the work I do today.
+      My passion for engineering started during undergrad at the{' '}
+      <strong>University of Chicago</strong> with my first computer science course. After finishing
+      internships in real estate and private equity, I realized those paths weren’t a great fit and
+      was drawn instead to technology for its constant change and room to explore. That shift led to
+      a role at the school's <strong>Computer Science Instructional Library</strong> and later an
+      internship at <strong>Visa</strong> in Client Engineering, which helped set the direction for
+      the work I do today.
     </p>
     <p>
       Outside of work I enjoy skiing, photography, and exploring the city I grew up in and still
@@ -78,25 +80,23 @@ const socialLinks = [
     </p>
   </div>
   <nav class="intro-social-links" aria-label="Social links">
-    {
-      socialLinks.map(({ name, url, icon }) => (
-        <a
-          href={url}
-          target={url.startsWith('http') ? '_blank' : undefined}
-          rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
-          class="intro-social-link"
-        >
-          <img
-            src={icon}
-            alt=""
-            class="intro-social-icon"
-            loading="eager"
-            fetchpriority="high"
-            aria-hidden="true"
-          />
-          <span>{name}</span>
-        </a>
-      ))
-    }
+    {socialLinks.map(({ name, url, icon }) => (
+      <a
+        href={url}
+        target={url.startsWith('http') ? '_blank' : undefined}
+        rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
+        class="intro-social-link"
+      >
+        <img
+          src={icon}
+          alt=""
+          class="intro-social-icon"
+          loading="eager"
+          fetchpriority="high"
+          aria-hidden="true"
+        />
+        <span>{name}</span>
+      </a>
+    ))}
   </nav>
 </section>
