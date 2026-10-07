@@ -49,6 +49,14 @@ for (const viewport of viewports) {
     await expect(page.locator('.intro-description').nth(1)).toContainText(
       'Sponsored Products for Creators'
     )
+    const creatorProductLink = page.getByRole('link', { name: 'Sponsored Products for Creators' })
+    await expect(creatorProductLink).toHaveAttribute(
+      'href',
+      'https://www.affiversemedia.com/amazon-sponsored-products-creator-content/'
+    )
+    await expect(creatorProductLink).toHaveClass('text-link')
+    await expect(creatorProductLink).toHaveAttribute('target', '_blank')
+    await expect(creatorProductLink).toHaveAttribute('rel', 'noopener noreferrer')
     await expect(page.locator('.intro-about-details p').first()).toContainText(
       'Seller Wallet as a founding engineer'
     )
