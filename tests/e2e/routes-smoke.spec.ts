@@ -50,7 +50,7 @@ for (const viewport of viewports) {
       'Sponsored Products for Creators'
     )
     await expect(page.locator('.intro-about-details p').first()).toContainText(
-      'Seller Wallet as an early engineer'
+      'Seller Wallet as a founding engineer'
     )
     await expect(page.locator('.project-item-link')).toHaveCount(0)
     await page.waitForLoadState('networkidle')
