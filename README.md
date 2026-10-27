@@ -24,7 +24,7 @@ section is currently hidden.
 
 ## Prerequisites
 
-- Node.js 24.x, matching CI
+- Node.js 26.x, matching CI
 - npm
 
 ## Getting Started
